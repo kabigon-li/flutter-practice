@@ -21,7 +21,7 @@ class TodoProvider with ChangeNotifier {
   // final todo = Todo(
   //   id: 0,
   //   content: 'kabigon',
-  //   isChecked: 0,
+  //   
   // );
   // addTodo(todo);
 

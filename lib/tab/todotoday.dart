@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/model/todo.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
 
 class TodoTaday extends StatefulWidget {
@@ -35,6 +36,7 @@ class _TodoTadayState extends State<TodoTaday> {
 
   @override
   Widget build(BuildContext context) {
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -59,7 +61,7 @@ class _TodoTadayState extends State<TodoTaday> {
                   height: 200,
                   child: ListView.builder(
                     shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-                    itemCount: 1,
+                    itemCount: todoProvider.,
                     itemBuilder: (BuildContext context, int index) {
                       return todo1();
                     },
@@ -167,6 +169,7 @@ class _TodoTadayState extends State<TodoTaday> {
                 //height: 60,
                 child: flag == true
                     ? GestureDetector(
+                        onTap: openModalBottomSheet,
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Text(
@@ -180,7 +183,7 @@ class _TodoTadayState extends State<TodoTaday> {
                         ),
                       )
                     : GestureDetector(
-                        onTap: openModalBottomSheet1,
+                        onTap: openModalBottomSheet,
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Text(
@@ -205,7 +208,7 @@ class _TodoTadayState extends State<TodoTaday> {
 
   void openModalBottomSheet() {
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
-    final todoProvider = Provider.of<TodoProvider>(context);
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     showModalBottomSheet(
       context: context,
@@ -218,56 +221,50 @@ class _TodoTadayState extends State<TodoTaday> {
             children: [
               SizedBox(
                 height: 80,
-                width: size.width * .7,
-                child: ColoredBox(
-                  color: Colors.white,
-                  child: TextField(
-                    maxLines: 20,
-                    onChanged: (String text) {
-                      chatbox(text);
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'to do',
-                      contentPadding: const EdgeInsets.all(10),
-                      // border: InputBorder.none,
+                //width: size.width,
+                child: Row(
+                  //Row Column中・二個か二個以上widgetの間隙間決める
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: ColoredBox(
+                        color: Colors.white,
+                        child: TextField(
+                          maxLines: 20,
+                          // onChanged: (String t) {
+                          //   chatbox(t);
+                          // },
+                          decoration: InputDecoration(
+                            hintText: 'to do',
+                            contentPadding: const EdgeInsets.all(10),
+                            // border: InputBorder.none,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void openModalBottomSheet1() {
-    final size = MediaQuery.of(context).size;
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          color: Colors.white,
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 80,
-                width: size.width * .7,
-                child: ColoredBox(
-                  color: Colors.white,
-                  child: TextField(
-                    maxLines: 20,
-                    onChanged: (String text) {
-                      chatbox(text);
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'to do',
-                      contentPadding: const EdgeInsets.all(10),
-                      // border: InputBorder.none,
-                    ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 0),
+                      child: SizedBox(
+                        height: 30,
+                        width: 60,
+                        child: RaisedButton(
+                          child: Text('送信'),
+                          color: Colors.blueGrey,
+                          onPressed: () {
+                            //クタスの実体化、Todoをtodoに代入
+                            Todo todo = Todo(
+                              id: 0,
+                              content: text,
+                              isChecked: 0,
+                            );
+                            todoProvider.addTodo(todo);
+                          },
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ],
