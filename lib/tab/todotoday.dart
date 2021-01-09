@@ -54,18 +54,16 @@ class _TodoTadayState extends State<TodoTaday> {
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Expanded(
+          child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: 200,
-                  child: ListView.builder(
-                    shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-                    itemCount: todoProvider.,
-                    itemBuilder: (BuildContext context, int index) {
-                      return todo1();
-                    },
-                  ),
+                ListView.builder(
+                  //physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+                  itemCount: todoProvider.todoList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return todo1(todoProvider.todoList[index]);
+                  },
                 ),
               ],
             ),
@@ -82,77 +80,7 @@ class _TodoTadayState extends State<TodoTaday> {
     );
   }
 
-  Widget todo() {
-    return Row(
-      children: [
-        //icon表示
-        text == ''
-            ? Container()
-            : GestureDetector(
-                onTap: () {
-                  if (checked == true) {
-                    onPressed(false);
-                  } else {
-                    onPressed(true);
-                  }
-                },
-                child: checked == true
-                    ? SizedBox(
-                        height: 60,
-                        child: Icon(
-                          Icons.check_box_rounded,
-                          color: Colors.grey,
-                          size: 30,
-                        ),
-                      )
-                    : SizedBox(
-                        height: 60,
-                        child: Icon(
-                          Icons.check_box_outline_blank,
-                          color: Colors.grey,
-                          size: 30,
-                        ),
-                      ),
-              ),
-
-        //to do
-        Expanded(
-          child: GestureDetector(
-            onTap: openModalBottomSheet,
-            child: ColoredBox(
-              color: Colors.white,
-              child: SizedBox(
-                  //height: 60,
-                  child: checked == true
-                      ? Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Text(
-                            text,
-                            style: new TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Text(
-                            text,
-                            style: new TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        )),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget todo1() {
+  Widget todo1(Todo todoNew) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -173,7 +101,7 @@ class _TodoTadayState extends State<TodoTaday> {
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Text(
-                            text,
+                            todoNew.content,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -187,7 +115,7 @@ class _TodoTadayState extends State<TodoTaday> {
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Text(
-                            text,
+                            todoNew.content,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -233,9 +161,9 @@ class _TodoTadayState extends State<TodoTaday> {
                         color: Colors.white,
                         child: TextField(
                           maxLines: 20,
-                          // onChanged: (String t) {
-                          //   chatbox(t);
-                          // },
+                          onChanged: (String t) {
+                            chatbox(t);
+                          },
                           decoration: InputDecoration(
                             hintText: 'to do',
                             contentPadding: const EdgeInsets.all(10),
@@ -254,12 +182,13 @@ class _TodoTadayState extends State<TodoTaday> {
                           color: Colors.blueGrey,
                           onPressed: () {
                             //クタスの実体化、Todoをtodoに代入
-                            Todo todo = Todo(
-                              id: 0,
+                            Todo todoNow = Todo(
+                              id: todoProvider.todoList.length,
                               content: text,
                               isChecked: 0,
                             );
-                            todoProvider.addTodo(todo);
+                            todoProvider.addTodo(todoNow);
+                            Navigator.of(context).pop();
                           },
                         ),
                       ),

@@ -21,19 +21,14 @@ class TodoProvider with ChangeNotifier {
   // final todo = Todo(
   //   id: 0,
   //   content: 'kabigon',
-  //   
+  //
   // );
   // addTodo(todo);
 
-  Future<void> addTodo(
-    Todo todo,
-  ) async {
-    final newTodo = Todo(
-      id: todo.id,
-      content: todo.content,
-      isChecked: todo.isChecked,
-    );
-    todoList.add(newTodo);
+  void addTodo(
+    Todo todo, //受け取りたいやつ
+  ) {
+    todoList.add(todo);
     notifyListeners();
   }
 
