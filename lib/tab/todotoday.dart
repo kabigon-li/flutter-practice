@@ -157,8 +157,9 @@ class _TodoTadayState extends State<TodoTaday> {
                       width: 200,
                       child: ColoredBox(
                         color: Colors.white,
-                        child: TextField(
+                        child: TextFormField(
                           maxLines: 20,
+                          initialValue: text,
                           onChanged: (String t) {
                             chatbox(t);
                           },
