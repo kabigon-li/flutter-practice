@@ -62,7 +62,11 @@ class _TodoTadayState extends State<TodoTaday> {
                   shrinkWrap: true, // 高さ関連のエラーが出たら、使う
                   itemCount: todoProvider.todoList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return todo1(todoProvider.todoList[index]);
+                    return todo(
+                      // 1. Todo(id: 0, content: 'k', isChecked: 0)
+                      // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
+                      todoProvider.todoList[index],
+                    );
                   },
                 ),
               ],
@@ -80,7 +84,10 @@ class _TodoTadayState extends State<TodoTaday> {
     );
   }
 
-  Widget todo1(Todo todoNew) {
+  Widget todo(
+    // Todo(id: 0, content: 'k', isChecked: 0)
+    Todo todoNew,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -95,34 +102,26 @@ class _TodoTadayState extends State<TodoTaday> {
               },
               title: SizedBox(
                 //height: 60,
-                child: flag == true
-                    ? GestureDetector(
-                        onTap: openModalBottomSheet,
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Text(
-                            todoNew.content,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: openModalBottomSheet,
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Text(
-                            todoNew.content,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
+                //クリック編集
+                child: GestureDetector(
+                  onTap: () {
+                    updateBottomSheet(
+                      todoNew.id,
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Text(
+                      todoNew.content,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        decoration:
+                            flag == true ? TextDecoration.lineThrough : null,
                       ),
+                    ),
+                  ),
+                ),
               ),
             ),
             const Divider(
@@ -131,6 +130,78 @@ class _TodoTadayState extends State<TodoTaday> {
           ],
         )
       ],
+    );
+  }
+
+  void updateBottomSheet(int index) {
+    // TodoProviderクラスのインスタンス(コピー)を変数に代入
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 80,
+                //width: size.width,
+                child: Row(
+                  //Row Column中・二個か二個以上widgetの間隙間決める
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: ColoredBox(
+                        color: Colors.white,
+                        child: TextField(
+                          maxLines: 20,
+                          onChanged: (String t) {
+                            chatbox(t);
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'to do',
+                            contentPadding: const EdgeInsets.all(10),
+                            // border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 0),
+                      child: SizedBox(
+                        height: 30,
+                        width: 60,
+                        child: RaisedButton(
+                          child: Text('編集'),
+                          color: Colors.blueGrey,
+                          onPressed: () {
+                            //クタスの実体化、Todoをtodoに代入
+                            Todo newTodo = Todo(
+                              id: index,
+                              content: text,
+                              isChecked: 0,
+                            );
+                            todoProvider.updateTodo(
+                              //1, 渡す 0
+                              index,
+                              newTodo,
+                            );
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

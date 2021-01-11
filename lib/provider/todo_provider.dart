@@ -12,19 +12,7 @@ class TodoProvider with ChangeNotifier {
   // 追加、削除、更新、取得
   // Create, Read, Update, Delete == CRUD
 
-  // getter for all todoList
-  List<Todo> get todosList {
-    return [...todoList];
-  }
-
-  // 追加する - 関数呼ぶ
-  // final todo = Todo(
-  //   id: 0,
-  //   content: 'kabigon',
-  //
-  // );
-  // addTodo(todo);
-
+  //クラス中の関数
   void addTodo(
     Todo todo, //受け取りたいやつ
   ) {
@@ -32,12 +20,17 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> updateTweet(int id, Todo newTodo) async {
-  //   final chatIndex = todoList.indexWhere((tweet) => tweet.id == id);
-
-  //   todoList[chatIndex] = newTodo;
-  //   notifyListeners();
-  // }
+  void updateTodo(
+    //2, うけとる
+    int id,
+    Todo newTodo,
+  ) {
+    final todoIndex = todoList.indexWhere(
+      (todo) => todo.id == id,
+    );
+    todoList[todoIndex] = newTodo;
+    notifyListeners();
+  }
 
   // Future<void> deleteTweet(int id) async {
   //   final existingChatIndex = todoList.indexWhere((tweet) => tweet.id == id);
