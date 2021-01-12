@@ -32,9 +32,9 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> deleteTweet(int id) async {
-  //   final existingChatIndex = todoList.indexWhere((tweet) => tweet.id == id);
-  //   todoList.removeAt(existingChatIndex);
-  //   notifyListeners();
-  // }
+  void deleteTodo(int id) {
+    final todoIndex = todoList.indexWhere((todo) => todo.id == id);
+    todoList.removeAt(todoIndex);
+    notifyListeners();
+  }
 }

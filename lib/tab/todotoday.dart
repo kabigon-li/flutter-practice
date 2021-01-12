@@ -91,45 +91,59 @@ class _TodoTadayState extends State<TodoTaday> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Column(
-          children: [
-            CheckboxListTile(
-              value: this.flag,
-              onChanged: (v) {
-                setState(() {
-                  this.flag = v;
-                });
+        CheckboxListTile(
+          value: this.flag,
+          onChanged: (v) {
+            setState(() {
+              this.flag = v;
+            });
+          },
+          title: SizedBox(
+            //height: 60,
+            //クリック編集
+            child: GestureDetector(
+              onTap: () {
+                updateBottomSheet(
+                  todoNew.id,
+                );
               },
-              title: SizedBox(
-                //height: 60,
-                //クリック編集
-                child: GestureDetector(
-                  onTap: () {
-                    updateBottomSheet(
-                      todoNew.id,
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Text(
-                      todoNew.content,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        decoration:
-                            flag == true ? TextDecoration.lineThrough : null,
-                      ),
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text(
+                  todoNew.content,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    decoration:
+                        flag == true ? TextDecoration.lineThrough : null,
                   ),
                 ),
               ),
             ),
-            const Divider(
-              color: Colors.grey,
-            ),
-          ],
-        )
+          ),
+        ),
+        const Divider(
+          color: Colors.grey,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RaisedButton(
+            onPressed: () {
+              deleteTodoSheet(todoNew.id);
+            },
+            child: Icon(Icons.delete),
+          ),
+        ),
       ],
+    );
+  }
+
+  void deleteTodoSheet(int index) {
+    // TodoProviderクラスのインスタンス(コピー)を変数に代入
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    todoProvider.deleteTodo(
+      //1, 渡す 0
+      index,
     );
   }
 
