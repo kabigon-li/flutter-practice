@@ -62,16 +62,7 @@ class _TabScreenState extends State<TabScreen> {
               color: Colors.blue,
             ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.people,
-              color: Colors.grey,
-            ),
-            activeIcon: Icon(
-              Icons.people,
-              color: Colors.blue,
-            ),
-          ),
+          
           BottomNavigationBarItem(
             icon: const Icon(
               Icons.article_outlined,
@@ -79,6 +70,16 @@ class _TabScreenState extends State<TabScreen> {
             ),
             activeIcon: Icon(
               Icons.article_outlined,
+              color: Colors.blue,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.people,
+              color: Colors.grey,
+            ),
+            activeIcon: Icon(
+              Icons.people,
               color: Colors.blue,
             ),
           ),

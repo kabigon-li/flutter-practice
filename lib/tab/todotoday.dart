@@ -59,7 +59,7 @@ class _TodoTadayState extends State<TodoTaday> {
                     return todo(
                       // 1. Todo(id: 0, content: 'k', isChecked: 0)
                       // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
-                      todoProvider.todoList[index],
+                      todoProvider.todoList[index],//todoの一つ分渡す
                     );
                   },
                 ),
@@ -70,7 +70,7 @@ class _TodoTadayState extends State<TodoTaday> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlue[200],
-        child: Icon(Icons.add_box),
+        child: Icon(Icons.add_box_outlined),
         onPressed: () {
           return openModalBottomSheet();
         },
@@ -86,56 +86,62 @@ class _TodoTadayState extends State<TodoTaday> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CheckboxListTile(
-          activeColor: Colors.blue,
-          value: todoNew.isChecked == 0 ? false : true,
-          onChanged: (v) {
-            //クタスの実体化、Todoをtodoに代入
-            setState(() {
-              Todo newTodo = Todo(
-                id: todoNew.id,
-                content: todoNew.content,
-                isChecked: todoNew.isChecked == 0 ? 1 : 0,
-              );
-              todoProvider.updateTodo(
-                //1, 渡す 0
-                todoNew.id,
-                newTodo,
-              );
-            });
-          },
-          title: SizedBox(
-            //height: 20,
-            //クリック編集
-            child: GestureDetector(
-              onTap: () {
-                updateBottomSheet(
-                  todoNew.id,
+        Card(
+          color: Colors.grey[200],
+          child: CheckboxListTile(
+            activeColor: Colors.blue,
+            value: todoNew.isChecked == 0 ? false : true,
+            onChanged: (v) {
+              //クタスの実体化、Todoをtodoに代入
+              setState(() {
+                Todo newTodo = Todo(//Todoの実体化（クラスのインスタンス）
+                  //受け取るやつ次第
+                  id: todoNew.id,//受け取るのTodoのid
+                  content: todoNew.content,//受け取るTodoの内容
+                  isChecked: todoNew.isChecked == 0 ? 1 : 0,//もし０、１になる、もし１、０になる
                 );
-              },
-              child: Text(
-                todoNew.content,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  decoration: flag == true ? TextDecoration.lineThrough : null,
+                todoProvider.updateTodo(
+                  //1, 渡す 0
+                  todoNew.id,
+                  newTodo,
+                );
+              });
+            },
+            title: SizedBox(
+              //height: 20,
+              //クリック編集
+              child: GestureDetector(
+                onTap: () {
+                  updateBottomSheet(
+                    todoNew.id,
+                    todoNew.isChecked,
+                  );
+                },
+                child: Text(
+                  todoNew.content,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    decoration:
+                        flag == true ? TextDecoration.lineThrough : null,
+                  ),
                 ),
               ),
             ),
-          ),
-          secondary: GestureDetector(
-            child: Icon(Icons.delete),
-            onTap: () {
-              //todoNew.id
-              deleteTodoSheet(todoNew.id);
-            },
+            secondary: GestureDetector(
+              child: Icon(Icons.delete),
+              onTap: () {
+                //todoNew.id
+                deleteTodoSheet(todoNew.id);
+              },
+            ),
           ),
         ),
         const Divider(
-          height: 10,
+          height: 2,
           thickness: 1,
-          color: Colors.amberAccent,
-          //indent: 16,
+          color: Colors.grey,
+          indent: 10,
           endIndent: 16,
         ),
       ],
@@ -151,7 +157,8 @@ class _TodoTadayState extends State<TodoTaday> {
     );
   }
 
-  void updateBottomSheet(int index) {
+//updateBottom呼び時、index渡す
+  void updateBottomSheet(int index, int flag) {//index受け取る
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     showModalBottomSheet(
@@ -189,29 +196,26 @@ class _TodoTadayState extends State<TodoTaday> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 0),
-                      child: SizedBox(
-                        height: 30,
-                        width: 60,
-                        child: RaisedButton(
-                          child: Text('編集'),
-                          color: Colors.blueGrey,
-                          onPressed: () {
-                            //クタスの実体化、Todoをtodoに代入
-                            Todo newTodo = Todo(
-                              id: index,
-                              content: text,
-                              isChecked: 0,
-                            );
-                            todoProvider.updateTodo(
-                              //1, 渡す 0
-                              index,
-                              newTodo,
-                            );
-                            Navigator.of(context).pop();
-                          },
-                        ),
+                    SizedBox(
+                      height: 30,
+                      width: 60,
+                      child: RaisedButton(
+                        child: Text('編集'),
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          //クタスの実体化、Todoをtodoに代入
+                          Todo newTodo = Todo(
+                            id: index,
+                            content: text,
+                            isChecked:flag,
+                          );
+                          todoProvider.updateTodo(
+                            //1, 渡す 0
+                            index,
+                            newTodo,
+                          );
+                          Navigator.of(context).pop();
+                        },
                       ),
                     )
                   ],
