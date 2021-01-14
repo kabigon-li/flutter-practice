@@ -92,6 +92,7 @@ class _TodoTadayState extends State<TodoTaday> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CheckboxListTile(
+          activeColor: Colors.blue,
           value: this.flag,
           onChanged: (v) {
             setState(() {
@@ -99,7 +100,7 @@ class _TodoTadayState extends State<TodoTaday> {
             });
           },
           title: SizedBox(
-            //height: 60,
+            //height: 20,
             //クリック編集
             child: GestureDetector(
               onTap: () {
@@ -107,32 +108,34 @@ class _TodoTadayState extends State<TodoTaday> {
                   todoNew.id,
                 );
               },
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Text(
-                  todoNew.content,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    decoration:
-                        flag == true ? TextDecoration.lineThrough : null,
-                  ),
+              child: Text(
+                todoNew.content,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  decoration: flag == true ? TextDecoration.lineThrough : null,
                 ),
               ),
             ),
           ),
-        ),
-        const Divider(
-          color: Colors.grey,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: RaisedButton(
-            onPressed: () {
+          secondary: 
+           GestureDetector(
+              child: Icon(Icons.delete),
+              onTap: () {
+              //todoNew.id
               deleteTodoSheet(todoNew.id);
-            },
-            child: Icon(Icons.delete),
-          ),
+              print('delete');
+              },)
+            
+            ),
+             
+        
+        const Divider(
+          height: 10,
+          thickness: 1,
+          color: Colors.amberAccent,
+          //indent: 16,
+          endIndent: 16,
         ),
       ],
     );
