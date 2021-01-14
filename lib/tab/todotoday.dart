@@ -12,7 +12,6 @@ class TodoTaday extends StatefulWidget {
 
 class _TodoTadayState extends State<TodoTaday> {
   bool checked = false;
-  int checked2 = 0;
 
   // Dart
   void onPressed(bool value) {
@@ -21,11 +20,6 @@ class _TodoTadayState extends State<TodoTaday> {
   }
 
   String text = '';
-
-  void onPressed1(bool value1) {
-    checked = value1;
-    setState(() {});
-  }
 
   void chatbox(String input) {
     text = input;
@@ -75,8 +69,8 @@ class _TodoTadayState extends State<TodoTaday> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.redAccent,
-        child: Icon(Icons.input),
+        backgroundColor: Colors.lightBlue[200],
+        child: Icon(Icons.add_box),
         onPressed: () {
           return openModalBottomSheet();
         },
@@ -88,15 +82,26 @@ class _TodoTadayState extends State<TodoTaday> {
     // Todo(id: 0, content: 'k', isChecked: 0)
     Todo todoNew,
   ) {
+    final todoProvider = Provider.of<TodoProvider>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CheckboxListTile(
           activeColor: Colors.blue,
-          value: this.flag,
+          value: todoNew.isChecked == 0 ? false : true,
           onChanged: (v) {
+            //クタスの実体化、Todoをtodoに代入
             setState(() {
-              this.flag = v;
+              Todo newTodo = Todo(
+                id: todoNew.id,
+                content: todoNew.content,
+                isChecked: todoNew.isChecked == 0 ? 1 : 0,
+              );
+              todoProvider.updateTodo(
+                //1, 渡す 0
+                todoNew.id,
+                newTodo,
+              );
             });
           },
           title: SizedBox(
@@ -118,18 +123,14 @@ class _TodoTadayState extends State<TodoTaday> {
               ),
             ),
           ),
-          secondary: 
-           GestureDetector(
-              child: Icon(Icons.delete),
-              onTap: () {
+          secondary: GestureDetector(
+            child: Icon(Icons.delete),
+            onTap: () {
               //todoNew.id
               deleteTodoSheet(todoNew.id);
-              print('delete');
-              },)
-            
-            ),
-             
-        
+            },
+          ),
+        ),
         const Divider(
           height: 10,
           thickness: 1,
