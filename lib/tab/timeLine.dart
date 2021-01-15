@@ -10,8 +10,21 @@ class TimeLine extends StatefulWidget {
 class _TimeLineState extends State<TimeLine> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: Text('timeline'),
-    );
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 120,
+        leadingWidth: MediaQuery.of(context).size.width,
+        centerTitle: true,
+        backgroundColor: Colors.green[300],
+        leading: Image.asset(
+          'image/kabi.jpeg',
+          width: MediaQuery.of(context).size.width,
+          //height: 30,
+          //fit:BoxFit.fitWidth,
+
+        ),
+        ),
+        body: Container(),
+      );
   }
 }

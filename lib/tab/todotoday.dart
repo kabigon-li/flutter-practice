@@ -59,7 +59,8 @@ class _TodoTadayState extends State<TodoTaday> {
                     return todo(
                       // 1. Todo(id: 0, content: 'k', isChecked: 0)
                       // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
-                      todoProvider.todoList[index],//todoの一つ分渡す
+                      todoProvider
+                          .todoList[index], //调用todo这个方法时，这获取画面中更新的每行Todo
                     );
                   },
                 ),
@@ -80,7 +81,7 @@ class _TodoTadayState extends State<TodoTaday> {
 
   Widget todo(
     // Todo(id: 0, content: 'k', isChecked: 0)
-    Todo todoNew,
+    Todo todoNew, //这接收新一个Todo
   ) {
     final todoProvider = Provider.of<TodoProvider>(context);
     return Column(
@@ -94,11 +95,12 @@ class _TodoTadayState extends State<TodoTaday> {
             onChanged: (v) {
               //クタスの実体化、Todoをtodoに代入
               setState(() {
-                Todo newTodo = Todo(//Todoの実体化（クラスのインスタンス）
+                Todo newTodo = Todo(
+                  //Todoの実体化（クラスのインスタンス）
                   //受け取るやつ次第
-                  id: todoNew.id,//受け取るのTodoのid
-                  content: todoNew.content,//受け取るTodoの内容
-                  isChecked: todoNew.isChecked == 0 ? 1 : 0,//もし０、１になる、もし１、０になる
+                  id: todoNew.id, //受け取るのTodoのid
+                  content: todoNew.content, //受け取るTodoの内容
+                  isChecked: todoNew.isChecked == 0 ? 1 : 0, //もし０、１になる、もし１、０になる
                 );
                 todoProvider.updateTodo(
                   //1, 渡す 0
@@ -113,8 +115,9 @@ class _TodoTadayState extends State<TodoTaday> {
               child: GestureDetector(
                 onTap: () {
                   updateBottomSheet(
-                    todoNew.id,
-                    todoNew.isChecked,
+                    //例えば、カビゴン書いたら、ここに渡す
+                    todoNew.id, //获取第一行的id，0
+                    todoNew.isChecked, //获取第一行的是否勾选
                   );
                 },
                 child: Text(
@@ -122,8 +125,9 @@ class _TodoTadayState extends State<TodoTaday> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
-                    decoration:
-                        flag == true ? TextDecoration.lineThrough : null,
+                    decoration: todoNew.isChecked == 0
+                        ? null
+                        : TextDecoration.lineThrough,
                   ),
                 ),
               ),
@@ -142,7 +146,7 @@ class _TodoTadayState extends State<TodoTaday> {
           thickness: 1,
           color: Colors.grey,
           indent: 10,
-          endIndent: 16,
+          // endIndent: 20,
         ),
       ],
     );
@@ -157,8 +161,9 @@ class _TodoTadayState extends State<TodoTaday> {
     );
   }
 
-//updateBottom呼び時、index渡す
-  void updateBottomSheet(int index, int flag) {//index受け取る
+//updateBottom接收
+  void updateBottomSheet(int index, int f) {
+    //index受け取る
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     showModalBottomSheet(
@@ -207,7 +212,7 @@ class _TodoTadayState extends State<TodoTaday> {
                           Todo newTodo = Todo(
                             id: index,
                             content: text,
-                            isChecked:flag,
+                            isChecked: f,
                           );
                           todoProvider.updateTodo(
                             //1, 渡す 0
