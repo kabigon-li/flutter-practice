@@ -51,17 +51,77 @@ class _ChatPageState extends State<ChatPage> {
           ],
         ),
         body: Container(
-          child: Column(children: [
-            ListView.builder(
-              //physics: const AlwaysScrollableScrollPhysics(),
-              shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-              itemCount: 1,
-              itemBuilder: (BuildContext context, int index) {
-                return chat();
-              },
-            ),
-          ]),
+          child: Stack(
+            children: [
+              ListView.builder(
+                //physics: const AlwaysScrollableScrollPhysics(),
+                shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+                itemCount: 1,
+                itemBuilder: (BuildContext context, int index) {
+                  return chat();
+                },
+              ),
+              
+              textfild(),
+
+              ],
+          ),
         ));
+  }
+
+  Widget textfild(){
+    final size = MediaQuery.of(context).size;
+  return  Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    height: 60,
+                    width: size.width,
+                    child: ColoredBox(
+                      color: Colors.grey[200],
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 50,
+                            width: size.width * .7,
+                            child: ColoredBox(
+                              color: Colors.white,
+                              child: TextField(
+                                maxLines: 20,
+                                onChanged: (String text) {
+                                  chatbox(text);
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Tell me your thinking',
+                                  contentPadding: const EdgeInsets.all(10),
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          SizedBox(
+                            height: 35,
+                            width: size.width * .2,
+                            child: RaisedButton(
+                              color: Colors.green[300],
+                              child: Text(
+                                '送信',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {
+                                return openChatBox();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+           
   }
 
   Widget chat() {
@@ -73,7 +133,7 @@ class _ChatPageState extends State<ChatPage> {
           shrinkWrap: true,
           itemCount: 3, //繰り返す10回
           separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(height: 10);
+            return const SizedBox(height: 10); //間の隙間
           },
           itemBuilder: (BuildContext context, int index) {
             return Padding(
@@ -99,55 +159,12 @@ class _ChatPageState extends State<ChatPage> {
             );
           },
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              height: 60,
-              width: size.width,
-              child: ColoredBox(
-                color: Colors.grey[200],
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 50,
-                      width: size.width * .7,
-                      child: ColoredBox(
-                        color: Colors.white,
-                        child: TextField(
-                          maxLines: 20,
-                          onChanged: (String text) {
-                            chatbox(text);
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Tell me your thinking',
-                            contentPadding: const EdgeInsets.all(10),
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    SizedBox(
-                      height: 35,
-                      width: size.width * .2,
-                      child: RaisedButton(
-                        color: Colors.green[300],
-                        child: Text(
-                          '送信',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
       ],
     );
+  }
+
+  Widget openChatBox() {
+    final todoProvider = Provider.of<TodoProvider>(context);
+    return Container();
   }
 }
