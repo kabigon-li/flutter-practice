@@ -95,6 +95,7 @@ class _TodoTadayState extends State<TodoTaday> {
             onChanged: (v) {
               //クタスの実体化、Todoをtodoに代入
               setState(() {
+                // checkboxl押された時,下実行する
                 Todo newTodo = Todo(
                   //Todoの実体化（クラスのインスタンス）
                   //受け取るやつ次第

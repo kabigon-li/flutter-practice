@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/model/todo.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
 
 class ChatPage extends StatefulWidget {
@@ -25,12 +26,12 @@ class _ChatPageState extends State<ChatPage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.grey[300],
           title: Text(
             'chatpage',
             style: TextStyle(color: Colors.black),
           ),
-          toolbarHeight: 30,
+          toolbarHeight: 50,
           leading: GestureDetector(
             onTap: () {
               Navigator.of(context).pop();
@@ -58,70 +59,71 @@ class _ChatPageState extends State<ChatPage> {
                 shrinkWrap: true, // 高さ関連のエラーが出たら、使う
                 itemCount: 1,
                 itemBuilder: (BuildContext context, int index) {
-                  return chat();
+                  return chatBox();
                 },
               ),
-              
               textfild(),
-
-              ],
+            ],
           ),
         ));
   }
 
-  Widget textfild(){
+  Widget textfild() {
+    final todoProvider = Provider.of<TodoProvider>(context);
     final size = MediaQuery.of(context).size;
-  return  Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    height: 60,
-                    width: size.width,
-                    child: ColoredBox(
-                      color: Colors.grey[200],
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            height: 50,
-                            width: size.width * .7,
-                            child: ColoredBox(
-                              color: Colors.white,
-                              child: TextField(
-                                maxLines: 20,
-                                onChanged: (String text) {
-                                  chatbox(text);
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'Tell me your thinking',
-                                  contentPadding: const EdgeInsets.all(10),
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          SizedBox(
-                            height: 35,
-                            width: size.width * .2,
-                            child: RaisedButton(
-                              color: Colors.green[300],
-                              child: Text(
-                                '送信',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              onPressed: () {
-                                return openChatBox();
-                              },
-                            ),
-                          ),
-                        ],
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: SizedBox(
+          height: 60,
+          width: size.width,
+          child: ColoredBox(
+            color: Colors.grey[200],
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 50,
+                  width: size.width * .7,
+                  child: ColoredBox(
+                    color: Colors.white,
+                    child: TextField(
+                      maxLines: 20,
+                      onChanged: (String text) {
+                        chatbox(text);
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Tell me your thinking',
+                        contentPadding: const EdgeInsets.all(10),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
                 ),
-              );
-           
+                SizedBox(width: 10),
+                SizedBox(
+                  height: 35,
+                  width: size.width * .2,
+                  child: RaisedButton(
+                    color: Colors.green[300],
+                    child: Text(
+                      '送信',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      final chatNow = Todo(
+                        content: text,
+                      );
+                      todoProvider.addTodo(chatNow);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget chat() {
@@ -163,8 +165,53 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  Widget chatBox() {
+    final todoProvider = Provider.of<TodoProvider>(context);
+    return Padding(
+      padding: const EdgeInsets.only(left: 10.0),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.green[200],
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: SizedBox(
+          width: 180,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget openChatBox() {
     final todoProvider = Provider.of<TodoProvider>(context);
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.only(left: 10.0),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.green[200],
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: SizedBox(
+          width: 180,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
