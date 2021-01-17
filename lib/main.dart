@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
 import 'package:wechat_like_memo/tab/tab.dart';
 
@@ -40,6 +41,11 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => TodoProvider(
             todoList: [],
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ChatProvider(
+            chatList: [],
           ),
         ),
       ],

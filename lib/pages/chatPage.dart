@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wechat_like_memo/model/todo.dart';
-import 'package:wechat_like_memo/provider/todo_provider.dart';
+import 'package:wechat_like_memo/model/chat.dart';
+
+import 'package:wechat_like_memo/provider/chat_provider.dart';
 
 class ChatPage extends StatefulWidget {
   ChatPage({Key key}) : super(key: key);
@@ -22,8 +23,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final todoProvider = Provider.of<TodoProvider>(context);
-    final size = MediaQuery.of(context).size;
+    final chatProvider = Provider.of<ChatProvider>(context);
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.grey[300],
@@ -57,9 +58,11 @@ class _ChatPageState extends State<ChatPage> {
               ListView.builder(
                 //physics: const AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-                itemCount: 1,
+                itemCount: chatProvider.chatList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return chatBox();
+                  return chat(
+                    chatProvider.chatList[index],
+                  );
                 },
               ),
               textfild(),
@@ -69,7 +72,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget textfild() {
-    final todoProvider = Provider.of<TodoProvider>(context);
+    final chatProvider = Provider.of<ChatProvider>(context);
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -111,10 +114,10 @@ class _ChatPageState extends State<ChatPage> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      final chatNow = Todo(
+                      final chatNow = Chat(
                         content: text,
                       );
-                      todoProvider.addTodo(chatNow);
+                      chatProvider.addchat(chatNow);
                     },
                   ),
                 ),
@@ -126,47 +129,44 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  Widget chat() {
-    final todoProvider = Provider.of<TodoProvider>(context);
+  Widget chat(
+    Chat chatNew,
+  ) {
+    final chatProvider = Provider.of<ChatProvider>(context);
     final size = MediaQuery.of(context).size;
     return Column(
+      //mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ListView.separated(
-          shrinkWrap: true,
-          itemCount: 3, //繰り返す10回
-          separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(height: 10); //間の隙間
-          },
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.green[200],
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: SizedBox(
-                  width: 180,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      text,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Colors.green[200],
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: SizedBox(
+              width: 180,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  chatNew.content,
+                  style: TextStyle(
+                    color: Colors.black,
                   ),
                 ),
               ),
-            );
-          },
+            ),
+          ),
         ),
+        SizedBox(
+          height:10,
+        )
       ],
     );
   }
 
   Widget chatBox() {
-    final todoProvider = Provider.of<TodoProvider>(context);
+    final chatProvider = Provider.of<ChatProvider>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 10.0),
       child: DecoratedBox(
@@ -191,7 +191,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget openChatBox() {
-    final todoProvider = Provider.of<TodoProvider>(context);
+    final chatProvider = Provider.of<ChatProvider>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 10.0),
       child: DecoratedBox(
