@@ -24,7 +24,6 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.grey[300],
@@ -72,7 +71,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget textfild() {
-    final chatProvider = Provider.of<ChatProvider>(context);
+    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -132,36 +131,48 @@ class _ChatPageState extends State<ChatPage> {
   Widget chat(
     Chat chatNew,
   ) {
-    final chatProvider = Provider.of<ChatProvider>(context);
-    final size = MediaQuery.of(context).size;
-    return Column(
-      //mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.green[200],
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: SizedBox(
-              width: 180,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  chatNew.content,
-                  style: TextStyle(
-                    color: Colors.black,
+    // final chatProvider = Provider.of<ChatProvider>(context);
+    // final size = MediaQuery.of(context).size;
+    return Scrollbar(
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                  child: Icon(
+                    Icons.delete_outline_rounded,
+                    color: Colors.grey,
+                    size: 23,
+                  ),
+                  onTap: () {
+                    deleteChat(chatNew.id);
+                  }),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.green[200],
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: SizedBox(
+                    width: 180,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        chatNew.content,
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ),
-        SizedBox(
-          height:10,
-        )
-      ],
+        ],
+      ),
     );
   }
 
@@ -213,5 +224,10 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
     );
+  }
+
+  void deleteChat(int index) {
+    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    chatProvider.deletechat(index);
   }
 }
