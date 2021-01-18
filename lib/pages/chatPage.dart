@@ -119,20 +119,26 @@ class _ChatPageState extends State<ChatPage> {
                       '送信',
                       style: TextStyle(color: Colors.white),
                     ),
+
+                    //チャット追加
                     onPressed: () {
                       final chatNow = Chat(
+                        id: chatProvider.chatList.length,
                         content: text,
                       );
-                      chatProvider.addchat(chatNow);
+                      chatProvider.addchat(
+                        chatNow,
+                      );
+                      chatbox('');
 
                       //收起输入框
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ChatPage();
-                          },
-                        ),
-                      );
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return ChatPage();
+                      //     },
+                      //   ),
+                      // );
                     },
                   ),
                 ),
@@ -156,17 +162,17 @@ class _ChatPageState extends State<ChatPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-
               //删除对话框图标
               GestureDetector(
-                  child: Icon(
-                    Icons.delete_outline_rounded,
-                    color: Colors.grey,
-                    size: 23,
-                  ),
-                  onTap: () {
-                    deleteChat(chatNew.id);
-                  }),
+                child: Icon(
+                  Icons.delete_outline_rounded,
+                  color: Colors.grey,
+                  size: 23,
+                ),
+                onTap: () {
+                  deleteChat(chatNew.id);
+                },
+              ),
 
               //对话框文字
               Padding(
@@ -181,13 +187,13 @@ class _ChatPageState extends State<ChatPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(7.0),
                       child: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           updateChat(
                             chatNew.id,
-                           
-                            );
+                            chatNew.content,
+                          );
                         },
-                             child: Text(
+                        child: Text(
                           chatNew.content,
                           style: TextStyle(
                             color: Colors.black,
@@ -205,11 +211,9 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  
-
   void updateChat(
     int index,
-    
+    String input,
   ) {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
     showModalBottomSheet(
@@ -235,7 +239,7 @@ class _ChatPageState extends State<ChatPage> {
                         color: Colors.white,
                         child: TextFormField(
                           maxLines: 20,
-                          initialValue: text,
+                          initialValue: input,
                           onChanged: (String t) {
                             chatbox(t);
                           },
@@ -258,14 +262,11 @@ class _ChatPageState extends State<ChatPage> {
                           Chat newChat = Chat(
                             id: index,
                             content: text,
-                            
-                            
                           );
                           chatProvider.updatechat(
                             //1, 渡す 0
                             index,
                             newChat,
-                           
                           );
                           Navigator.of(context).pop();
                         },
@@ -279,7 +280,6 @@ class _ChatPageState extends State<ChatPage> {
         );
       },
     );
- 
   }
 
   void deleteChat(int index) {

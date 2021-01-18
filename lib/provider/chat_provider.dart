@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:wechat_like_memo/model/chat.dart';
 
 class ChatProvider with ChangeNotifier {
- ChatProvider({
+  ChatProvider({
     this.chatList,
   });
 
@@ -15,29 +14,27 @@ class ChatProvider with ChangeNotifier {
 
   //クラス中の関数
   void addchat(
-   Chat chat, //受け取りたいやつ
+    Chat chat, //受け取りたいやつ
   ) {
-   chatList.add(chat);
+    chatList.add(chat);
     notifyListeners();
   }
 
   void updatechat(
     //2, うけとる
     int id,
-   Chat newChat,
+    Chat newChat,
   ) {
     final chatIndex = chatList.indexWhere(
-       (chat) => chat.id == id,
+      (chat) => chat.id == id,
     );
-   chatList [chatIndex] = newChat;
+    chatList[chatIndex] = newChat;
     notifyListeners();
   }
 
   void deletechat(int id) {
-    final chatIndex = chatList.indexWhere(
-       (chat) => chat.id == id
-      );
-   chatList.removeAt(chatIndex);
+    final chatIndex = chatList.indexWhere((chat) => chat.id == id);
+    chatList.removeAt(chatIndex);
     notifyListeners();
   }
 }
