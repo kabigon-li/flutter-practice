@@ -33,7 +33,7 @@ class _ChatPageState extends State<ChatPage> {
               color: Colors.black,
               fontFamily: 'Cursive',
               fontSize: 30,
-              ),
+            ),
           ),
           toolbarHeight: 50,
           leading: GestureDetector(
@@ -88,6 +88,7 @@ class _ChatPageState extends State<ChatPage> {
             color: Colors.grey[200],
             child: Row(
               children: [
+                //textfild
                 SizedBox(
                   height: 50,
                   width: size.width * .7,
@@ -106,6 +107,8 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                   ),
                 ),
+
+                //送信button
                 SizedBox(width: 10),
                 SizedBox(
                   height: 35,
@@ -114,14 +117,22 @@ class _ChatPageState extends State<ChatPage> {
                     color: Colors.green[300],
                     child: Text(
                       '送信',
-                      style: TextStyle(
-                        color: Colors.white),
+                      style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
                       final chatNow = Chat(
                         content: text,
                       );
                       chatProvider.addchat(chatNow);
+
+                      //收起输入框
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ChatPage();
+                          },
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -133,6 +144,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  //绿色对话框和删除键
   Widget chat(
     Chat chatNew,
   ) {
@@ -144,6 +156,8 @@ class _ChatPageState extends State<ChatPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+
+              //删除对话框图标
               GestureDetector(
                   child: Icon(
                     Icons.delete_outline_rounded,
@@ -153,6 +167,8 @@ class _ChatPageState extends State<ChatPage> {
                   onTap: () {
                     deleteChat(chatNew.id);
                   }),
+
+              //对话框文字
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: DecoratedBox(
@@ -163,11 +179,19 @@ class _ChatPageState extends State<ChatPage> {
                   child: SizedBox(
                     width: 180,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        chatNew.content,
-                        style: TextStyle(
-                          color: Colors.black,
+                      padding: const EdgeInsets.all(7.0),
+                      child: GestureDetector(
+                        onTap: (){
+                          updateChat(
+                            chatNew.id,
+                           
+                            );
+                        },
+                             child: Text(
+                          chatNew.content,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),
@@ -181,54 +205,81 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  Widget chatBox() {
-    final chatProvider = Provider.of<ChatProvider>(context);
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.green[200],
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: SizedBox(
-          width: 180,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  
 
-  Widget openChatBox() {
-    final chatProvider = Provider.of<ChatProvider>(context);
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.green[200],
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: SizedBox(
-          width: 180,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.black,
+  void updateChat(
+    int index,
+    
+  ) {
+    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 80,
+                //width: size.width,
+                child: Row(
+                  //Row Column中・二個か二個以上widgetの間隙間決める
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: ColoredBox(
+                        color: Colors.white,
+                        child: TextFormField(
+                          maxLines: 20,
+                          initialValue: text,
+                          onChanged: (String t) {
+                            chatbox(t);
+                          },
+                          decoration: InputDecoration(
+                            //hintText: 'chat',
+                            contentPadding: const EdgeInsets.all(10),
+                            // border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                      width: 60,
+                      child: RaisedButton(
+                        child: Text('編集'),
+                        color: Colors.blueGrey,
+                        onPressed: () {
+                          //クタスの実体化、Todoをtodoに代入
+                          Chat newChat = Chat(
+                            id: index,
+                            content: text,
+                            
+                            
+                          );
+                          chatProvider.updatechat(
+                            //1, 渡す 0
+                            index,
+                            newChat,
+                           
+                          );
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-        ),
-      ),
+        );
+      },
     );
+ 
   }
 
   void deleteChat(int index) {

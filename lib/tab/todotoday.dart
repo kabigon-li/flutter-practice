@@ -44,7 +44,7 @@ class _TodoTadayState extends State<TodoTaday> {
             'To do',
             style: TextStyle(
               fontFamily: 'Cursive',
-              fontSize:30,
+              fontSize: 30
               ),
             
           ),
