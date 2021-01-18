@@ -50,10 +50,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         title: Center(
           child: Text(
             'chat home',
+            
             style: TextStyle(
+              
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              fontFamily: 'Roboto',
+              fontFamily: 'Cursive',
               letterSpacing: 1.0,
             ),
           ),
@@ -89,7 +91,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   fontSize: 20,
                   color: Colors.grey[700],
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Cursive',
                 ),
               ),
             ),

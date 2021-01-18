@@ -29,7 +29,11 @@ class _ChatPageState extends State<ChatPage> {
           backgroundColor: Colors.grey[300],
           title: Text(
             'chatpage',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Cursive',
+              fontSize: 30,
+              ),
           ),
           toolbarHeight: 50,
           leading: GestureDetector(
@@ -110,7 +114,8 @@ class _ChatPageState extends State<ChatPage> {
                     color: Colors.green[300],
                     child: Text(
                       '送信',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white),
                     ),
                     onPressed: () {
                       final chatNow = Chat(

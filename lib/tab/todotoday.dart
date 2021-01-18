@@ -42,6 +42,11 @@ class _TodoTadayState extends State<TodoTaday> {
         title: Center(
           child: Text(
             'To do',
+            style: TextStyle(
+              fontFamily: 'Cursive',
+              fontSize:30,
+              ),
+            
           ),
         ),
       ),
