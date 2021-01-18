@@ -34,7 +34,7 @@ class _TodoTadayState extends State<TodoTaday> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.green[300],
+        backgroundColor: Colors.green[200],
         leading: Icon(
           Icons.account_circle,
           color: Colors.black,
