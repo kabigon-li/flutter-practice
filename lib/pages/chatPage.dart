@@ -71,7 +71,7 @@ class _ChatPageState extends State<ChatPage> {
               textfild(),
             ],
           ),
-        ));
+        ),);
   }
 
   Widget textfild() {
