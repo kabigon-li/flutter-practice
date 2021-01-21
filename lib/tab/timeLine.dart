@@ -48,14 +48,59 @@ class _TimeLineState extends State<TimeLine> {
                 );
               },
             ),
-            Icon(
-              Icons.add_a_photo,
-              color: Colors.grey,
-              size: 23,
+            Align(
+              alignment: Alignment.bottomRight,
+              child: GestureDetector(
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Icon(
+                    Icons.add_a_photo,
+                    color: Colors.grey,
+                    size: 33,
+                  ),
+                ),
+                onTap: () {
+                  showPictureUpdateSheet();
+                },
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  showPictureUpdateSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          child: SizedBox(
+            height: 150,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 15),
+                Text(
+                  '写真を撮る',
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  'アルバムから選択',
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  '取り消し',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
