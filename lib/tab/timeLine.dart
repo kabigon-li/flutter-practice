@@ -86,12 +86,26 @@ class _TimeLineState extends State<TimeLine> {
                   '写真を撮る',
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(height: 15),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(
+                    thickness: 0.2,
+                    color: Colors.grey,
+                  ),
+                ),
+                //SizedBox(height: 15),
                 Text(
                   'アルバムから選択',
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(height: 15),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(
+                    thickness: 0.2,
+                    color: Colors.grey,
+                  ),
+                ),
+                //SizedBox(height: 15),
                 Text(
                   '取り消し',
                   style: TextStyle(fontSize: 16),
