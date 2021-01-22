@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
+import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/tab/todotoday.dart';
 import 'package:wechat_like_memo/tab/home.dart';
 import 'package:wechat_like_memo/tab/mypage.dart';
@@ -14,6 +15,7 @@ final routes = {
   '/chatpage': (context) => ChatPage(),
   '/timeline': (context) => TimeLine(),
   '/loginpage' : (context) => LoginPage(),
+  '/timelineInputpage' : (context) => TimelineInputPage(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {
