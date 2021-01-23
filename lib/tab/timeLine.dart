@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
+import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 
 class TimeLine extends StatefulWidget {
@@ -19,6 +23,21 @@ class _TimeLineState extends State<TimeLine> {
     setState(() {});
   }
 
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    // 写真取得する，获取照片
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+    } else {
+      print('No image selected.');
+    }
+    setState(() {});
+  }
+
   Widget build(BuildContext context) {
     final timelineProvider = Provider.of<TimelineProvider>(context);
     return Scaffold(
@@ -27,19 +46,11 @@ class _TimeLineState extends State<TimeLine> {
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
         backgroundColor: Colors.green[200],
-        // leading: Image.asset(
-        //   'image/kabi.jpeg',
-        //   width: MediaQuery.of(context).size.width,
-        //   //height: 30,
-        //   //fit:BoxFit.fitWidth,
-
-        // ),
       ),
       body: Container(
         child: Column(
           children: [
             ListView.builder(
-              //physics: const AlwaysScrollableScrollPhysics(),
               shrinkWrap: true, // 高さ関連のエラーが出たら、使う
               itemCount: timelineProvider.timelineList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -77,7 +88,7 @@ class _TimeLineState extends State<TimeLine> {
         return Container(
           color: Colors.white,
           child: SizedBox(
-            height: 150,
+            height: 200,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -94,9 +105,22 @@ class _TimeLineState extends State<TimeLine> {
                   ),
                 ),
                 //SizedBox(height: 15),
-                Text(
-                  'アルバムから選択',
-                  style: TextStyle(fontSize: 16),
+                InkWell(
+                  onTap: () async {
+                    await getImage();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TimelineInputPage(
+                          image: _image,//次のクラスに渡す
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'アルバムから選択',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

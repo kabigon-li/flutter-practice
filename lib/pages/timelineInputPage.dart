@@ -4,29 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TimelineInputPage extends StatefulWidget {
-  TimelineInputPage({Key key}) : super(key: key);
+
+  
+  TimelineInputPage({
+    this.image, //class受け取る
+  });
+
+  final File image;
 
   @override
   _TimelineInputPageState createState() => _TimelineInputPageState();
 }
 
 class _TimelineInputPageState extends State<TimelineInputPage> {
-  File _image;
-  final picker = ImagePicker(); 
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,11 +51,17 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
         ],
       ),
       body: Container(
-          child: Column(
-        children: [
-          TextField(),
-        ],
-      )),
+        child: Column(
+          children: [
+            
+            Image.file(
+              widget.image,
+              height: 300,
+              width: 400,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
