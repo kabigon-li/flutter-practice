@@ -9,17 +9,18 @@ import 'package:wechat_like_memo/provider/timeline_provider.dart';
 class TimelineInputPage extends StatefulWidget {
   TimelineInputPage({
     this.image, //class受け取る
+    this.timelineNew,
   });
 
   final File image;
+  final Timeline timelineNew;
 
   @override
   _TimelineInputPageState createState() => _TimelineInputPageState();
 }
 
 class _TimelineInputPageState extends State<TimelineInputPage> {
-
-   String text = '';
+  String text = '';
 
   void chatbox(String input) {
     text = input;
@@ -62,23 +63,24 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                 color: Colors.greenAccent,
                 child: Center(
                   child: SizedBox(
-                        height: 30,
-                        width: 60,
-                        child: RaisedButton(
-                          child: Text('発表'),
-                          color: Colors.blueGrey,
-                          onPressed: () {
-                            //クタスの実体化、Todoをtodoに代入
-                            Timeline timelineNow = Timeline(
-                              id: timelineProvider.timelineList.length,
-                              content: text,
-                            
-                            );
-                            timelineProvider.addTimeline(timelineNew);
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ),
+                    height: 30,
+                    width: 60,
+                    child: RaisedButton(
+                      child: Text('発表'),
+                      color: Colors.blueGrey,
+                      onPressed: () {
+                        //クタスの実体化、Todoをtodoに代入
+                        Timeline timelineNow = Timeline(
+                          id: timelineProvider.timelineList.length,
+                          content: text,
+                        );
+
+                        // 新しいtimelineをproviderに追加する
+                        timelineProvider.addTimeline(timelineNow);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -88,7 +90,6 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
       body: Container(
         child: Column(
           children: [
-
             //入力枠
             textfild(),
 
@@ -106,7 +107,8 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
   }
 
   Widget textfild() {
-    final timelineProvider = Provider.of<TimelineProvider>(context, listen: false);
+    final timelineProvider =
+        Provider.of<TimelineProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -138,8 +140,6 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                     ),
                   ),
                 ),
-
-                
               ],
             ),
           ),
@@ -147,5 +147,4 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
       ),
     );
   }
-
 }

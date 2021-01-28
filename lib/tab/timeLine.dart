@@ -87,6 +87,7 @@ class _TimeLineState extends State<TimeLine> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
+        final timelineProvider = Provider.of<TimelineProvider>(context);
         return Container(
           color: Colors.white,
           child: SizedBox(
@@ -109,12 +110,22 @@ class _TimeLineState extends State<TimeLine> {
                 //SizedBox(height: 15),
                 InkWell(
                   onTap: () async {
+                    // 点按从相册查找按钮后，获取相册照片
                     await getImage();
+
+                    //　timelintInputにpush、image渡す
+                    Timeline timelineNow = Timeline(
+                              id: timelineProvider.timelineList.length,
+                              content: text,
+                              
+                            );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => TimelineInputPage(
                           image: _image, //次のクラスに渡す
+                          timelineNew: timelineNow,
+
                         ),
                       ),
                     );
