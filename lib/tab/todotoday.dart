@@ -92,9 +92,13 @@ class _TodoTadayState extends State<TodoTaday> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+
+        //显示在屏幕上的每一条todo，由打沟框，todo内容，和删除按钮组成
         Card(
           color: Colors.grey[200],
           child: CheckboxListTile(
+
+            //打勾框
             activeColor: Colors.blue,
             value: todoNew.isChecked == 0 ? false : true,
             onChanged: (v) {
@@ -115,6 +119,8 @@ class _TodoTadayState extends State<TodoTaday> {
                 );
               });
             },
+
+            //todo内容部分
             title: SizedBox(
               //height: 20,
               //クリック編集
@@ -138,6 +144,8 @@ class _TodoTadayState extends State<TodoTaday> {
                 ),
               ),
             ),
+
+            //删除按钮
             secondary: GestureDetector(
               child: Icon(Icons.delete),
               onTap: () {
@@ -147,6 +155,8 @@ class _TodoTadayState extends State<TodoTaday> {
             ),
           ),
         ),
+
+        //分割线
         const Divider(
           height: 2,
           thickness: 1,

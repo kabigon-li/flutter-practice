@@ -59,6 +59,8 @@ class _TimeLineState extends State<TimeLine> {
                 );
               },
             ),
+
+            //投稿内容追加アイコン
             Align(
               alignment: Alignment.bottomRight,
               child: GestureDetector(
@@ -112,7 +114,7 @@ class _TimeLineState extends State<TimeLine> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => TimelineInputPage(
-                          image: _image,//次のクラスに渡す
+                          image: _image, //次のクラスに渡す
                         ),
                       ),
                     );
@@ -145,21 +147,51 @@ class _TimeLineState extends State<TimeLine> {
   Widget timeline(
     Timeline timelineNew,
   ) {
-    final timelineProvider =
-        Provider.of<TimelineProvider>(context, listen: false);
+    final timelineProvider = Provider.of<TimelineProvider>(context);
 
     return Scrollbar(
-      child: Column(
-        children: [
-          GestureDetector(
-            child: Card(
-              child: Text(text),
+      child: Container(
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(22.0),
+              child: Column(children: [
+                ClipOval(
+                  child: Image.file(
+                    _image,
+                    height: 50,
+                    width: 50,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+                //ID name
+                Text(
+                  " ID name",
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Cursive',
+                  ),
+                ),
+
+                //CopyInputPageText
+                Text(
+                  text, //?わからない
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                //CopyInputPageImage
+                Image.file(_image),
+              ]),
             ),
-            onTap: () {
-              timelineProvider.addTimeline(timelineNew);
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

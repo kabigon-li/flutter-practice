@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/model/timeline.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 
 class TimelineInputPage extends StatefulWidget {
@@ -27,6 +28,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
 
   @override
   Widget build(BuildContext context) {
+    final timelineProvider = Provider.of<TimelineProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -59,13 +61,24 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
               child: ColoredBox(
                 color: Colors.greenAccent,
                 child: Center(
-                  child: Text(
-                    '発表',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
+                  child: SizedBox(
+                        height: 30,
+                        width: 60,
+                        child: RaisedButton(
+                          child: Text('発表'),
+                          color: Colors.blueGrey,
+                          onPressed: () {
+                            //クタスの実体化、Todoをtodoに代入
+                            Timeline timelineNow = Timeline(
+                              id: timelineProvider.timelineList.length,
+                              content: text,
+                            
+                            );
+                            timelineProvider.addTimeline(timelineNew);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
                 ),
               ),
             ),
@@ -78,12 +91,13 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
 
             //入力枠
             textfild(),
-            
+
             //写真投稿枠
             Image.file(
               widget.image,
               height: 150,
               width: 150,
+              fit: BoxFit.cover,
             ),
           ],
         ),
@@ -92,7 +106,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
   }
 
   Widget textfild() {
-    final chatProvider = Provider.of<TimelineProvider>(context, listen: false);
+    final timelineProvider = Provider.of<TimelineProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
