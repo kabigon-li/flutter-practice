@@ -29,7 +29,7 @@ class _TimeLineState extends State<TimeLine> {
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    // 写真取得する，获取照片
+    // 写真取得する（获取照片）
     if (pickedFile != null) {
       _image = File(pickedFile.path);
     } else {

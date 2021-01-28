@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/provider/timeline_provider.dart';
 
 class TimelineInputPage extends StatefulWidget {
   TimelineInputPage({
@@ -15,6 +17,14 @@ class TimelineInputPage extends StatefulWidget {
 }
 
 class _TimelineInputPageState extends State<TimelineInputPage> {
+
+   String text = '';
+
+  void chatbox(String input) {
+    text = input;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,14 +75,63 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
       body: Container(
         child: Column(
           children: [
+
+            //入力枠
+            textfild(),
+            
+            //写真投稿枠
             Image.file(
               widget.image,
-              height: 300,
-              width: 400,
+              height: 150,
+              width: 150,
             ),
           ],
         ),
       ),
     );
   }
+
+  Widget textfild() {
+    final chatProvider = Provider.of<TimelineProvider>(context, listen: false);
+    final size = MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: SizedBox(
+          height: 60,
+          width: size.width,
+          child: ColoredBox(
+            color: Colors.grey[200],
+            child: Column(
+              children: [
+                //textfild
+                SizedBox(
+                  height: 50,
+                  //width: size.width * .7,
+                  child: ColoredBox(
+                    color: Colors.white,
+                    child: TextField(
+                      maxLines: 20,
+                      onChanged: (String text) {
+                        chatbox(text);
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Say something...',
+                        contentPadding: const EdgeInsets.all(10),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+
+                
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }
