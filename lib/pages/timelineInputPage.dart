@@ -115,7 +115,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: SizedBox(
-          height: 60,
+          height: 100,
           width: size.width,
           child: ColoredBox(
             color: Colors.grey[200],
@@ -123,7 +123,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
               children: [
                 //textfild
                 SizedBox(
-                  height: 50,
+                  height: 100,
                   width: size.width * .9,
                   child: ColoredBox(
                     color: Colors.white,

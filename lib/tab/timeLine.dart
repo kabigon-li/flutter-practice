@@ -47,37 +47,42 @@ class _TimeLineState extends State<TimeLine> {
         centerTitle: true,
         backgroundColor: Colors.green[200],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            ListView.builder(
-              shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-              itemCount: timelineProvider.timelineList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return timeline(
-                  timelineProvider.timelineList[index],
-                );
-              },
-            ),
-
-            //投稿内容追加アイコン
-            Align(
-              alignment: Alignment.bottomRight,
-              child: GestureDetector(
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Icon(
-                    Icons.add_a_photo,
-                    color: Colors.grey,
-                    size: 33,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              // 追加icon
+              Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Icon(
+                      Icons.add_a_photo,
+                      color: Colors.grey,
+                      size: 33,
+                    ),
                   ),
+                  onTap: () {
+                    showPictureUpdateSheet();
+                  },
                 ),
-                onTap: () {
-                  showPictureUpdateSheet();
+              ),
+
+              // timeline
+              ListView.builder(
+                shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+                itemCount: timelineProvider.timelineList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return timeline(
+                    timelineProvider.timelineList[index],
+                  );
                 },
               ),
-            ),
-          ],
+
+              //投稿内容追加アイコン
+            ],
+          ),
         ),
       ),
     );
@@ -118,6 +123,8 @@ class _TimeLineState extends State<TimeLine> {
                       id: timelineProvider.timelineList.length,
                       content: text,
                     );
+
+                    Navigator.of(context).pop();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -163,16 +170,22 @@ class _TimeLineState extends State<TimeLine> {
   Widget timeline(
     Timeline timelineNew,
   ) {
-    final timelineProvider = Provider.of<TimelineProvider>(context);
+    //final timelineProvider = Provider.of<TimelineProvider>(context);
 
-    return Scrollbar(
-      child: Container(
-        child: Row(
+    return Container(
+      decoration: BoxDecoration(
+        //border: Border.all(color: Colors.grey[300]),
+        color: Colors.yellow[50],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(22.0),
-              child: Column(children: [
-                ClipOval(
+            Row(
+              children: [
+                // ID icon
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
                   child: Image.file(
                     _image,
                     height: 50,
@@ -181,30 +194,53 @@ class _TimeLineState extends State<TimeLine> {
                   ),
                 ),
 
-                //ID name
-                Text(
-                  " ID name",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey[700],
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Cursive',
+                // ID name
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'ID count',
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.grey[700],
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Cursive',
+                    ),
                   ),
                 ),
+              ],
+            ),
 
-                //CopyInputPageText
-                Text(
-                  text, //?わからない
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey[700],
-                    fontWeight: FontWeight.bold,
+            // CopyInputPageText
+            Align(
+              alignment: Alignment.centerRight,
+              child: SizedBox(
+                //height: 100,
+                width: 300,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    timelineNew.content,
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
+              ),
+            ),
 
-                //CopyInputPageImage
-                Image.file(_image),
-              ]),
+            //Image.file(_image),
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: Image.file(
+                    _image,
+                    height: 250,
+                    width: 250,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
