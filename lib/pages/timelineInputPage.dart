@@ -43,44 +43,42 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                 width: 80,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    '戻る',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
+                  child: GestureDetector(
+                    child: Text(
+                      '戻る',
+                      style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ),
               ),
             )),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(0),
             child: SizedBox(
-              height: 20,
-              width: 50,
-              child: ColoredBox(
-                color: Colors.greenAccent,
-                child: Center(
-                  child: SizedBox(
-                    height: 30,
-                    width: 60,
-                    child: RaisedButton(
-                      child: Text('発表'),
-                      color: Colors.blueGrey,
-                      onPressed: () {
-                        //クタスの実体化、Todoをtodoに代入
-                        Timeline timelineNow = Timeline(
-                          id: timelineProvider.timelineList.length,
-                          content: text,
-                        );
-
-                        // 新しいtimelineをproviderに追加する
-                        timelineProvider.addTimeline(timelineNow);
-                        Navigator.of(context).pop();
-                      },
-                    ),
+              height: 30,
+              width: 70,
+              child: Center(
+                child: RaisedButton(
+                  child: Text(
+                    '発表',
+                    style: TextStyle(fontSize: 16),
                   ),
+                  color: Colors.greenAccent,
+                  onPressed: () {
+                    //クタスの実体化、Todoをtodoに代入
+                    Timeline timelineNow = Timeline(
+                      id: timelineProvider.timelineList.length,
+                      content: text,
+                    );
+
+                    // 新しいtimelineをproviderに追加する
+                    timelineProvider.addTimeline(timelineNow);
+                    Navigator.of(context).pop();
+                  },
                 ),
               ),
             ),
@@ -93,11 +91,13 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
             //入力枠
             textfild(),
 
+            SizedBox(height: 30),
+
             //写真投稿枠
             Image.file(
               widget.image,
-              height: 150,
-              width: 150,
+              height: 200,
+              width: 200,
               fit: BoxFit.cover,
             ),
           ],
@@ -124,7 +124,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                 //textfild
                 SizedBox(
                   height: 50,
-                  //width: size.width * .7,
+                  width: size.width * .9,
                   child: ColoredBox(
                     color: Colors.white,
                     child: TextField(

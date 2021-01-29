@@ -110,22 +110,20 @@ class _TimeLineState extends State<TimeLine> {
                 //SizedBox(height: 15),
                 InkWell(
                   onTap: () async {
-                    // 点按从相册查找按钮后，获取相册照片
+                    // 点按”アルバムから選択”按钮后，获取相册照片
                     await getImage();
 
                     //　timelintInputにpush、image渡す
                     Timeline timelineNow = Timeline(
-                              id: timelineProvider.timelineList.length,
-                              content: text,
-                              
-                            );
+                      id: timelineProvider.timelineList.length,
+                      content: text,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => TimelineInputPage(
                           image: _image, //次のクラスに渡す
                           timelineNew: timelineNow,
-
                         ),
                       ),
                     );
@@ -135,6 +133,7 @@ class _TimeLineState extends State<TimeLine> {
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Divider(
@@ -143,9 +142,15 @@ class _TimeLineState extends State<TimeLine> {
                   ),
                 ),
                 //SizedBox(height: 15),
-                Text(
-                  '取り消し',
-                  style: TextStyle(fontSize: 16),
+
+                GestureDetector(
+                  child: Text(
+                    '取り消し',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
               ],
             ),
