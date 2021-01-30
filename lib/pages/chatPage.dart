@@ -13,8 +13,8 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   bool like = false;
-
   String text = '';
+  final formKey = GlobalKey<FormState>();
 
   void chatbox(String input) {
     text = input;
@@ -25,53 +25,62 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.grey[300],
-          title: Text(
-            'chatpage',
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Cursive',
-              fontSize: 30,
-            ),
+      appBar: AppBar(
+        backgroundColor: Colors.grey[300],
+        title: Text(
+          'chatpage',
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Cursive',
+            fontSize: 30,
           ),
-          toolbarHeight: 50,
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(4),
-              child: Icon(
-                Icons.double_arrow_rounded,
-                color: Colors.grey,
-              ),
-            ),
-          ],
         ),
-        body: Container(
-          child: Stack(
-            children: [
-              ListView.builder(
-                //physics: const AlwaysScrollableScrollPhysics(),
-                shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-                itemCount: chatProvider.chatList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return chat(
-                    chatProvider.chatList[index],
-                  );
-                },
-              ),
-              textfild(),
-            ],
+        toolbarHeight: 50,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
           ),
-        ),);
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Icon(
+              Icons.double_arrow_rounded,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  "image/背景.jpg",
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          ListView.builder(
+            //physics: const AlwaysScrollableScrollPhysics(),
+            shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+            itemCount: chatProvider.chatList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return chat(
+                chatProvider.chatList[index],
+              );
+            },
+          ),
+          textfild(),
+        ],
+      ),
+    );
   }
 
   Widget textfild() {
@@ -82,27 +91,30 @@ class _ChatPageState extends State<ChatPage> {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: SizedBox(
-          height: 60,
+          height: 100,
           width: size.width,
           child: ColoredBox(
             color: Colors.grey[200],
             child: Row(
               children: [
                 //textfild
-                SizedBox(
-                  height: 50,
-                  width: size.width * .7,
-                  child: ColoredBox(
-                    color: Colors.white,
-                    child: TextField(
-                      maxLines: 20,
-                      onChanged: (String text) {
-                        chatbox(text);
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Tell me your thinking',
-                        contentPadding: const EdgeInsets.all(10),
-                        border: InputBorder.none,
+                Form(
+                  key: formKey,
+                  child: SizedBox(
+                    height: 90,
+                    width: size.width * .7,
+                    child: ColoredBox(
+                      color: Colors.white,
+                      child: TextFormField(
+                        maxLines: 20,
+                        onChanged: (String text) {
+                          chatbox(text);
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Tell me your thinking',
+                          contentPadding: const EdgeInsets.all(10),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
@@ -111,13 +123,16 @@ class _ChatPageState extends State<ChatPage> {
                 //送信button
                 SizedBox(width: 10),
                 SizedBox(
-                  height: 35,
+                  height: 50,
                   width: size.width * .2,
                   child: RaisedButton(
                     color: Colors.green[300],
                     child: Text(
                       '送信',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                      ),
                     ),
 
                     //チャット追加
@@ -130,6 +145,12 @@ class _ChatPageState extends State<ChatPage> {
                         chatNow,
                       );
                       chatbox('');
+
+                      // 入力内容リセット
+                      formKey.currentState.reset();
+
+                      // フォームにフォーカスがある際に、解除する
+                      FocusScope.of(context).requestFocus(FocusNode());
 
                       //收起输入框
                       // Navigator.of(context).push(
@@ -167,7 +188,7 @@ class _ChatPageState extends State<ChatPage> {
                 child: Icon(
                   Icons.delete_outline_rounded,
                   color: Colors.grey,
-                  size: 23,
+                  size: 35,
                 ),
                 onTap: () {
                   deleteChat(chatNew.id);
@@ -184,6 +205,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                   child: SizedBox(
                     width: 180,
+                    //height: 50,
                     child: Padding(
                       padding: const EdgeInsets.all(7.0),
                       child: GestureDetector(
@@ -197,6 +219,7 @@ class _ChatPageState extends State<ChatPage> {
                           chatNew.content,
                           style: TextStyle(
                             color: Colors.black,
+                            fontSize: 20,
                           ),
                         ),
                       ),

@@ -25,6 +25,7 @@ class TimelineProvider with ChangeNotifier {
     int id,
     Timeline newTimeline,
     Image picture,
+    Color color,
   ) {
     final timelineIndex = timelineList.indexWhere(
       (timeline) => timeline.id == id,
