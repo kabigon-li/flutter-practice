@@ -42,38 +42,47 @@ class _TodoTadayState extends State<TodoTaday> {
         title: Center(
           child: Text(
             'To do',
-            style: TextStyle(
-              fontFamily: 'Cursive',
-              fontSize: 30
-              ),
-            
+            style: TextStyle(fontFamily: 'Cursive', fontSize: 30),
           ),
         ),
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ListView.builder(
-                  //physics: const AlwaysScrollableScrollPhysics(),
-                  shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-                  itemCount: todoProvider.todoList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return todo(
-                      // 1. Todo(id: 0, content: 'k', isChecked: 0)
-                      // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
-                      todoProvider
-                          .todoList[index], //调用todo这个方法时，这获取画面中更新的每行Todo
-                    );
-                  },
+      body: Stack(children: [
+        // Stackの中のやつ使える
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  "image/背景.jpg",
                 ),
-              ],
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      //physics: const AlwaysScrollableScrollPhysics(),
+                      shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+                      itemCount: todoProvider.todoList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return todo(
+                          // 1. Todo(id: 0, content: 'k', isChecked: 0)
+                          // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
+                          todoProvider
+                              .todoList[index], //调用todo这个方法时，这获取画面中更新的每行Todo
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
-      ),
+      ]),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlue[200],
         child: Icon(Icons.add_box_outlined),
@@ -92,12 +101,10 @@ class _TodoTadayState extends State<TodoTaday> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-
         //显示在屏幕上的每一条todo，由打沟框，todo内容，和删除按钮组成
         Card(
           color: Colors.grey[200],
           child: CheckboxListTile(
-
             //打勾框
             activeColor: Colors.blue,
             value: todoNew.isChecked == 0 ? false : true,

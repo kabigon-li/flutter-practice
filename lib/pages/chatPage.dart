@@ -112,6 +112,7 @@ class _ChatPageState extends State<ChatPage> {
                         },
                         decoration: InputDecoration(
                           hintText: 'Tell me your thinking',
+                          
                           contentPadding: const EdgeInsets.all(10),
                           border: InputBorder.none,
                         ),
@@ -204,7 +205,7 @@ class _ChatPageState extends State<ChatPage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: SizedBox(
-                    width: 180,
+                    width: 250,
                     //height: 50,
                     child: Padding(
                       padding: const EdgeInsets.all(7.0),
