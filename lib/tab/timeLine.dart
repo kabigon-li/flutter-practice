@@ -234,6 +234,7 @@ class _TimeLineState extends State<TimeLine> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5.0),
                   child: Image.file(
+                    
                     _image,
                     height: 250,
                     width: 250,
