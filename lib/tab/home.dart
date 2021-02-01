@@ -7,8 +7,10 @@ import 'package:wechat_like_memo/pages/chatPage.dart';
 class Home extends StatefulWidget {
   Home({
     this.image, //class受け取る
+    this.idtext,
   });
   final File image;
+  final String idtext;
 
   @override
   _HomeState createState() => _HomeState();
@@ -89,7 +91,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'ID name',
+                    widget.idtext != null
+                    ? widget.idtext
+                    : 'no ID',
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.grey[700],

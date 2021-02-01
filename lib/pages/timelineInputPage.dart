@@ -14,6 +14,7 @@ class TimelineInputPage extends StatefulWidget {
     this.timelineNew,
   });
 
+   
   final File image;
   final Timeline timelineNew;
 

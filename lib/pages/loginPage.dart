@@ -12,8 +12,20 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  File image;
   File _image;
+  Image imageIcon;
+  final picker = ImagePicker();
+
+  TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 空文字で初期化 - TextFormで使う
+    controller = TextEditingController();
+    controller.text = '';
+  }
 
   //头像拦
   iconImageField() {
@@ -24,11 +36,13 @@ class _LoginPageState extends State<LoginPage> {
 
         //只有在选择了照片时，向下一个页面移动
         if (_image != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Home(
-                image: _image, //次のクラスに渡す
+          ClipOval(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Image.file(
+                _image,
               ),
             ),
           );
@@ -41,11 +55,19 @@ class _LoginPageState extends State<LoginPage> {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
               ),
-              child: Icon(
-                Icons.add_a_photo_outlined,
-                color: Colors.black38,
-                size: 50,
-              ),
+              child: _image == null
+                  ? Icon(
+                      Icons.add_a_photo_outlined,
+                      color: Colors.black38,
+                      size: 50,
+                    )
+                  : ClipOval(
+                      child: Image.file(
+                        _image,
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
             ),
           ),
           Container(
@@ -65,19 +87,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  //ID栏
-  final idField = TextField(
-    obscureText: false,
-    //style: style,
-    decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: "ID name",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-  );
-
-  
-  final picker = ImagePicker();
-
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
@@ -90,24 +99,6 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {});
   }
 
-  //登陆按钮
-  final loginButon = Material(
-    elevation: 5.0,
-    borderRadius: BorderRadius.circular(30.0),
-    color: Color(0xff01A0C7),
-    child: MaterialButton(
-      // minWidth: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: () {},
-      child: Text(
-        "Login",
-        textAlign: TextAlign.center,
-        // style: style.copyWith(
-        //     color: Colors.white, fontWeight: FontWeight.bold
-      ),
-      //     ),
-    ),
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,22 +122,53 @@ class _LoginPageState extends State<LoginPage> {
                 //   ),
                 // ),
                 SizedBox(height: 25.0),
-
                 iconImageField(),
-
                 SizedBox(height: 45.0),
 
-                idField,
-
-                SizedBox(
-                  height: 35.0,
+                // ID name
+                TextFormField(
+                  // controllerは入力されたやつ
+                  controller: controller,
+                  obscureText: false,
+                  //style: style,
+                  decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      hintText: "ID name",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32.0))),
                 ),
+                SizedBox(height: 35.0),
 
-                loginButon,
-
-                SizedBox(
-                  height: 15.0,
+                // 登陆按钮
+                Material(
+                  elevation: 5.0,
+                  borderRadius: BorderRadius.circular(30.0),
+                  color: Color(0xff01A0C7),
+                  child: MaterialButton(
+                    // minWidth: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home(
+                            image: _image,
+                            idtext: controller.text,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Login",
+                      textAlign: TextAlign.center,
+                      // style: style.copyWith(
+                      //     color: Colors.white, fontWeight: FontWeight.bold
+                    ),
+                    //     ),
+                  ),
                 ),
+                SizedBox(height: 15.0),
               ],
             ),
           ),
