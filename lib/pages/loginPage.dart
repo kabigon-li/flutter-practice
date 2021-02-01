@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wechat_like_memo/tab/home.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -11,6 +12,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  File image;
+  File _image;
+
   //头像拦
   iconImageField() {
     return InkWell(
@@ -19,22 +23,21 @@ class _LoginPageState extends State<LoginPage> {
         await getImage();
 
         //只有在选择了照片时，向下一个页面移动
-        // if (_image != null) {
-        //   Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => TimelineInputPage(
-        //         image: _image, //次のクラスに渡す
-        //         timelineNew: timelineNow,
-        //       ),
-        //     ),
-        //   );
-        // }
+        if (_image != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Home(
+                image: _image, //次のクラスに渡す
+              ),
+            ),
+          );
+        }
       },
       child: Row(
         children: [
           ClipOval(
-                      child: Container(
+            child: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
               ),
@@ -72,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
   );
 
-  File _image;
+  
   final picker = ImagePicker();
 
   Future getImage() async {

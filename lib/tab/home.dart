@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
-import 'package:wechat_like_memo/tab/timeLine.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
 
 class Home extends StatefulWidget {
-  Home({Key key}) : super(key: key);
+  Home({
+    this.image, //class受け取る
+  });
+  final File image;
 
   @override
   _HomeState createState() => _HomeState();
@@ -68,16 +71,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             //用户头像，保存ID名称和头像图片之后显示
             Row(
               children: [
-                ClipOval(
-                  child: Image.asset(
-                    'image/kabigon.jpeg',
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                //当image不为空时，显示图片
+                widget.image != null
+                
+                    ? ClipOval(
+                        child: Image.file(
+                          widget.image,
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                 //image为空时显示空
+                    : Container(),
 
-              // 用户ID，保存ID名称和头像图片之后显示
+                // 用户ID，保存ID名称和头像图片之后显示
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -106,7 +114,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     builder: (context) => ChatPage(),
                   ),
                 );
-                
               },
               child: Text(
                 " Hello ! Click here to chat !",
