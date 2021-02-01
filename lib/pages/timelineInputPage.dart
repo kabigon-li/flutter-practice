@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/Utility/utility.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 
@@ -21,6 +23,8 @@ class TimelineInputPage extends StatefulWidget {
 
 class _TimelineInputPageState extends State<TimelineInputPage> {
   String text = '';
+  String fileName;
+  String imageString;
 
   void chatbox(String input) {
     text = input;
@@ -69,10 +73,15 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                   ),
                   color: Colors.greenAccent,
                   onPressed: () {
-                    //クタスの実体化、Todoをtodoに代入
+                    fileName = basename(widget.image.path);
+                    imageString =
+                        Utility.base64String(widget.image.readAsBytesSync());
+
+                    // //クタスの実体化、Todoをtodoに代入
                     Timeline timelineNow = Timeline(
                       id: timelineProvider.timelineList.length,
                       content: text,
+                      imagePath: imageString,
                     );
 
                     // 新しいtimelineをproviderに追加する
@@ -89,7 +98,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
         child: Column(
           children: [
             //入力枠
-            textfild(),
+            textfild(context),
 
             SizedBox(height: 30),
 
@@ -106,7 +115,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
     );
   }
 
-  Widget textfild() {
+  Widget textfild(BuildContext context) {
     final timelineProvider =
         Provider.of<TimelineProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;

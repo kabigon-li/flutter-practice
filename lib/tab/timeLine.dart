@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -123,6 +124,7 @@ class _TimeLineState extends State<TimeLine> {
                     Timeline timelineNow = Timeline(
                       id: timelineProvider.timelineList.length,
                       content: text,
+                      imagePath: _image.path,
                     );
 
                     // 切换画面后，下弹拦收起
@@ -238,8 +240,8 @@ class _TimeLineState extends State<TimeLine> {
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5.0),
-                  child: Image.file(
-                    _image,
+                  child: Image.memory(
+                    base64Decode(timelineNew.imagePath),
                     height: 250,
                     width: 250,
                     fit: BoxFit.cover,
