@@ -71,6 +71,7 @@ class _TimeLineState extends State<TimeLine> {
 
               // timeline
               ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true, // 高さ関連のエラーが出たら、使う
                 itemCount: timelineProvider.timelineList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -124,16 +125,21 @@ class _TimeLineState extends State<TimeLine> {
                       content: text,
                     );
 
+                    // 切换画面后，下弹拦收起
                     Navigator.of(context).pop();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TimelineInputPage(
-                          image: _image, //次のクラスに渡す
-                          timelineNew: timelineNow,
+
+                    // 只有在选择了照片时，向下一个页面移动
+                    if (_image != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TimelineInputPage(
+                            image: _image, //次のクラスに渡す
+                            timelineNew: timelineNow,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   },
                   child: Text(
                     'アルバムから選択',
@@ -226,7 +232,6 @@ class _TimeLineState extends State<TimeLine> {
               ),
             ),
 
-            //Image.file(_image),
             Align(
               alignment: Alignment.center,
               child: Padding(
@@ -234,7 +239,6 @@ class _TimeLineState extends State<TimeLine> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5.0),
                   child: Image.file(
-                    
                     _image,
                     height: 250,
                     width: 250,

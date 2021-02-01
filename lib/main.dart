@@ -23,6 +23,7 @@ void main() async {
         "CREATE TABLE todo(id INTEGER PRIMARY KEY, content TEXT, ischecked INTEGER)",
       );
     },
+
     // 更新する時、２になる、次の更新３になる、毎回増える
     version: 1,
   );
@@ -30,14 +31,14 @@ void main() async {
   // クラスの実体化、Todoをtodo1に代入
   final todo1 = Todo(
     id: 0,
-    content: 'kabigon',
+    content: 'todo1',
     isChecked: 0,
   );
 
   // クラスの実体化、Todoをtodo２に代入
   final todo2 = Todo(
     id: 1,
-    content: 'kabigon-2',
+    content: 'todo2',
     isChecked: 0,
   );
 
