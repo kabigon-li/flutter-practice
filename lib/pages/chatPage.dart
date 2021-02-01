@@ -132,7 +132,7 @@ class _ChatPageState extends State<ChatPage> {
                       '送信',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 20,
                       ),
                     ),
 

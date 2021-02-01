@@ -50,9 +50,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         title: Center(
           child: Text(
             'chat home',
-            
             style: TextStyle(
-              
               fontSize: 30,
               fontWeight: FontWeight.bold,
               fontFamily: 'Cursive',
@@ -66,15 +64,40 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(22.0),
-          child: Row(children: [
-            ClipOval(
-              child: Image.asset(
-                'image/kabigon.jpeg',
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-              ),
+          child: Column(children: [
+            //用户头像，保存ID名称和头像图片之后显示
+            Row(
+              children: [
+                ClipOval(
+                  child: Image.asset(
+                    'image/kabigon.jpeg',
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+              // 用户ID，保存ID名称和头像图片之后显示
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'ID name',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.grey[700],
+                      fontWeight: FontWeight.bold,
+                      //fontFamily: 'Cursive',
+                    ),
+                  ),
+                ),
+              ],
             ),
+
+            SizedBox(
+              height: 20,
+            ),
+
+            //点击之后进入聊天页面
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -83,15 +106,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     builder: (context) => ChatPage(),
                   ),
                 );
-                //Navigator.of(context).pushNamed('/chatpage');
+                
               },
               child: Text(
                 " Hello ! Click here to chat !",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 25,
                   color: Colors.grey[700],
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Cursive',
+                  //fontFamily: 'Cursive',
                 ),
               ),
             ),
