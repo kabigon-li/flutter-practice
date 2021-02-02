@@ -75,7 +75,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               children: [
                 //当image不为空时，显示图片
                 widget.image != null
-                
                     ? ClipOval(
                         child: Image.file(
                           widget.image,
@@ -84,29 +83,52 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           fit: BoxFit.cover,
                         ),
                       )
-                 //image为空时显示空
+                    //image为空时显示空
                     : Container(),
 
                 // 用户ID，保存ID名称和头像图片之后显示
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.idtext != null
-                    ? widget.idtext
-                    : 'no ID',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.grey[700],
-                      fontWeight: FontWeight.bold,
-                      //fontFamily: 'Cursive',
-                    ),
-                  ),
+                  child: widget.idtext != null
+                      ? Text(
+                          widget.idtext,
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.bold,
+                            //fontFamily: 'Cursive',
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            MaterialButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(),
+                                  ),
+                                );
+                              },
+                              child: Material(
+                                elevation: 5.0,
+                                borderRadius: BorderRadius.circular(30.0),
+                                //color: Color(0xff01A0C7),
+                                child: Icon(
+                                  Icons.account_circle,
+                                  size: 60,
+                                  color: Colors.grey[700],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                 ),
               ],
             ),
 
             SizedBox(
-              height: 20,
+              height: 40,
             ),
 
             //点击之后进入聊天页面
@@ -119,13 +141,33 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
                 );
               },
-              child: Text(
-                " Hello ! Click here to chat !",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.grey[700],
-                  fontWeight: FontWeight.bold,
-                  //fontFamily: 'Cursive',
+              
+              child: SizedBox(
+                height:150,
+                width: 300,
+
+                child: Material(
+                  
+                  elevation: 5.0,
+                    borderRadius: BorderRadius.circular(30.0),
+                    color: Colors.grey[200],
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                      '''Thank you for downloading!
+                      
+             Click here to chat!
+                      ''',
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.bold,
+                          //fontFamily: 'Cursive',
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
