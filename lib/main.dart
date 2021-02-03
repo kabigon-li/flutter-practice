@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
@@ -46,7 +47,7 @@ void main() async {
   insertTodo(database, todo1);
   insertTodo(database, todo2);
 
- //todoListはreturnしたやつを代入
+  //todoListはreturnしたやつを代入
   final todoList = await getTodo(database);
 
   // 使いたいProviderをここに書く
@@ -67,6 +68,9 @@ void main() async {
           create: (_) => TimelineProvider(
             timelineList: [],
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AppTheme(),
         ),
       ],
       child: MyApp(),
@@ -112,9 +116,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Wechat_like_memo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
+      theme: Provider.of<AppTheme>(context).buildTheme(),
       home: TabScreen(),
       onGenerateRoute: onGenerateRoute,
     );
