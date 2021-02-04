@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
+import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
 import 'package:wechat_like_memo/tab/tab.dart';
@@ -71,6 +72,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => AppTheme(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SeasonsMode(),
         ),
       ],
       child: MyApp(),

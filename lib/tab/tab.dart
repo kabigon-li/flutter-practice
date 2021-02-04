@@ -85,11 +85,11 @@ class _TabScreenState extends State<TabScreen> {
           ),
           BottomNavigationBarItem(
             icon: const Icon(
-              Icons.account_circle_rounded,
+              Icons.settings_applications,
               color: Colors.grey,
             ),
             activeIcon: Icon(
-              Icons.account_circle_rounded,
+              Icons.settings_applications,
               color: Colors.blue,
             ),
           ),
