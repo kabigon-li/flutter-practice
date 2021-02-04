@@ -13,6 +13,7 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
   bool _active = false;
+  int num;
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +57,8 @@ class _MyPageState extends State<MyPage> {
                 onChanged: (_) {
                   theme.changeMode();
                 },
-                activeColor: Colors.orange,
-                activeTrackColor: Colors.orange,
+                activeColor: Colors.blue,
+                activeTrackColor: Colors.blue,
                 inactiveThumbColor: Colors.grey,
                 inactiveTrackColor: Colors.grey,
                 secondary: new Icon(
@@ -68,45 +69,99 @@ class _MyPageState extends State<MyPage> {
                 title: Text('dark mode'),
               ),
 
-              // 背景設定
-              Stack(children: [
-                Container(
-                  decoration: season.isSpring
-                      ? BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              "image/sakura.jpg",
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : null,
-                  child: SwitchListTile(
-                    value: season.isSpring,
-                    onChanged: (_) {
-                      season.changeMode();
-                    },
-                    activeColor: Colors.orange,
-                    activeTrackColor: Colors.orange,
-                    inactiveThumbColor: Colors.grey,
-                    inactiveTrackColor: Colors.grey,
-                    secondary: ClipOval(
-                      child: Image.asset(
-                        'image/springmode.jpg',
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    title: Text('Spring mode'),
-                    subtitle: Text('sakura'),
-                  ),
-                ),
-              ]),
+              // spring背景設定
+              springMode(),
+
+              //summer 背景設定
+              summerMode(),
             ],
           ),
         ),
       ),
     );
+  }
+
+  springMode() {
+    final season = Provider.of<SeasonsMode>(context);
+
+    return Stack(children: [
+      Container(
+        decoration: season.selectedImageNumber == 0
+            ? BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    "image/spring.jpg",
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              )
+            : null,
+        child: SwitchListTile(
+          value: season.selectedImageNumber == 0 ? true : false,
+          // 押された後時更新する
+          onChanged: (_) {
+            if (season.selectedImageNumber == 0) {
+              season.updateSelectedImageNumber(100);
+              season.updateIsImageSelected(true);
+            } else {
+              season.updateSelectedImageNumber(0);
+              season.updateIsImageSelected(false);
+            }
+          },
+          activeColor: Colors.blue,
+          activeTrackColor: Colors.blue,
+          inactiveThumbColor: Colors.grey,
+          inactiveTrackColor: Colors.grey,
+          secondary: ClipOval(
+            child: Image.asset(
+              'image/springicon.jpg',
+              height: 50,
+              width: 50,
+              fit: BoxFit.cover,
+            ),
+          ),
+          title: Text('Spring mode'),
+          subtitle: Text('sakura'),
+        ),
+      ),
+    ]);
+  }
+
+  summerMode() {
+    final season = Provider.of<SeasonsMode>(context);
+    return Stack(children: [
+      Container(
+        decoration: season.selectedImageNumber == 1
+            ? BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    "image/summer.jpg",
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              )
+            : null,
+        child: SwitchListTile(
+          value: season.selectedImageNumber == 1 ? true : false,
+          onChanged: (_) {
+            season.updateSelectedImageNumber(1);
+          },
+          activeColor: Colors.blue,
+          activeTrackColor: Colors.blue,
+          inactiveThumbColor: Colors.grey,
+          inactiveTrackColor: Colors.grey,
+          secondary: ClipOval(
+            child: Image.asset(
+              'image/summericon.jpg',
+              height: 50,
+              width: 50,
+              fit: BoxFit.cover,
+            ),
+          ),
+          title: Text('Summer mode'),
+          subtitle: Text('sea'),
+        ),
+      ),
+    ]);
   }
 }

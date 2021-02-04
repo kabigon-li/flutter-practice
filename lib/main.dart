@@ -74,7 +74,10 @@ void main() async {
           create: (_) => AppTheme(),
         ),
         ChangeNotifierProvider(
-          create: (_) => SeasonsMode(),
+          create: (_) => SeasonsMode(
+            isImageSelected: false,
+            selectedImageNumber: 100,
+          ),
         ),
       ],
       child: MyApp(),

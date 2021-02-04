@@ -4,13 +4,23 @@ import 'package:flutter/material.dart';
 class SeasonsMode extends ChangeNotifier {
   // 初期化
   SeasonsMode({
-    this.isSpring = false,
+    this.isImageSelected = false,
+    this.selectedImageNumber = 0,
   });
 
-  bool isSpring;
+  // 画像選択されているかどうか判定
+  bool isImageSelected;
 
-  void changeMode() {
-    isSpring = !isSpring;
+  // 選択されている画像の番号
+  int selectedImageNumber;
+
+  void updateIsImageSelected(bool value) {
+    isImageSelected = !isImageSelected;
+    notifyListeners();
+  }
+
+  void updateSelectedImageNumber(int number) {
+    selectedImageNumber = number;
     notifyListeners();
   }
 }
