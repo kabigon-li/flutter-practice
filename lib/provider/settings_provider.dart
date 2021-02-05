@@ -15,7 +15,7 @@ class SeasonsMode extends ChangeNotifier {
   int selectedImageNumber;
 
   void updateIsImageSelected(bool value) {
-    isImageSelected = !isImageSelected;
+    isImageSelected = value;
     notifyListeners();
   }
 

@@ -34,6 +34,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final season = Provider.of<SeasonsMode>(context);
+    print(season.selectedImageNumber);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
