@@ -50,6 +50,7 @@ class _TabScreenState extends State<TabScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
+      
       tabBar: CupertinoTabBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -93,7 +94,10 @@ class _TabScreenState extends State<TabScreen> {
               color: Colors.blue,
             ),
           ),
+
+          
         ],
+        
         onTap: _onTapHandler,
         currentIndex: _selectedIndex,
         backgroundColor: Colors.white,
@@ -136,6 +140,8 @@ class _TabScreenState extends State<TabScreen> {
             }
         }
       },
+      
     );
+    
   }
 }

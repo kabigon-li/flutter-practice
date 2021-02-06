@@ -76,6 +76,8 @@ class _MyPageState extends State<MyPage> {
               summerMode(),
 
               autumnMode(),
+
+              winterMode(),
             ],
           ),
         ),
@@ -174,6 +176,7 @@ class _MyPageState extends State<MyPage> {
   }
 
   autumnMode() {
+
     final season = Provider.of<SeasonsMode>(context);
     return Stack(children: [
       Container(
@@ -188,7 +191,7 @@ class _MyPageState extends State<MyPage> {
               )
             : null,
         child: SwitchListTile(
-          value: season.selectedImageNumber == 1 ? true : false,
+          value: season.selectedImageNumber == 2 ? true : false,
           onChanged: (_) {
             if (season.selectedImageNumber == 2) {
               season.updateSelectedImageNumber(100);
@@ -216,5 +219,50 @@ class _MyPageState extends State<MyPage> {
       ),
     ]);
   }
+  
+  winterMode() {
+    final season = Provider.of<SeasonsMode>(context);
+    return Stack(children: [
+      Container(
+        decoration: season.selectedImageNumber == 3
+            ? BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    "image/winter.jpg",
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              )
+            : null,
+        child: SwitchListTile(
+          value: season.selectedImageNumber == 3 ? true : false,
+          onChanged: (_) {
+            if (season.selectedImageNumber == 3) {
+              season.updateSelectedImageNumber(100);
+              season.updateIsImageSelected(false);
+            } else {
+              season.updateSelectedImageNumber(3);
+              season.updateIsImageSelected(true);
+            }
+          },
+          activeColor: Colors.blue,
+          activeTrackColor: Colors.blue,
+          inactiveThumbColor: Colors.grey,
+          inactiveTrackColor: Colors.grey,
+          secondary: ClipOval(
+            child: Image.asset(
+              'image/wintericon.png',
+              height: 50,
+              width: 50,
+              fit: BoxFit.cover,
+            ),
+          ),
+          title: Text('Winter mode'),
+          subtitle: Text('snow'),
+        ),
+      ),
+    ]);
+  }
+
 }
 
