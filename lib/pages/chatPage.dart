@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/chat.dart';
 
 import 'package:wechat_like_memo/provider/chat_provider.dart';
+import 'package:wechat_like_memo/provider/settings_provider.dart';
 
 class ChatPage extends StatefulWidget {
   ChatPage({Key key}) : super(key: key);
@@ -23,6 +25,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final season = Provider.of<SeasonsMode>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -59,12 +62,19 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  "image/背景.jpg",
-                ),
-                fit: BoxFit.cover,
-              ),
+              image: season.isImageSelected
+                  ? DecorationImage(
+                      image: AssetImage(
+                        imageList[season.selectedImageNumber],
+                      ),
+                      fit: BoxFit.cover,
+                    )
+                  : DecorationImage(
+                      image: AssetImage(
+                        'image/chatpageimage.jpg',
+                      ),
+                      fit: BoxFit.cover,
+                    )
             ),
           ),
           ListView.builder(

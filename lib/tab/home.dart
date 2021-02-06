@@ -82,7 +82,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                       fit: BoxFit.cover,
                     )
-                  : null,
+                  : DecorationImage(
+                      image: AssetImage(
+                        'image/home.png',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
           Padding(

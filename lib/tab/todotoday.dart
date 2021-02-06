@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/todo.dart';
+import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
 
 class TodoTaday extends StatefulWidget {
@@ -30,6 +32,7 @@ class _TodoTadayState extends State<TodoTaday> {
 
   @override
   Widget build(BuildContext context) {
+    final season = Provider.of<SeasonsMode>(context);
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
@@ -50,13 +53,20 @@ class _TodoTadayState extends State<TodoTaday> {
         // Stackの中のやつ使える
         Positioned.fill(
           child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  "image/背景.jpg",
-                ),
-                fit: BoxFit.cover,
-              ),
+             decoration: BoxDecoration(
+              image: season.isImageSelected
+                  ? DecorationImage(
+                      image: AssetImage(
+                        imageList[season.selectedImageNumber],
+                      ),
+                      fit: BoxFit.cover,
+                    )
+                  : DecorationImage(
+                      image: AssetImage(
+                        'image/chatpageimage.jpg',
+                      ),
+                      fit: BoxFit.cover,
+                    )
             ),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
