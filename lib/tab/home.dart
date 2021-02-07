@@ -6,6 +6,7 @@ import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
+import 'package:wechat_like_memo/tab/todotoday.dart';
 
 class Home extends StatefulWidget {
   Home({
@@ -21,6 +22,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController _tabController;
+  final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
 
   @override
   void initState() {
@@ -36,27 +38,101 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     final season = Provider.of<SeasonsMode>(context);
     print(season.selectedImageNumber);
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.green[200],
+      // 左ドロアー
+      drawer: Drawer(
+        key: drawerKey,
+        child: ListView(
+          children: [
 
-        leading: GestureDetector(
+            // header
+            DrawerHeader(
+              child: Text('header'),
+              decoration: BoxDecoration(color: Colors.blue),
+            ),
+
+            // make an account
+            ListTile(
+              title: Text("Make an account"),
+              trailing: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                  );
+                  //Navigator.of(context).pushNamed('/chatpage');
+                },
+                child: Icon(
+                  Icons.account_circle,
+                  color: Colors.black,
+                  size: 30,
+                ),
+              ),
+            ),
+
+           // move to chatpage
+            ListTile(
+              title: Text("Move to chatpage"),
+              trailing: GestureDetector(
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => LoginPage(),
+                builder: (context) => ChatPage(),
               ),
             );
             //Navigator.of(context).pushNamed('/chatpage');
           },
           child: Icon(
-            Icons.account_circle,
+            Icons.chat,
             color: Colors.black,
-            size: 35,
+            size: 30,
           ),
         ),
+            ),
 
+            ListTile(
+              title: Text("Move to todopage"),
+              trailing: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TodoTaday(),
+              ),
+            );
+            //Navigator.of(context).pushNamed('/chatpage');
+          },
+          child: Icon(
+            Icons.today_outlined,
+            color: Colors.black,
+            size: 30,
+          ),
+        ),
+            ),
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.green[200],
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => LoginPage(),
+        //       ),
+        //     );
+        //     //Navigator.of(context).pushNamed('/chatpage');
+        //   },
+        //   child: Icon(
+        //     Icons.account_circle,
+        //     color: Colors.black,
+        //     size: 35,
+        //   ),
+        // ),
         title: Center(
           child: Text(
             'chat home',
