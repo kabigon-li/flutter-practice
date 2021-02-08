@@ -160,7 +160,7 @@ class _ChatPageState extends State<ChatPage> {
                       // 入力内容リセット
                       formKey.currentState.reset();
 
-                      // フォームにフォーカスがある際に、解除する
+                      // フォームにフォーカスがある際に、解除する(输入栏收回)
                       FocusScope.of(context).requestFocus(FocusNode());
 
                       //收起输入框

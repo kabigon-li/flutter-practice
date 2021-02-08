@@ -41,14 +41,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       // 左ドロアー
       drawer: Drawer(
         key: drawerKey,
-        child: ListView(
+        child: Column(
           children: [
+            ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                // header
 
-            // header
-            DrawerHeader(
-              child: Row(
-                children: [
-                  GestureDetector(
+                UserAccountsDrawerHeader(
+                  accountName: Text('ID name'),
+                  accountEmail: Text('emal.com'),
+                  currentAccountPicture: GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -69,77 +73,90 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         )
                       //image为空时显示空
                       : Icon(
-                  Icons.account_circle,
-                  color: Colors.black,
-                  size: 30,
-                ),
-                  ),
-                  Text('WechatMemo'),
-                ],
-              ),
-              decoration: BoxDecoration(color: Colors.blue),
-            ),
-
-            // make an account
-            ListTile(
-              title: Text("Make an account"),
-              trailing: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginPage(),
+                      Icons.account_circle,
+                      color: Colors.black,
+                      size: 30,
                     ),
-                  );
-                  //Navigator.of(context).pushNamed('/chatpage');
-                },
-                child: Icon(
-                  Icons.account_circle,
-                  color: Colors.black,
-                  size: 30,
+                  ),
+                  decoration: BoxDecoration(
+                    image: season.isImageSelected
+                        ? DecorationImage(
+                            image: AssetImage(
+                              imageList[season.selectedImageNumber],
+                            ),
+                            fit: BoxFit.cover,
+                          )
+                        : DecorationImage(
+                            image: AssetImage(
+                              'image/home.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                  ),
                 ),
-              ),
-            ),
 
-           // move to chatpage
-            ListTile(
-              title: Text("Move to chatpage"),
-              trailing: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChatPage(),
-              ),
-            );
-            //Navigator.of(context).pushNamed('/chatpage');
-          },
-          child: Icon(
-            Icons.chat,
-            color: Colors.black,
-            size: 30,
-          ),
-        ),
-            ),
+                // make an account
+                ListTile(
+                  title: Text("Make an account"),
+                  leading: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                      //Navigator.of(context).pushNamed('/chatpage');
+                    },
+                    child: Icon(
+                      Icons.account_circle,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                  ),
+                ),
 
-            ListTile(
-              title: Text("Move to todopage"),
-              trailing: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TodoTaday(),
-              ),
-            );
-            //Navigator.of(context).pushNamed('/chatpage');
-          },
-          child: Icon(
-            Icons.today_outlined,
-            color: Colors.black,
-            size: 30,
-          ),
-        ),
+                // move to chatpage
+                ListTile(
+                  title: Text("Move to chatpage"),
+                  leading: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatPage(),
+                        ),
+                      );
+                      //Navigator.of(context).pushNamed('/chatpage');
+                    },
+                    child: Icon(
+                      Icons.chat,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                  ),
+                ),
+
+                ListTile(
+                  title: Text("Move to todopage"),
+                  leading: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TodoTaday(),
+                        ),
+                      );
+                      //Navigator.of(context).pushNamed('/chatpage');
+                    },
+                    child: Icon(
+                      Icons.today_outlined,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -147,22 +164,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.green[200],
-        // leading: GestureDetector(
-        //   onTap: () {
-        //     Navigator.push(
-        //       context,
-        //       MaterialPageRoute(
-        //         builder: (context) => LoginPage(),
-        //       ),
-        //     );
-        //     //Navigator.of(context).pushNamed('/chatpage');
-        //   },
-        //   child: Icon(
-        //     Icons.account_circle,
-        //     color: Colors.black,
-        //     size: 35,
-        //   ),
-        // ),
+
         title: Center(
           child: Text(
             'chat home',

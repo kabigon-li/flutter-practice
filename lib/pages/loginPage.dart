@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
           color: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.all(36.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                 // ),
                 SizedBox(height: 25.0),
                 iconImageField(),
-                SizedBox(height: 45.0),
+                SizedBox(height: 25.0),
 
                 // ID name
                 TextFormField(
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0))),
                 ),
-                SizedBox(height: 35.0),
+                SizedBox(height: 25.0),
 
                 // 登陆按钮
                 Material(
