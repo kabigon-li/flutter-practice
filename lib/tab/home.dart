@@ -48,10 +48,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               physics: NeverScrollableScrollPhysics(),
               children: [
                 // header
-
                 UserAccountsDrawerHeader(
-                  accountName: Text('ID name'),
-                  accountEmail: Text('emal.com'),
+                  //icon图标，当每上传照片时为登陆图标，上传照片后显示图片
                   currentAccountPicture: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -63,35 +61,54 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       //Navigator.of(context).pushNamed('/chatpage');
                     },
                     child: widget.image != null
-                      ? ClipOval(
-                          child: Image.file(
-                            widget.image,
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.cover,
+                        ? ClipOval(
+                            child: Image.file(
+                              widget.image,
+                              height: 50,
+                              width: 50,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        //image为空时显示空
+                        : Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginPage(),
+                                    ),
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.account_circle,
+                                  size: 50,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+
+                  //ID name
+                  accountName: widget.idtext != null
+                      ? Text(
+                          widget.idtext,
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.bold,
+                            //fontFamily: 'Cursive',
                           ),
                         )
-                      //image为空时显示空
-                      : Icon(
-                      Icons.account_circle,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                  ),
+                      : Text(''),
+
+                  accountEmail: Text('@WetchatMemo.kabigon'),
+
+                  //背景
                   decoration: BoxDecoration(
-                    image: season.isImageSelected
-                        ? DecorationImage(
-                            image: AssetImage(
-                              imageList[season.selectedImageNumber],
-                            ),
-                            fit: BoxFit.cover,
-                          )
-                        : DecorationImage(
-                            image: AssetImage(
-                              'image/home.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
+                    color: Colors.blue[200],
                   ),
                 ),
 
@@ -182,6 +199,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: Stack(
         children: [
           Container(
+            //背景設定
             decoration: BoxDecoration(
               image: season.isImageSelected
                   ? DecorationImage(
