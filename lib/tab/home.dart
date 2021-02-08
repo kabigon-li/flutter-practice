@@ -46,7 +46,37 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
             // header
             DrawerHeader(
-              child: Text('header'),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                      //Navigator.of(context).pushNamed('/chatpage');
+                    },
+                    child: widget.image != null
+                      ? ClipOval(
+                          child: Image.file(
+                            widget.image,
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      //image为空时显示空
+                      : Icon(
+                  Icons.account_circle,
+                  color: Colors.black,
+                  size: 30,
+                ),
+                  ),
+                  Text('WechatMemo'),
+                ],
+              ),
               decoration: BoxDecoration(color: Colors.blue),
             ),
 
@@ -167,7 +197,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(22.0),
+            padding: const EdgeInsets.all(20),
             child: Column(children: [
               //用户头像，保存ID名称和头像图片之后显示
               Row(
