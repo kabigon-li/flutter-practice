@@ -35,6 +35,7 @@ class _TodoTadayState extends State<TodoTaday> {
     final season = Provider.of<SeasonsMode>(context);
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     return Scaffold(
+      
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.green[200],

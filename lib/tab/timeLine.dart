@@ -9,7 +9,13 @@ import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 
 class TimeLine extends StatefulWidget {
-  TimeLine({Key key}) : super(key: key);
+  //TimeLine({Key key}) : super(key: key);
+//   Timeline({
+//  this.image,
+//  this.idtext,
+//   });
+//   final File image;
+//   final String idtext;
 
   @override
   _TimeLineState createState() => _TimeLineState();
@@ -177,79 +183,85 @@ class _TimeLineState extends State<TimeLine> {
 
   Widget timeline(
     Timeline timelineNew,
+   
   ) {
     //final timelineProvider = Provider.of<TimelineProvider>(context);
 
-    return Container(
-      decoration: BoxDecoration(
-        //border: Border.all(color: Colors.grey[300]),
-        color: Colors.yellow[50],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                // ID icon
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image.file(
-                    _image,
-                    height: 50,
-                    width: 50,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey[300]),
+          //color: Colors.yellow[50],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  // ID icon
+                  //  widget._image != null
+                  //     ? ClipOval(
+                  //         child: Image.file(
+                  //           widget.image,
+                  //           height: 50,
+                  //           width: 50,
+                  //           fit: BoxFit.cover,
+                  //         ),
+                  //       )
+                  //     //image为空时显示空
+                  //     : Container(),
 
-                // ID name
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'ID count',
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.grey[700],
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Cursive',
+                  // ID name
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'ID count',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Cursive',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              // CopyInputPageText
+              Align(
+                alignment: Alignment.centerRight,
+                child: SizedBox(
+                  //height: 100,
+                  width: 300,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      timelineNew.content,
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
 
-            // CopyInputPageText
-            Align(
-              alignment: Alignment.centerRight,
-              child: SizedBox(
-                //height: 100,
-                width: 300,
+              Align(
+                alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    timelineNew.content,
-                    style: TextStyle(fontSize: 18),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5.0),
+                    child: Image.memory(
+                      base64Decode(timelineNew.imagePath),
+                      height: 250,
+                      width: 250,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
-
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Image.memory(
-                    base64Decode(timelineNew.imagePath),
-                    height: 250,
-                    width: 250,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

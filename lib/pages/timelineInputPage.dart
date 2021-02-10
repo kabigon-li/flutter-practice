@@ -106,8 +106,8 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
             //写真投稿枠
             Image.file(
               widget.image,
-              height: 200,
-              width: 200,
+              height: 100,
+              width: 100,
               fit: BoxFit.cover,
             ),
           ],
