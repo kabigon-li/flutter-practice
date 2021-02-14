@@ -9,13 +9,13 @@ import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 
 class TimeLine extends StatefulWidget {
-  //TimeLine({Key key}) : super(key: key);
-//   Timeline({
-//  this.image,
-//  this.idtext,
-//   });
-//   final File image;
-//   final String idtext;
+  
+   TimeLine({
+    this.image, //class受け取る
+    this.idtext,
+  });
+  final File image;
+  final String idtext;
 
   @override
   _TimeLineState createState() => _TimeLineState();
@@ -84,6 +84,8 @@ class _TimeLineState extends State<TimeLine> {
                 itemBuilder: (BuildContext context, int index) {
                   return timeline(
                     timelineProvider.timelineList[index],
+                    _image,
+                    widget.idtext,
                   );
                 },
               ),
@@ -183,7 +185,9 @@ class _TimeLineState extends State<TimeLine> {
 
   Widget timeline(
     Timeline timelineNew,
-   
+    File image,
+    String idtext,
+
   ) {
     //final timelineProvider = Provider.of<TimelineProvider>(context);
 
@@ -200,31 +204,33 @@ class _TimeLineState extends State<TimeLine> {
             children: [
               Row(
                 children: [
-                  // ID icon
-                  //  widget._image != null
-                  //     ? ClipOval(
-                  //         child: Image.file(
-                  //           widget.image,
-                  //           height: 50,
-                  //           width: 50,
-                  //           fit: BoxFit.cover,
-                  //         ),
-                  //       )
-                  //     //image为空时显示空
-                  //     : Container(),
+                  // ID icon  
+                   widget.image != null
+                      ? ClipOval(
+                          child: Image.file(
+                            widget.image,
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      //image为空时显示空
+                      : Container(),
 
                   // ID name
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      'ID count',
+                    child: widget.idtext != null
+                    ? Text(
+                      idtext,
                       style: TextStyle(
                         fontSize: 22,
                         color: Colors.grey[700],
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Cursive',
                       ),
-                    ),
+                    )
+                    : Text('No account!'),
                   ),
                 ],
               ),
