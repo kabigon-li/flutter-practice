@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/model/user.dart';
+import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/home.dart';
 
 class LoginPage extends StatefulWidget {
@@ -101,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('log in'),
@@ -149,6 +154,15 @@ class _LoginPageState extends State<LoginPage> {
                     // minWidth: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                     onPressed: () {
+                      // TODO: User追加 - addUser
+                      User usernow = User(
+                        id: userProvider.userList.length,
+                        userImage: _image.path,
+                        userName: controller.text,
+                      );
+                      userProvider.addUser(usernow);
+
+                      userProvider.updateIslogined(true);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -7,6 +7,7 @@ import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
+import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/tab.dart';
 
 import 'model/todo.dart';
@@ -77,6 +78,11 @@ void main() async {
           create: (_) => SeasonsMode(
             isImageSelected: false,
             selectedImageNumber: 100,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(
+            userList: [],
           ),
         ),
       ],

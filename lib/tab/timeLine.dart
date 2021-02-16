@@ -4,13 +4,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/Utility/utility.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
 import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
+import 'package:wechat_like_memo/provider/user_provider.dart';
 
 class TimeLine extends StatefulWidget {
-  
-   TimeLine({
+  TimeLine({
     this.image, //class受け取る
     this.idtext,
   });
@@ -103,6 +104,7 @@ class _TimeLineState extends State<TimeLine> {
       context: context,
       builder: (BuildContext context) {
         final timelineProvider = Provider.of<TimelineProvider>(context);
+        final userProvider = Provider.of<UserProvider>(context);
         return Container(
           color: Colors.white,
           child: SizedBox(
@@ -187,9 +189,8 @@ class _TimeLineState extends State<TimeLine> {
     Timeline timelineNew,
     File image,
     String idtext,
-
   ) {
-    //final timelineProvider = Provider.of<TimelineProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -204,11 +205,13 @@ class _TimeLineState extends State<TimeLine> {
             children: [
               Row(
                 children: [
-                  // ID icon  
-                   widget.image != null
+                  // ID icon
+                  userProvider.isLogined == true
                       ? ClipOval(
-                          child: Image.file(
-                            widget.image,
+                          child: Image.memory(
+                            base64Decode(
+                              userProvider.getFirstUser().userImage,
+                            ),
                             height: 50,
                             width: 50,
                             fit: BoxFit.cover,
@@ -221,16 +224,16 @@ class _TimeLineState extends State<TimeLine> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: widget.idtext != null
-                    ? Text(
-                      idtext,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.grey[700],
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Cursive',
-                      ),
-                    )
-                    : Text('No account!'),
+                        ? Text(
+                            idtext,
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.grey[700],
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Cursive',
+                            ),
+                          )
+                        : Text('No account!'),
                   ),
                 ],
               ),
