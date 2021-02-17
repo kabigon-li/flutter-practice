@@ -40,6 +40,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return Scaffold(
       // 左ドロアー
       drawer: Drawer(
+        
         key: drawerKey,
         child: Column(
           children: [
@@ -151,7 +152,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginPage(),
+                          builder: (context) => ChatPage(),
                         ),
                       );
                       //Navigator.of(context).pushNamed('/chatpage');
@@ -183,7 +184,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginPage(),
+                          builder: (context) => TodoTaday(
+                            isNavigateFromDrawer: true,
+                          ),
                         ),
                       );
                       //Navigator.of(context).pushNamed('/chatpage');

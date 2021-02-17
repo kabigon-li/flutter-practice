@@ -6,7 +6,13 @@ import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
 
 class TodoTaday extends StatefulWidget {
-  TodoTaday({Key key}) : super(key: key);
+  TodoTaday({
+    Key key,
+    this.isNavigateFromDrawer = false,
+  }) : super(key: key);
+
+ // 受け取りたい値
+  final bool isNavigateFromDrawer;
 
   @override
   _TodoTadayState createState() => _TodoTadayState();
@@ -35,14 +41,15 @@ class _TodoTadayState extends State<TodoTaday> {
     final season = Provider.of<SeasonsMode>(context);
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     return Scaffold(
-      
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.green[200],
-        leading: Icon(
+        leading: widget.isNavigateFromDrawer == false
+        ? Icon(
           Icons.account_circle,
           color: Colors.black,
-        ),
+        )
+        : Icon(Icons.arrow_back),
         title: Center(
           child: Text(
             'To do',
@@ -54,21 +61,20 @@ class _TodoTadayState extends State<TodoTaday> {
         // Stackの中のやつ使える
         Positioned.fill(
           child: Container(
-             decoration: BoxDecoration(
-              image: season.isImageSelected
-                  ? DecorationImage(
-                      image: AssetImage(
-                        imageList[season.selectedImageNumber],
-                      ),
-                      fit: BoxFit.cover,
-                    )
-                  : DecorationImage(
-                      image: AssetImage(
-                        'image/chatpageimage.jpg',
-                      ),
-                      fit: BoxFit.cover,
-                    )
-            ),
+            decoration: BoxDecoration(
+                image: season.isImageSelected
+                    ? DecorationImage(
+                        image: AssetImage(
+                          imageList[season.selectedImageNumber],
+                        ),
+                        fit: BoxFit.cover,
+                      )
+                    : DecorationImage(
+                        image: AssetImage(
+                          'image/chatpageimage.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                      )),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: SingleChildScrollView(
