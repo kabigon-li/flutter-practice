@@ -11,12 +11,7 @@ import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 
 class TimeLine extends StatefulWidget {
-  TimeLine({
-    this.image, //class受け取る
-    this.idtext,
-  });
-  final File image;
-  final String idtext;
+  const TimeLine();
 
   @override
   _TimeLineState createState() => _TimeLineState();
@@ -86,7 +81,6 @@ class _TimeLineState extends State<TimeLine> {
                   return timeline(
                     timelineProvider.timelineList[index],
                     _image,
-                    widget.idtext,
                   );
                 },
               ),
@@ -188,7 +182,6 @@ class _TimeLineState extends State<TimeLine> {
   Widget timeline(
     Timeline timelineNew,
     File image,
-    String idtext,
   ) {
     final userProvider = Provider.of<UserProvider>(context);
 
@@ -223,17 +216,15 @@ class _TimeLineState extends State<TimeLine> {
                   // ID name
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: widget.idtext != null
-                        ? Text(
-                            idtext,
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Colors.grey[700],
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Cursive',
-                            ),
-                          )
-                        : Text('No account!'),
+                    child: Text(
+                      userProvider.getFirstUser().userName,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Cursive',
+                      ),
+                    ),
                   ),
                 ],
               ),

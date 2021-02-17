@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/Utility/utility.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/home.dart';
@@ -139,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      hintText: "ID name",
+                      hintText: "User name",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0))),
                 ),
@@ -154,12 +156,24 @@ class _LoginPageState extends State<LoginPage> {
                     // minWidth: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                     onPressed: () {
+                      var fileName;
+                      String imgString;
+
+                      fileName = basename(_image.path); 
+
+                      // 画像を文字に変換する
+                      // provider、データベースに画像保存する時、base64Stringに変換する
+                      imgString =
+                          Utility.base64String(_image.readAsBytesSync());
+
                       // TODO: User追加 - addUser
                       User usernow = User(
                         id: userProvider.userList.length,
-                        userImage: _image.path,
+                        userImage: imgString,
                         userName: controller.text,
                       );
+
+                      
                       userProvider.addUser(usernow);
 
                       userProvider.updateIslogined(true);

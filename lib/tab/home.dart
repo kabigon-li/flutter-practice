@@ -114,7 +114,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
                 // make an account
                 ListTile(
-                  title: Text("Make an account"),
+                  title: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                      //Navigator.of(context).pushNamed('/chatpage');
+                    },
+                    child: Text('Make an account'),
+                  ),
                   leading: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -135,7 +146,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
                 // move to chatpage
                 ListTile(
-                  title: Text("Move to chatpage"),
+                  title: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                      //Navigator.of(context).pushNamed('/chatpage');
+                    },
+                    child: Text('Move to chatpage'),
+                  ),
                   leading: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -154,8 +176,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
                 ),
 
+                //move to todopage
                 ListTile(
-                  title: Text("Move to todopage"),
+                  title: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                      //Navigator.of(context).pushNamed('/chatpage');
+                    },
+                    child: Text('Move to todopage'),
+                  ),
                   leading: GestureDetector(
                     onTap: () {
                       Navigator.push(
