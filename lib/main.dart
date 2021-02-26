@@ -23,6 +23,7 @@ void main() async {
     // 初期定義を行う（初期化）
     onCreate: (db, version) {
       return db.execute(
+        //tableの中身
         "CREATE TABLE todo(id INTEGER PRIMARY KEY, content TEXT, ischecked INTEGER)",
       );
     },
@@ -45,11 +46,11 @@ void main() async {
     isChecked: 0,
   );
 
-  // データベースに追加
+  // データベースに追加(creat)
   insertTodo(database, todo1);
   insertTodo(database, todo2);
 
-  //todoListはreturnしたやつを代入
+  //todoListはreturnしたやつを代入(read)
   final todoList = await getTodo(database);
 
   // 使いたいProviderをここに書く
@@ -57,6 +58,7 @@ void main() async {
     (MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          // todoproviderはデータベースから持ってきたtodoを管理してる
           create: (_) => TodoProvider(
             todoList: todoList,
           ),
@@ -91,20 +93,21 @@ void main() async {
   );
 }
 
-//todoを追加する
+//todoを追加する(create)
 Future<void> insertTodo(
   Future<Database> database,
   Todo todo,
 ) async {
   final Database db = await database;
   await db.insert(
+    // tableの名前
     'todo',
     todo.toMap(),
     conflictAlgorithm: ConflictAlgorithm.replace,
   );
 }
 
-//todoを取得する
+//todoを取得する(read)
 // getTodoのreturnしたデータ型はlist<Todo>
 Future<List<Todo>> getTodo(
   Future<Database> database,
