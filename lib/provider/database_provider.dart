@@ -14,10 +14,10 @@ class DataBaseProvider with ChangeNotifier {
   }
 
 //todoを追加する(create)
-  Future<void> insertTodo(
+  Future<void> insertTodo({
     Future<Database> database,
     Todo todo,
-  ) async {
+  }) async {
     final Database db = await database;
     await db.insert(
       // tableの名前

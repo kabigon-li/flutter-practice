@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
+import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
@@ -31,24 +32,6 @@ void main() async {
     // 更新する時、２になる、次の更新３になる、毎回増える
     version: 1,
   );
-
-  // クラスの実体化、Todoをtodo1に代入
-  final todo1 = Todo(
-    id: 0,
-    content: 'todo1',
-    isChecked: 0,
-  );
-
-  // クラスの実体化、Todoをtodo２に代入
-  final todo2 = Todo(
-    id: 1,
-    content: 'todo2',
-    isChecked: 0,
-  );
-
-  // データベースに追加(creat)
-  insertTodo(database, todo1);
-  insertTodo(database, todo2);
 
   //todoListはreturnしたやつを代入(read)
   final todoList = await getTodo(database);
@@ -83,10 +66,11 @@ void main() async {
           ),
         ),
         ChangeNotifierProvider(
-          create: (_) => UserProvider(
-            userList: [],
+          create: (_) => DataBaseProvider(
+            database: database,
           ),
         ),
+        
       ],
       child: MyApp(),
     )),

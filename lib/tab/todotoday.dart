@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/todo.dart';
+import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
 
@@ -11,7 +12,7 @@ class TodoTaday extends StatefulWidget {
     this.isNavigateFromDrawer = false,
   }) : super(key: key);
 
- // 受け取りたい値
+  // 受け取りたい値
   final bool isNavigateFromDrawer;
 
   @override
@@ -45,11 +46,11 @@ class _TodoTadayState extends State<TodoTaday> {
         centerTitle: true,
         backgroundColor: Colors.green[200],
         leading: widget.isNavigateFromDrawer == false
-        ? Icon(
-          Icons.account_circle,
-          color: Colors.black,
-        )
-        : Icon(Icons.arrow_back),
+            ? Icon(
+                Icons.account_circle,
+                color: Colors.black,
+              )
+            : Icon(Icons.arrow_back),
         title: Center(
           child: Text(
             'To do',
@@ -276,7 +277,12 @@ class _TodoTadayState extends State<TodoTaday> {
   void openModalBottomSheet() {
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
-    final size = MediaQuery.of(context).size;
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
+    
+    //　databaseの実体化
+    final databaseInstance = databaseProvider.getDatabaseInfo();
+    
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -327,6 +333,14 @@ class _TodoTadayState extends State<TodoTaday> {
                               isChecked: 0,
                             );
                             todoProvider.addTodo(todoNow);
+
+                            //databaseに追加
+                            databaseProvider.insertTodo(
+                              // datebase and todo渡す
+                              database: databaseInstance,
+                              todo: todoNow,
+                            );
+
                             Navigator.of(context).pop();
                           },
                         ),
