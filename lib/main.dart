@@ -24,7 +24,7 @@ void main() async {
     // 初期定義を行う（初期化）
     onCreate: (db, version) {
       return db.execute(
-        //tableの中身
+        //tableの中身、todoはテーブルの名前
         "CREATE TABLE todo(id INTEGER PRIMARY KEY, content TEXT, ischecked INTEGER)",
       );
     },
@@ -70,24 +70,9 @@ void main() async {
             database: database,
           ),
         ),
-        
       ],
       child: MyApp(),
     )),
-  );
-}
-
-//todoを追加する(create)
-Future<void> insertTodo(
-  Future<Database> database,
-  Todo todo,
-) async {
-  final Database db = await database;
-  await db.insert(
-    // tableの名前
-    'todo',
-    todo.toMap(),
-    conflictAlgorithm: ConflictAlgorithm.replace,
   );
 }
 
@@ -96,9 +81,13 @@ Future<void> insertTodo(
 Future<List<Todo>> getTodo(
   Future<Database> database,
 ) async {
+  //　database 本体をdbに代入
   final Database db = await database;
 
+  // databaseからtodoの全部アプリに持ってくる
   final List<Map<String, dynamic>> maps = await db.query('todo');
+  
+  //Map<String, dynamic>からTodo型に変換
   return List.generate(maps.length, (i) {
     return Todo(
       id: maps[i]['id'],

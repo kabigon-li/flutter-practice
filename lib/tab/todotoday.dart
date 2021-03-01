@@ -116,6 +116,7 @@ class _TodoTadayState extends State<TodoTaday> {
     Todo todoNew, //这接收新一个Todo
   ) {
     final todoProvider = Provider.of<TodoProvider>(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -196,10 +197,14 @@ class _TodoTadayState extends State<TodoTaday> {
   void deleteTodoSheet(int index) {
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    //　databaseの実体化
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
     todoProvider.deleteTodo(
       //1, 渡す 0
       index,
     );
+    databaseProvider.deleteTodo(index);
   }
 
 //updateBottom接收
@@ -279,10 +284,10 @@ class _TodoTadayState extends State<TodoTaday> {
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     final databaseProvider =
         Provider.of<DataBaseProvider>(context, listen: false);
-    
+
     //　databaseの実体化
     final databaseInstance = databaseProvider.getDatabaseInfo();
-    
+
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {

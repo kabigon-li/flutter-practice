@@ -43,4 +43,19 @@ class DataBaseProvider with ChangeNotifier {
       );
     });
   }
+
+  // delete chat room
+  Future<void> deleteTodo(int id) async {
+    // Get a reference to the database.
+    final db = await database;
+
+    // Remove the Dog from the Database.
+    await db.delete(
+      'todo',
+      // Use a `where` clause to delete a specific dog.
+      where: "id = ?",
+      // Pass the Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [id],
+    );
+  }
 }
