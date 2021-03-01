@@ -116,7 +116,7 @@ class _TodoTadayState extends State<TodoTaday> {
     Todo todoNew, //这接收新一个Todo
   ) {
     final todoProvider = Provider.of<TodoProvider>(context);
-
+    final databaseProvider = Provider.of<DataBaseProvider>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -141,6 +141,10 @@ class _TodoTadayState extends State<TodoTaday> {
                 todoProvider.updateTodo(
                   //1, 渡す 0
                   todoNew.id,
+                  newTodo,
+                );
+
+                databaseProvider.updateTodo(
                   newTodo,
                 );
               });
@@ -285,9 +289,6 @@ class _TodoTadayState extends State<TodoTaday> {
     final databaseProvider =
         Provider.of<DataBaseProvider>(context, listen: false);
 
-    //　databaseの実体化
-    final databaseInstance = databaseProvider.getDatabaseInfo();
-
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -342,7 +343,6 @@ class _TodoTadayState extends State<TodoTaday> {
                             //databaseに追加
                             databaseProvider.insertTodo(
                               // datebase and todo渡す
-                              database: databaseInstance,
                               todo: todoNow,
                             );
 

@@ -15,7 +15,6 @@ class DataBaseProvider with ChangeNotifier {
 
 //todoを追加する(create)
   Future<void> insertTodo({
-    Future<Database> database,
     Todo todo,
   }) async {
     final Database db = await database;
@@ -29,9 +28,7 @@ class DataBaseProvider with ChangeNotifier {
 
 //todoを取得する(read)
 // getTodoのreturnしたデータ型はlist<Todo>
-  Future<List<Todo>> getTodo(
-    Future<Database> database,
-  ) async {
+  Future<List<Todo>> getTodo() async {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query('todo');
@@ -56,6 +53,20 @@ class DataBaseProvider with ChangeNotifier {
       where: "id = ?",
       // Pass the Dog's id as a whereArg to prevent SQL injection.
       whereArgs: [id],
+    );
+  }
+
+  Future<void> updateTodo(
+    Todo todo,
+  ) async {
+    final Database db = await database;
+    await db.update(
+      'todo',
+      todo.toMap(),
+      // Ensure that the Dog has a matching id.
+      where: "id = ?",
+      // Pass the Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [todo.id],
     );
   }
 }
