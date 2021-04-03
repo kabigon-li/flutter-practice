@@ -67,7 +67,7 @@ class _TodoTadayState extends State<TodoTaday> {
                     ? DecorationImage(
                         image: AssetImage(
                           imageList[season.selectedImageNumber],
-                        ),
+                        ),  
                         fit: BoxFit.cover,
                       )
                     : DecorationImage(

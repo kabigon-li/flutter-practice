@@ -54,16 +54,17 @@ class _TimeLineState extends State<TimeLine> {
         child: Container(
           child: Column(
             children: [
-              // 追加icon
+
+              // 发朋友圈按钮
               Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
                   child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Icon(
                       Icons.add_a_photo,
                       color: Colors.grey,
-                      size: 33,
+                      size: 45,
                     ),
                   ),
                   onTap: () {
@@ -93,12 +94,13 @@ class _TimeLineState extends State<TimeLine> {
     );
   }
 
+  // 上弹窗口
   showPictureUpdateSheet() {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         final timelineProvider = Provider.of<TimelineProvider>(context);
-        final userProvider = Provider.of<UserProvider>(context);
+       
         return Container(
           color: Colors.white,
           child: SizedBox(
@@ -147,7 +149,7 @@ class _TimeLineState extends State<TimeLine> {
                       );
                     }
                   },
-                  child: Text(
+                 child: Text(
                     'アルバムから選択',
                     style: TextStyle(fontSize: 16),
                   ),

@@ -70,6 +70,12 @@ void main() async {
             database: database,
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(
+            isLogined: false,
+            userList: [],
+          ),
+        ),
       ],
       child: MyApp(),
     )),
