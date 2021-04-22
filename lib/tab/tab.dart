@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:wechat_like_memo/pages/calender.dart';
 import 'package:wechat_like_memo/tab/todotoday.dart';
 import 'package:wechat_like_memo/tab/home.dart';
 import 'package:wechat_like_memo/tab/mypage.dart';
@@ -15,6 +16,8 @@ class NavigationHolder {
   static GlobalKey<NavigatorState> chatRoomNavigatorKey =
       GlobalKey<NavigatorState>();
   static GlobalKey<NavigatorState> settingsNavigatorKey =
+      GlobalKey<NavigatorState>();
+ static GlobalKey<NavigatorState> calenderNavigatorKey =
       GlobalKey<NavigatorState>();
 }
 
@@ -92,6 +95,16 @@ class _TabScreenState extends State<TabScreen> {
               color: Colors.blue,
             ),
           ),
+          BottomNavigationBarItem(
+            icon: const Icon(
+              Icons.calendar_today,
+              color: Colors.grey,
+            ),
+            activeIcon: Icon(
+              Icons.calendar_today,
+              color: Colors.blue,
+            ),
+          ),
         ],
         onTap: _onTapHandler,
         currentIndex: _selectedIndex,
@@ -123,6 +136,12 @@ class _TabScreenState extends State<TabScreen> {
             return CupertinoTabView(
               builder: (context) {
                 return MyPage();
+              },
+            );
+          case 4:
+            return CupertinoTabView(
+              builder: (context) {
+                return Calender();
               },
             );
           default:
