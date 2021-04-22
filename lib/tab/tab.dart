@@ -87,24 +87,25 @@ class _TabScreenState extends State<TabScreen> {
           ),
           BottomNavigationBarItem(
             icon: const Icon(
-              Icons.settings_applications,
+              Icons.calendar_today,
               color: Colors.grey,
             ),
             activeIcon: Icon(
-              Icons.settings_applications,
+              Icons.calendar_today,
               color: Colors.blue,
             ),
           ),
           BottomNavigationBarItem(
             icon: const Icon(
-              Icons.calendar_today,
+              Icons.settings_applications,
               color: Colors.grey,
             ),
             activeIcon: Icon(
-              Icons.calendar_today,
+              Icons.settings_applications,
               color: Colors.blue,
             ),
           ),
+          
         ],
         onTap: _onTapHandler,
         currentIndex: _selectedIndex,
@@ -133,15 +134,17 @@ class _TabScreenState extends State<TabScreen> {
               },
             );
           case 3:
-            return CupertinoTabView(
+            return 
+            CupertinoTabView(
               builder: (context) {
-                return MyPage();
+                return Calender();
               },
+              
             );
           case 4:
             return CupertinoTabView(
               builder: (context) {
-                return Calender();
+                return MyPage();
               },
             );
           default:
