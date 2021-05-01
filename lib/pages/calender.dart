@@ -31,16 +31,14 @@ class _CalenderState extends State<Calender> {
       ),
       body: SingleChildScrollView(
         child: Container(
-         
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'image/chatpageimage.jpg',
-                    
-                  ),
-                   fit: BoxFit.cover,
-                ),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                'image/spring.jpg',
               ),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Column(
             children: [
               CalendarCarousel<Event>(
@@ -65,13 +63,7 @@ class _CalenderState extends State<Calender> {
                 markedDateMoreShowTotal: false,
               ),
               Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'image/chatpageimage.jpg',
-                    ),
-                  ),
-                ),
+               
                 child: ListView.builder(
                   //physics: const AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true, // 高さ関連のエラーが出たら、使う
@@ -80,7 +72,8 @@ class _CalenderState extends State<Calender> {
                     return todo(
                       // 1. Todo(id: 0, content: 'k', isChecked: 0)
                       // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
-                      todoProvider.todoList[index], //调用todo这个方法时，这获取画面中更新的每行Todo
+                      todoProvider
+                          .todoList[index], //调用todo这个方法时，这获取画面中更新的每行Todo
                     );
                   },
                 ),
@@ -110,14 +103,25 @@ class _CalenderState extends State<Calender> {
               todoNew.isChecked, //获取第一行的是否勾选
             );
           },
-          child: Text(
-            todoNew.content,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              // decoration: todoNew.isChecked == 0
-              //     ? null
-              //     : TextDecoration.lineThrough,
+          child: Container(
+             decoration: BoxDecoration(
+               color: Colors.grey[100],
+          ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  todoNew.content,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    // decoration: todoNew.isChecked == 0
+                    //     ? null
+                    //     : TextDecoration.lineThrough,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
