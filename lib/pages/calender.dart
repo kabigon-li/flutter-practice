@@ -102,67 +102,22 @@ class _CalenderState extends State<Calender> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         //显示在屏幕上的每一条todo，由打沟框，todo内容，和删除按钮组成
-        Card(
-          color: Colors.grey[200],
-          child: CheckboxListTile(
-            //打勾框
-            activeColor: Colors.blue,
-            value: todoNew.isChecked == 0 ? false : true,
-            onChanged: (v) {
-              //クタスの実体化、Todoをtodoに代入
-              setState(() {
-                // checkboxl押された時,下実行する
-                Todo newTodo = Todo(
-                  //Todoの実体化（クラスのインスタンス）
-                  //受け取るやつ次第
-                  id: todoNew.id, //受け取るのTodoのid
-                  content: todoNew.content, //受け取るTodoの内容
-                  isChecked: todoNew.isChecked == 0 ? 1 : 0, //もし０、１になる、もし１、０になる
-                );
-                todoProvider.updateTodo(
-                  //1, 渡す 0
-                  todoNew.id,
-                  newTodo,
-                );
-
-                databaseProvider.updateTodo(
-                  newTodo,
-                );
-              });
-            },
-
-            //todo内容部分
-            title: SizedBox(
-              //height: 20,
-              //クリック編集
-              child: GestureDetector(
-                onTap: () {
-                  updateBottomSheet(
-                    //例えば、カビゴン書いたら、ここに渡す
-                    todoNew.id, //获取第一行的id，0
-                    todoNew.isChecked, //获取第一行的是否勾选
-                  );
-                },
-                child: Text(
-                  todoNew.content,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    decoration: todoNew.isChecked == 0
-                        ? null
-                        : TextDecoration.lineThrough,
-                  ),
-                ),
-              ),
-            ),
-
-            //删除按钮
-            secondary: GestureDetector(
-              child: Icon(Icons.delete),
-              onTap: () {
-                //todoNew.id
-                deleteTodoSheet(todoNew.id);
-              },
+        GestureDetector(
+          onTap: () {
+            updateBottomSheet(
+              //例えば、カビゴン書いたら、ここに渡す
+              todoNew.id, //获取第一行的id，0
+              todoNew.isChecked, //获取第一行的是否勾选
+            );
+          },
+          child: Text(
+            todoNew.content,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              // decoration: todoNew.isChecked == 0
+              //     ? null
+              //     : TextDecoration.lineThrough,
             ),
           ),
         ),
