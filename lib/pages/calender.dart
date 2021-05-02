@@ -32,13 +32,13 @@ class _CalenderState extends State<Calender> {
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                'image/spring.jpg',
+              // image: DecorationImage(
+              //   image: AssetImage(
+              //     'image/spring.jpg',
+              //   ),
+              //   fit: BoxFit.cover,
+              // ),
               ),
-              fit: BoxFit.cover,
-            ),
-          ),
           child: Column(
             children: [
               CalendarCarousel<Event>(
@@ -63,7 +63,7 @@ class _CalenderState extends State<Calender> {
                 markedDateMoreShowTotal: false,
               ),
               Container(
-               
+                
                 child: ListView.builder(
                   //physics: const AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true, // 高さ関連のエラーが出たら、使う
@@ -91,50 +91,57 @@ class _CalenderState extends State<Calender> {
   ) {
     final todoProvider = Provider.of<TodoProvider>(context);
     final databaseProvider = Provider.of<DataBaseProvider>(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        //显示在屏幕上的每一条todo，由打沟框，todo内容，和删除按钮组成
-        GestureDetector(
-          onTap: () {
-            updateBottomSheet(
-              //例えば、カビゴン書いたら、ここに渡す
-              todoNew.id, //获取第一行的id，0
-              todoNew.isChecked, //获取第一行的是否勾选
-            );
-          },
-          child: Container(
-             decoration: BoxDecoration(
-               color: Colors.grey[100],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'image/note.jpeg',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          //显示在屏幕上的每一条todo，由打沟框，todo内容，和删除按钮组成
+          GestureDetector(
+            onTap: () {
+              updateBottomSheet(
+                //例えば、カビゴン書いたら、ここに渡す
+                todoNew.id, //获取第一行的id，0
+                todoNew.isChecked, //获取第一行的是否勾选
+              );
+            },
             child: Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  todoNew.content,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    // decoration: todoNew.isChecked == 0
-                    //     ? null
-                    //     : TextDecoration.lineThrough,
+                child: Container(
+                  child: Text(
+                    todoNew.content,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      // decoration: todoNew.isChecked == 0
+                      //     ? null
+                      //     : TextDecoration.lineThrough,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
 
-        //分割线
-        const Divider(
-          height: 2,
-          thickness: 1,
-          color: Colors.grey,
-          indent: 10,
-          // endIndent: 20,
-        ),
-      ],
+          //分割线
+          const Divider(
+            height: 2,
+            thickness: 1,
+            color: Colors.grey,
+            indent: 10,
+            endIndent: 20,
+          ),
+        ],
+      ),
     );
   }
 
