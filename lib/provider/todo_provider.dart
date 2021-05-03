@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/model/todo.dart';
 
 class TodoProvider with ChangeNotifier {

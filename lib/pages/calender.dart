@@ -98,17 +98,7 @@ class _CalenderState extends State<Calender> {
     // Todo(id: 0, content: 'k', isChecked: 0)
     Todo todoNew, //这接收新一个Todo
   ) {
-    final todoProvider = Provider.of<TodoProvider>(context);
-    final databaseProvider = Provider.of<DataBaseProvider>(context);
     return Container(
-      // decoration: BoxDecoration(
-      //             image: DecorationImage(
-      //               image: AssetImage(
-      //                 'image/backnote.png',
-      //               ),
-      //               fit: BoxFit.cover,
-      //             ),
-      //           ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -210,9 +200,11 @@ class _CalenderState extends State<Calender> {
                     SizedBox(
                       height: 30,
                       width: 60,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         child: Text('編集'),
-                        color: Colors.blueGrey,
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey,
+                        ),
                         onPressed: () {
                           //クタスの実体化、Todoをtodoに代入
                           Todo newTodo = Todo(

@@ -62,20 +62,19 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Container(
             decoration: BoxDecoration(
-              image: season.isImageSelected
-                  ? DecorationImage(
-                      image: AssetImage(
-                        imageList[season.selectedImageNumber],
-                      ),
-                      fit: BoxFit.cover,
-                    )
-                  : DecorationImage(
-                      image: AssetImage(
-                        'image/chatpageimage.jpg',
-                      ),
-                      fit: BoxFit.cover,
-                    )
-            ),
+                image: season.isImageSelected
+                    ? DecorationImage(
+                        image: AssetImage(
+                          imageList[season.selectedImageNumber],
+                        ),
+                        fit: BoxFit.cover,
+                      )
+                    : DecorationImage(
+                        image: AssetImage(
+                          'image/chatpageimage.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                      )),
           ),
           ListView.builder(
             //physics: const AlwaysScrollableScrollPhysics(),
@@ -122,7 +121,6 @@ class _ChatPageState extends State<ChatPage> {
                         },
                         decoration: InputDecoration(
                           hintText: 'Tell me your thinking',
-                          
                           contentPadding: const EdgeInsets.all(10),
                           border: InputBorder.none,
                         ),
@@ -136,14 +134,12 @@ class _ChatPageState extends State<ChatPage> {
                 SizedBox(
                   height: 50,
                   width: size.width * .2,
-                  child: RaisedButton(
-                    color: Colors.green[300],
+                  child: ElevatedButton(
                     child: Text(
                       '送信',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green[300],
                     ),
 
                     //チャット追加
@@ -288,9 +284,11 @@ class _ChatPageState extends State<ChatPage> {
                     SizedBox(
                       height: 30,
                       width: 60,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         child: Text('編集'),
-                        color: Colors.blueGrey,
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey,
+                        ),
                         onPressed: () {
                           //クタスの実体化、Todoをtodoに代入
                           Chat newChat = Chat(

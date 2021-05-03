@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/Utility/utility.dart';
@@ -67,12 +67,14 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
               height: 30,
               width: 70,
               child: Center(
-                child: RaisedButton(
+                child: ElevatedButton(
                   child: Text(
                     '発表',
-                    style: TextStyle(fontSize: 16),
+                    
                   ),
-                  color: Colors.greenAccent,
+                  style: ElevatedButton.styleFrom(
+                          primary: Colors.greenAccent,
+                        ),
                   onPressed: () {
                     fileName = basename(widget.image.path);
                     imageString =

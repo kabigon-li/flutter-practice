@@ -7,7 +7,6 @@ import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/tab/todotoday.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class Home extends StatefulWidget {
   // クラスの初期化

@@ -67,7 +67,7 @@ class _TodoTadayState extends State<TodoTaday> {
                     ? DecorationImage(
                         image: AssetImage(
                           imageList[season.selectedImageNumber],
-                        ),  
+                        ),
                         fit: BoxFit.cover,
                       )
                     : DecorationImage(
@@ -254,9 +254,11 @@ class _TodoTadayState extends State<TodoTaday> {
                     SizedBox(
                       height: 30,
                       width: 60,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         child: Text('編集'),
-                        color: Colors.blueGrey,
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey,
+                        ),
                         onPressed: () {
                           //クタスの実体化、Todoをtodoに代入
                           Todo newTodo = Todo(
@@ -328,9 +330,11 @@ class _TodoTadayState extends State<TodoTaday> {
                       child: SizedBox(
                         height: 30,
                         width: 60,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           child: Text('送信'),
-                          color: Colors.blueGrey,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blueGrey,
+                          ),
                           onPressed: () {
                             //クタスの実体化、Todoをtodoに代入
                             Todo todoNow = Todo(
