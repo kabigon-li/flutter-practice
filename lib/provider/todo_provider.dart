@@ -31,7 +31,7 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTodo(int id) {
+  void deleteTodo(int id) {   
     final todoIndex = todoList.indexWhere(
       (todo) => todo.id == id
       );

@@ -5,47 +5,43 @@ import 'package:wechat_like_memo/model/todo.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
+import 'package:wechat_like_memo/tab/todotoday_notifier.dart';
 
-class TodoTaday extends StatefulWidget {
-  TodoTaday({
+class TodoTaday extends StatelessWidget {
+  const TodoTaday({
     Key key,
     this.isNavigateFromDrawer = false,
-  }) : super(key: key);
+  });
 
   // 受け取りたい値
   final bool isNavigateFromDrawer;
 
-  @override
-  _TodoTadayState createState() => _TodoTadayState();
-}
-
-class _TodoTadayState extends State<TodoTaday> {
-  bool checked = false;
-
-  // Dart
-  void onPressed(bool value) {
-    checked = value;
-    setState(() {});
-  }
-
-  String text = '';
-
-  void chatbox(String input) {
-    text = input;
-    setState(() {});
-  }
-
-  var flag = false;
+  static String routeName = 'todo-today-screen';
 
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      // Notifier作成
+      create: (_) => TodoTodayNotifier(
+        context: context,
+        isNavigateFromDrawer: isNavigateFromDrawer,
+      ),
+      child: _TodoTaday(),
+    );
+  }
+}
+
+class _TodoTaday extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final notifier = Provider.of<TodoTodayNotifier>(context,listen: false);
     final season = Provider.of<SeasonsMode>(context);
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.green[200],
-        leading: widget.isNavigateFromDrawer == false
+        leading: notifier.isNavigateFromDrawer == false
             ? Icon(
                 Icons.account_circle,
                 color: Colors.black,
@@ -87,6 +83,7 @@ class _TodoTadayState extends State<TodoTaday> {
                       itemCount: todoProvider.todoList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return todo(
+                          context,
                           // 1. Todo(id: 0, content: 'k', isChecked: 0)
                           // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
                           todoProvider
@@ -113,10 +110,10 @@ class _TodoTadayState extends State<TodoTaday> {
 
   Widget todo(
     // Todo(id: 0, content: 'k', isChecked: 0)
+    BuildContext context,
     Todo todoNew, //这接收新一个Todo
   ) {
-    final todoProvider = Provider.of<TodoProvider>(context);
-    final databaseProvider = Provider.of<DataBaseProvider>(context);
+    final notifier = Provider.of<TodoTodayNotifier>(context,listen: false);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -128,26 +125,7 @@ class _TodoTadayState extends State<TodoTaday> {
             activeColor: Colors.blue,
             value: todoNew.isChecked == 0 ? false : true,
             onChanged: (v) {
-              //クタスの実体化、Todoをtodoに代入
-              setState(() {
-                // checkboxl押された時,下実行する
-                Todo newTodo = Todo(
-                  //Todoの実体化（クラスのインスタンス）
-                  //受け取るやつ次第
-                  id: todoNew.id, //受け取るのTodoのid
-                  content: todoNew.content, //受け取るTodoの内容
-                  isChecked: todoNew.isChecked == 0 ? 1 : 0, //もし０、１になる、もし１、０になる
-                );
-                todoProvider.updateTodo(
-                  //1, 渡す 0
-                  todoNew.id,
-                  newTodo,
-                );
-
-                databaseProvider.updateTodo(
-                  newTodo,
-                );
-              });
+              notifier.updateTodo(todoNew);
             },
 
             //todo内容部分
@@ -157,6 +135,7 @@ class _TodoTadayState extends State<TodoTaday> {
               child: GestureDetector(
                 onTap: () {
                   updateBottomSheet(
+                    context,
                     //例えば、カビゴン書いたら、ここに渡す
                     todoNew.id, //获取第一行的id，0
                     todoNew.isChecked, //获取第一行的是否勾选
@@ -180,7 +159,7 @@ class _TodoTadayState extends State<TodoTaday> {
               child: Icon(Icons.delete),
               onTap: () {
                 //todoNew.id
-                deleteTodoSheet(todoNew.id);
+                deleteTodoSheet(context, todoNew.id);
               },
             ),
           ),
@@ -198,7 +177,10 @@ class _TodoTadayState extends State<TodoTaday> {
     );
   }
 
-  void deleteTodoSheet(int index) {
+  void deleteTodoSheet(
+    BuildContext context,
+    int index,
+  ) {
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     //　databaseの実体化
@@ -212,9 +194,14 @@ class _TodoTadayState extends State<TodoTaday> {
   }
 
 //updateBottom接收
-  void updateBottomSheet(int index, int f) {
+  void updateBottomSheet(
+    BuildContext context,
+    int index,
+    int f,
+  ) {
     //index受け取る
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
+    final notifier = Provider.of<TodoTodayNotifier>(context,listen: false);
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     showModalBottomSheet(
       context: context,
@@ -239,9 +226,9 @@ class _TodoTadayState extends State<TodoTaday> {
                         color: Colors.white,
                         child: TextFormField(
                           maxLines: 20,
-                          initialValue: text,
+                          initialValue: notifier.text,
                           onChanged: (String t) {
-                            chatbox(t);
+                            notifier.chatbox(t);
                           },
                           decoration: InputDecoration(
                             hintText: 'to do',
@@ -263,7 +250,7 @@ class _TodoTadayState extends State<TodoTaday> {
                           //クタスの実体化、Todoをtodoに代入
                           Todo newTodo = Todo(
                             id: index,
-                            content: text,
+                            content: notifier.text,
                             isChecked: f,
                           );
                           todoProvider.updateTodo(
@@ -286,6 +273,8 @@ class _TodoTadayState extends State<TodoTaday> {
   }
 
   void openModalBottomSheet() {
+    BuildContext context;
+    final notifier = Provider.of<TodoTodayNotifier>(context,listen: false);
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     final databaseProvider =
@@ -315,7 +304,7 @@ class _TodoTadayState extends State<TodoTaday> {
                         child: TextField(
                           maxLines: 20,
                           onChanged: (String t) {
-                            chatbox(t);
+                            notifier.chatbox(t);
                           },
                           decoration: InputDecoration(
                             hintText: 'to do',
@@ -339,7 +328,7 @@ class _TodoTadayState extends State<TodoTaday> {
                             //クタスの実体化、Todoをtodoに代入
                             Todo todoNow = Todo(
                               id: todoProvider.todoList.length,
-                              content: text,
+                              content: notifier.text,
                               isChecked: 0,
                             );
                             todoProvider.addTodo(todoNow);
