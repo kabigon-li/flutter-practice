@@ -63,17 +63,26 @@ class _CalenderState extends State<Calender> {
                 markedDateMoreShowTotal: false,
               ),
               Container(
-                
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'image/backnote.png',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 child: ListView.builder(
                   //physics: const AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true, // 高さ関連のエラーが出たら、使う
                   itemCount: todoProvider.todoList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return todo(
-                      // 1. Todo(id: 0, content: 'k', isChecked: 0)
-                      // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
-                      todoProvider
-                          .todoList[index], //调用todo这个方法时，这获取画面中更新的每行Todo
+                    return Container(
+                      child: todo(
+                        // 1. Todo(id: 0, content: 'k', isChecked: 0)
+                        // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
+                        todoProvider
+                            .todoList[index], //调用todo这个方法时，这获取画面中更新的每行Todo
+                      ),
                     );
                   },
                 ),
@@ -92,14 +101,14 @@ class _CalenderState extends State<Calender> {
     final todoProvider = Provider.of<TodoProvider>(context);
     final databaseProvider = Provider.of<DataBaseProvider>(context);
     return Container(
-      decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'image/note.jpeg',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+      // decoration: BoxDecoration(
+      //             image: DecorationImage(
+      //               image: AssetImage(
+      //                 'image/backnote.png',
+      //               ),
+      //               fit: BoxFit.cover,
+      //             ),
+      //           ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -113,7 +122,7 @@ class _CalenderState extends State<Calender> {
               );
             },
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
@@ -137,8 +146,8 @@ class _CalenderState extends State<Calender> {
             height: 2,
             thickness: 1,
             color: Colors.grey,
-            indent: 10,
-            endIndent: 20,
+            indent: 100,
+            endIndent: 100,
           ),
         ],
       ),
