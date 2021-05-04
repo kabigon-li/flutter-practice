@@ -42,6 +42,7 @@ class TodoTodayNotifier extends ChangeNotifier {
 
     //クタスの実体化、Todoをtodoに代入
 
+    //当只有ischecked改变的时候，todo model里写copywith
     Todo newTodo = todoNew.copyWith(
       isChecked: todoNew.isChecked == 0 ? 1 : 0, //もし０、１になる、もし１、０になる
     );
@@ -58,5 +59,24 @@ class TodoTodayNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTodo() {}
+  void addTodo() {
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
+    //クタスの実体化、Todoをtodoに代入
+    Todo todoNow = Todo(
+      id: todoProvider.todoList.length,
+      content: text,
+      isChecked: 0,
+    );
+    todoProvider.addTodo(todoNow);
+
+    //databaseに追加
+    databaseProvider.insertTodo(
+      // datebase and todo渡す
+      todo: todoNow,
+    );
+
+    Navigator.of(context).pop();
+  }
 }

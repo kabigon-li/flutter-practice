@@ -166,7 +166,7 @@ class _TodoTaday extends StatelessWidget {
           ),
         ),
 
-          // 4. 分割线
+        // 4. 分割线
         const Divider(
           height: 2,
           thickness: 1,
@@ -193,7 +193,6 @@ class _TodoTaday extends StatelessWidget {
     );
     databaseProvider.deleteTodo(index);
   }
-
 
 //编辑todo时上弹输入框
   void updateBottomSheet(
@@ -277,11 +276,6 @@ class _TodoTaday extends StatelessWidget {
 //添加新的todo
   void openModalBottomSheet(BuildContext context) {
     final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
-    // TodoProviderクラスのインスタンス(コピー)を変数に代入
-    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
-    final databaseProvider =
-        Provider.of<DataBaseProvider>(context, listen: false);
-
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -326,23 +320,7 @@ class _TodoTaday extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             primary: Colors.blueGrey,
                           ),
-                          onPressed: () {
-                            //クタスの実体化、Todoをtodoに代入
-                            Todo todoNow = Todo(
-                              id: todoProvider.todoList.length,
-                              content: notifier.text,
-                              isChecked: 0,
-                            );
-                            todoProvider.addTodo(todoNow);
-
-                            //databaseに追加
-                            databaseProvider.insertTodo(
-                              // datebase and todo渡す
-                              todo: todoNow,
-                            );
-
-                            Navigator.of(context).pop();
-                          },
+                          onPressed: notifier.addTodo,
                         ),
                       ),
                     )
