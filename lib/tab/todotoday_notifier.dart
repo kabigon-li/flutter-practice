@@ -32,7 +32,7 @@ class TodoTodayNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTodo(
+  void updateCheckBox(
     //todoNew を受け取って、これから使えるようにった
     Todo todoNew,
   ) {
@@ -42,14 +42,10 @@ class TodoTodayNotifier extends ChangeNotifier {
 
     //クタスの実体化、Todoをtodoに代入
 
-    // checkboxl押された時,下実行する
-    Todo newTodo = Todo(
-      //Todoの実体化（クラスのインスタンス）
-      //受け取るやつ次第
-      id: todoNew.id, //受け取るのTodoのid
-      content: todoNew.content, //受け取るTodoの内容
+    Todo newTodo = todoNew.copyWith(
       isChecked: todoNew.isChecked == 0 ? 1 : 0, //もし０、１になる、もし１、０になる
     );
+
     todoProvider.updateTodo(
       //1, 渡す 0
       todoNew.id,
@@ -61,4 +57,6 @@ class TodoTodayNotifier extends ChangeNotifier {
     );
     notifyListeners();
   }
+
+  void updateTodo() {}
 }

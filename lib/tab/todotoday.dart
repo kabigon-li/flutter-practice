@@ -98,6 +98,7 @@ class _TodoTaday extends StatelessWidget {
           ),
         ),
       ]),
+      //右下角添加新的todo
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlue[200],
         child: Icon(Icons.add_box_outlined),
@@ -121,14 +122,14 @@ class _TodoTaday extends StatelessWidget {
         Card(
           color: Colors.grey[200],
           child: CheckboxListTile(
-            //打勾框
+            // 1.右边打勾框
             activeColor: Colors.blue,
             value: todoNew.isChecked == 0 ? false : true,
             onChanged: (v) {
-              notifier.updateTodo(todoNew);
+              notifier.updateCheckBox(todoNew);
             },
 
-            //todo内容部分
+            // 2. todo内容部分
             title: SizedBox(
               //height: 20,
               //クリック編集
@@ -154,7 +155,7 @@ class _TodoTaday extends StatelessWidget {
               ),
             ),
 
-            //删除按钮
+            // 3. 删除按钮
             secondary: GestureDetector(
               child: Icon(Icons.delete),
               onTap: () {
@@ -165,7 +166,7 @@ class _TodoTaday extends StatelessWidget {
           ),
         ),
 
-        //分割线
+          // 4. 分割线
         const Divider(
           height: 2,
           thickness: 1,
@@ -193,8 +194,8 @@ class _TodoTaday extends StatelessWidget {
     databaseProvider.deleteTodo(index);
   }
 
-//updateBottom接收
-//
+
+//编辑todo时上弹输入框
   void updateBottomSheet(
     BuildContext context,
     int index,
@@ -273,6 +274,7 @@ class _TodoTaday extends StatelessWidget {
     );
   }
 
+//添加新的todo
   void openModalBottomSheet(BuildContext context) {
     final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
@@ -320,7 +322,7 @@ class _TodoTaday extends StatelessWidget {
                         height: 30,
                         width: 60,
                         child: ElevatedButton(
-                          child: Text('送信'),
+                          child: Text('Todo追加'),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.blueGrey,
                           ),
