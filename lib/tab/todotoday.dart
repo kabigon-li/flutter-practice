@@ -34,7 +34,7 @@ class TodoTaday extends StatelessWidget {
 class _TodoTaday extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final notifier = Provider.of<TodoTodayNotifier>(context,listen: false);
+    final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
     final season = Provider.of<SeasonsMode>(context);
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     return Scaffold(
@@ -102,7 +102,7 @@ class _TodoTaday extends StatelessWidget {
         backgroundColor: Colors.lightBlue[200],
         child: Icon(Icons.add_box_outlined),
         onPressed: () {
-          return openModalBottomSheet();
+          return openModalBottomSheet(context);
         },
       ),
     );
@@ -113,7 +113,7 @@ class _TodoTaday extends StatelessWidget {
     BuildContext context,
     Todo todoNew, //这接收新一个Todo
   ) {
-    final notifier = Provider.of<TodoTodayNotifier>(context,listen: false);
+    final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -194,14 +194,15 @@ class _TodoTaday extends StatelessWidget {
   }
 
 //updateBottom接收
+//
   void updateBottomSheet(
     BuildContext context,
     int index,
-    int f,
+    int ischecked,
   ) {
     //index受け取る
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
-    final notifier = Provider.of<TodoTodayNotifier>(context,listen: false);
+    final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     showModalBottomSheet(
       context: context,
@@ -251,7 +252,7 @@ class _TodoTaday extends StatelessWidget {
                           Todo newTodo = Todo(
                             id: index,
                             content: notifier.text,
-                            isChecked: f,
+                            isChecked: ischecked,
                           );
                           todoProvider.updateTodo(
                             //1, 渡す 0
@@ -272,9 +273,8 @@ class _TodoTaday extends StatelessWidget {
     );
   }
 
-  void openModalBottomSheet() {
-    BuildContext context;
-    final notifier = Provider.of<TodoTodayNotifier>(context,listen: false);
+  void openModalBottomSheet(BuildContext context) {
+    final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     final databaseProvider =

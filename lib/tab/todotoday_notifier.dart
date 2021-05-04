@@ -36,8 +36,9 @@ class TodoTodayNotifier extends ChangeNotifier {
     //todoNew を受け取って、これから使えるようにった
     Todo todoNew,
   ) {
-    final todoProvider = Provider.of<TodoProvider>(context);
-    final databaseProvider = Provider.of<DataBaseProvider>(context);
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
 
     //クタスの実体化、Todoをtodoに代入
 
@@ -48,7 +49,7 @@ class TodoTodayNotifier extends ChangeNotifier {
       id: todoNew.id, //受け取るのTodoのid
       content: todoNew.content, //受け取るTodoの内容
       isChecked: todoNew.isChecked == 0 ? 1 : 0, //もし０、１になる、もし１、０になる
-    );  
+    );
     todoProvider.updateTodo(
       //1, 渡す 0
       todoNew.id,
