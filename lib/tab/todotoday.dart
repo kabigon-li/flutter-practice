@@ -138,8 +138,8 @@ class _TodoTaday extends StatelessWidget {
                   updateBottomSheet(
                     context,
                     //例えば、カビゴン書いたら、ここに渡す
-                    todoNew.id, //获取第一行的id，0
-                    todoNew.isChecked, //获取第一行的是否勾选
+                    todoNew, //获取第一行的id，0
+                    //获取第一行的是否勾选
                   );
                 },
                 child: Text(
@@ -197,13 +197,11 @@ class _TodoTaday extends StatelessWidget {
 //编辑todo时上弹输入框
   void updateBottomSheet(
     BuildContext context,
-    int index,
-    int ischecked,
+    Todo todoNew,
   ) {
     //index受け取る
     // TodoProviderクラスのインスタンス(コピー)を変数に代入
     final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
-    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -249,17 +247,7 @@ class _TodoTaday extends StatelessWidget {
                         ),
                         onPressed: () {
                           //クタスの実体化、Todoをtodoに代入
-                          Todo newTodo = Todo(
-                            id: index,
-                            content: notifier.text,
-                            isChecked: ischecked,
-                          );
-                          todoProvider.updateTodo(
-                            //1, 渡す 0
-                            index,
-                            newTodo,
-                          );
-                          Navigator.of(context).pop();
+                          notifier.updateTodoContext(todoNew);
                         },
                       ),
                     )

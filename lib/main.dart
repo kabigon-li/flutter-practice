@@ -41,7 +41,8 @@ void main() async {
     (MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          // todoproviderはデータベースから持ってきたtodoを管理してる
+          // データベースから持ってきたtodoをtodoproviderに渡す
+          // Providerの初期化
           create: (_) => TodoProvider(
             todoList: todoList,
           ),

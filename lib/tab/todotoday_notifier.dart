@@ -22,6 +22,7 @@ class TodoTodayNotifier extends ChangeNotifier {
   var flag = false;
 
   // Dart
+
   void onPressed(bool value) {
     checked = value;
     notifyListeners();
@@ -30,6 +31,27 @@ class TodoTodayNotifier extends ChangeNotifier {
   void chatbox(String input) {
     text = input;
     notifyListeners();
+  }
+
+  void updateTodoContext(
+    // 更新したいやつここで受け取る
+    Todo todoNew,
+  ) {
+    // TodoProviderの実体化
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+
+    // 更新する時にcontextだけ更新したい時、CopyWithを使う
+    Todo newTodo = todoNew.copyWith(
+      content: text,
+    );
+
+    todoProvider.updateTodo(
+      //1, 渡す 0
+      newTodo,
+    );
+
+    // 一つ前の画面に戻る
+    Navigator.of(context).pop();
   }
 
   void updateCheckBox(
@@ -49,7 +71,7 @@ class TodoTodayNotifier extends ChangeNotifier {
 
     todoProvider.updateTodo(
       //1, 渡す 0
-      todoNew.id,
+
       newTodo,
     );
 

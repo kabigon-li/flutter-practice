@@ -214,7 +214,7 @@ class _CalenderState extends State<Calender> {
                           );
                           todoProvider.updateTodo(
                             //1, 渡す 0
-                            index,
+
                             newTodo,
                           );
                           Navigator.of(context).pop();

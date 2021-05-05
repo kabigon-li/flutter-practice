@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wechat_like_memo/model/todo.dart';
 
+//データはデータベースからproviderに渡す
 class TodoProvider with ChangeNotifier {
   TodoProvider({
     this.todoList,
@@ -21,20 +22,17 @@ class TodoProvider with ChangeNotifier {
 
   void updateTodo(
     //2, うけとる
-    int id,
     Todo newTodo,
   ) {
     final todoIndex = todoList.indexWhere(
-      (todo) => todo.id == id,
+      (todo) => todo.id == newTodo.id,
     );
     todoList[todoIndex] = newTodo;
     notifyListeners();
   }
 
-  void deleteTodo(int id) {   
-    final todoIndex = todoList.indexWhere(
-      (todo) => todo.id == id
-      );
+  void deleteTodo(int id) {
+    final todoIndex = todoList.indexWhere((todo) => todo.id == id);
     todoList.removeAt(todoIndex);
     notifyListeners();
   }
