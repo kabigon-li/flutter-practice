@@ -36,7 +36,8 @@ class _TodoTaday extends StatelessWidget {
   Widget build(BuildContext context) {
     final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
     final season = Provider.of<SeasonsMode>(context);
-    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    // 当todoprovider中的todolist中内容的改变，要呈现画面上的改变时，listen为true
+    final todoProvider = Provider.of<TodoProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -78,7 +79,7 @@ class _TodoTaday extends StatelessWidget {
                 child: Column(
                   children: [
                     ListView.builder(
-                      //physics: const AlwaysScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true, // 高さ関連のエラーが出たら、使う
                       itemCount: todoProvider.todoList.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -182,16 +183,8 @@ class _TodoTaday extends StatelessWidget {
     BuildContext context,
     int index,
   ) {
-    // TodoProviderクラスのインスタンス(コピー)を変数に代入
-    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
-    //　databaseの実体化
-    final databaseProvider =
-        Provider.of<DataBaseProvider>(context, listen: false);
-    todoProvider.deleteTodo(
-      //1, 渡す 0
-      index,
-    );
-    databaseProvider.deleteTodo(index);
+    final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
+    notifier.deleteTodo(index);
   }
 
 //编辑todo时上弹输入框
@@ -230,7 +223,7 @@ class _TodoTaday extends StatelessWidget {
                             notifier.chatbox(t);
                           },
                           decoration: InputDecoration(
-                            hintText: 'to do',
+                            hintText: todoNew.content,
                             contentPadding: const EdgeInsets.all(10),
                             // border: InputBorder.none,
                           ),
@@ -247,7 +240,7 @@ class _TodoTaday extends StatelessWidget {
                         ),
                         onPressed: () {
                           //クタスの実体化、Todoをtodoに代入
-                          notifier.updateTodoContext(todoNew);
+                          notifier.updateTodoContent(todoNew);
                         },
                       ),
                     )
@@ -291,7 +284,7 @@ class _TodoTaday extends StatelessWidget {
                             notifier.chatbox(t);
                           },
                           decoration: InputDecoration(
-                            hintText: 'to do',
+                            hintText: 'White a new to do !',
                             contentPadding: const EdgeInsets.all(10),
                             // border: InputBorder.none,
                           ),
@@ -304,7 +297,7 @@ class _TodoTaday extends StatelessWidget {
                         height: 30,
                         width: 60,
                         child: ElevatedButton(
-                          child: Text('Todo追加'),
+                          child: Text('追加'),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.blueGrey,
                           ),

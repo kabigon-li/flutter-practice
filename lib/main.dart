@@ -93,7 +93,7 @@ Future<List<Todo>> getTodo(
 
   // databaseからtodoの全部アプリに持ってくる
   final List<Map<String, dynamic>> maps = await db.query('todo');
-  
+
   //Map<String, dynamic>からTodo型に変換
   return List.generate(maps.length, (i) {
     return Todo(

@@ -33,7 +33,7 @@ class TodoTodayNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTodoContext(
+  void updateTodoContent(
     // 更新したいやつここで受け取る
     Todo todoNew,
   ) {
@@ -71,7 +71,6 @@ class TodoTodayNotifier extends ChangeNotifier {
 
     todoProvider.updateTodo(
       //1, 渡す 0
-
       newTodo,
     );
 
@@ -100,5 +99,18 @@ class TodoTodayNotifier extends ChangeNotifier {
     );
 
     Navigator.of(context).pop();
+  }
+
+  void deleteTodo(int index) {
+    // TodoProviderクラスのインスタンス(コピー)を変数に代入
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    //　databaseの実体化
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
+    todoProvider.deleteTodo(
+      //1, 渡す 0
+      index,
+    );
+    databaseProvider.deleteTodo(index);
   }
 }
