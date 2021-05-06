@@ -41,7 +41,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return Scaffold(
       // 左ドロアー
       drawer: Drawer(
-        
         key: drawerKey,
         child: Column(
           children: [
@@ -104,7 +103,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             //fontFamily: 'Cursive',
                           ),
                         )
-                      : Text(''),
+                      : Text(
+                          '＠Memolady',
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.bold,
+                            //fontFamily: 'Cursive',
+                          ),
+                        ),
 
                   accountEmail: Text('@WetchatMemo.kabigon'),
 
@@ -260,64 +267,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               //用户头像，保存ID名称和头像图片之后显示
               Row(
                 children: [
-                  //当image不为空时，显示图片
+                  //当image不为空时，显示头像
                   widget.image != null
-                      ? ClipOval(
-                          child: Image.file(
-                            widget.image,
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.cover,
-                          ),
-                        )
+                      ? _buildHomeIconImage()
                       //image为空时显示空
-                      : Container(),
-
+                      : _buildHomeIconBlank(),
                   // 用户ID，保存ID名称和头像图片之后显示
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: widget.idtext != null
-                        ? Text(
-                            widget.idtext,
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.grey[700],
-                              fontWeight: FontWeight.bold,
-                              //fontFamily: 'Cursive',
-                            ),
-                          )
-                        : Row(
-                            children: [
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginPage(),
-                                    ),
-                                  );
-                                },
-                                child: Material(
-                                  elevation: 5.0,
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  //color: Color(0xff01A0C7),
-                                  child: Icon(
-                                    Icons.account_circle,
-                                    size: 60,
-                                    color: Colors.grey[700],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                  ),
+                  if (widget.idtext != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _buildHomeName(),
+                    ),
                 ],
               ),
-
-              SizedBox(
-                height: 40,
-              ),
-
+              SizedBox(height: 40),
               //点击之后进入聊天页面
               GestureDetector(
                 onTap: () {
@@ -355,6 +318,57 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ]),
           ),
         ],
+      ),
+    );
+  }
+
+// 関数はWidget　buildの外で書く
+  Widget _buildHomeIconImage() {
+    return ClipOval(
+      child: Image.file(
+        widget.image,
+        height: 50,
+        width: 50,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Widget _buildHomeIconBlank() {
+    return Row(
+      children: [
+        MaterialButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginPage(),
+              ),
+            );
+          },
+          child: Material(
+            elevation: 5.0,
+            borderRadius: BorderRadius.circular(30.0),
+            //color: Color(0xff01A0C7),
+            child: Icon(
+              Icons.account_circle,
+              size: 60,
+              color: Colors.grey[700],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHomeName() {
+    return Text(
+      widget.idtext,
+      style: TextStyle(
+        fontSize: 25,
+        color: Colors.grey[700],
+        fontWeight: FontWeight.bold,
+        //fontFamily: 'Cursive',
       ),
     );
   }

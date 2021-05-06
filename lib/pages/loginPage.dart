@@ -74,18 +74,18 @@ class _LoginPageState extends State<LoginPage> {
                     ),
             ),
           ),
-          Container(
-            // decoration: BoxDecoration(
-            //   border: Border.all(color: Colors.grey[300]),
-            // ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                '⬅️click to choose an icon',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
+          // Container(
+          //   // decoration: BoxDecoration(
+          //   //   border: Border.all(color: Colors.grey[300]),
+          //   // ),
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: Text(
+          //       '⬅️click to choose an icon',
+          //       style: TextStyle(fontSize: 16),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
