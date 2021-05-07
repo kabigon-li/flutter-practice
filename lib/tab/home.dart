@@ -230,15 +230,29 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
         title: Align(
           alignment: Alignment.topLeft,
-          child: Text(
-            'Wochat',
-            style: TextStyle(
-              fontSize: 20,
-              fontFamily: 'iconfont',
-              color: fontColor,
-            ),
+          child: Row(
+            children: [
+              Text(
+                'Wochat',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontFamily: 'iconfont',
+                  color: fontColor,
+                ),
+              ),
+            ],
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Icon(
+              Icons.add_circle,
+               color: Colors.grey,
+               size: 30,
+               ),
+          ),
+        ],
 
         //tabBar
       ),
@@ -275,12 +289,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         child: _buildHomeName(),
                       ),
 
-                   //点击之后进入聊天页面
+                    //点击之后进入聊天页面
                     _buildClickChatBox(),
                   ],
                 ),
                 SizedBox(height: 40),
-                
               ],
             ),
           ),
@@ -352,15 +365,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         );
       },
       child: Column(
+        //竖列两个组件对其
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              'UserName',
-              style: TextStyle(
-                fontSize: 22,
-                color: fontColor,
-              ),
+          Text(
+            'UserName',
+            style: TextStyle(
+              fontSize: 22,
+              color: fontColor,
             ),
           ),
           Text(
