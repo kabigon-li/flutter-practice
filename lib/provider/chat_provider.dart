@@ -1,52 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:wechat_like_memo/model/chatRoom.dart';
 
-import 'package:wechat_like_memo/model/chat.dart';
 
-class ChatProvider with ChangeNotifier {
-  ChatProvider({
-    this.chatList,
+
+
+class ChatRoomProvider with ChangeNotifier {
+  ChatRoomProvider({
+    this.chatRoomList,
   });
 
-  List<Chat> chatList;
+  List<ChatRoom> chatRoomList;
 
   // 追加、削除、更新、取得
   // Create, Read, Update, Delete == CRUD
 
   //クラス中の関数
   void addchat(
-    Chat chat,
-    int userId,
-    int isLeft,
-    String createdAt,
-    int isImage,
-    String imagePath,
-     //受け取りたいやつ
+    ChatRoom chat,
   ) {
-    chatList.add(chat);
+    chatRoomList.add(chat);
     notifyListeners();
   }
 
   void updatechat(
     //2, うけとる
     int id,
-    Chat newChat,
-    int isLeft,
-    String createdAt,
-    int isImage,
-    String imagePath,
+    ChatRoom newChatRoom,
   ) {
-    final chatIndex = chatList.indexWhere(
+    final chatIndex = chatRoomList.indexWhere(
       (chat) => chat.id == id,
     );
-    chatList[chatIndex] = newChat;
+    chatRoomList[chatIndex] = newChatRoom;
     notifyListeners();
   }
 
   void deletechat(int id) {
-    final chatIndex = chatList.indexWhere((chat) => chat.id == id);
-    chatList.removeAt(chatIndex);
+    final chatIndex = chatRoomList.indexWhere((chat) => chat.id == id);
+    chatRoomList.removeAt(chatIndex);
     notifyListeners();
   }
-
-  
 }
