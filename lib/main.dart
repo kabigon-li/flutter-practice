@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
+import 'package:wechat_like_memo/provider/chatRoom_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
@@ -50,6 +51,11 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => ChatProvider(
             chatList: [],
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ChatRoomProvider(
+            chatRoomList: [],
           ),
         ),
         ChangeNotifierProvider(
