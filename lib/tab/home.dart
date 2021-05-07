@@ -275,12 +275,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         child: _buildHomeName(),
                       ),
 
-                       _buildClickChatBox(),
+                   //点击之后进入聊天页面
+                    _buildClickChatBox(),
                   ],
                 ),
                 SizedBox(height: 40),
-                //点击之后进入聊天页面
-               
+                
               ],
             ),
           ),
@@ -351,25 +351,26 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         );
       },
-      child: SizedBox(
-        
-        child: Material(
-          elevation: 5.0,
-         
-          //color: Colors.grey[200],
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
             child: Text(
-              'Click here to chat!',
+              'UserName',
               style: TextStyle(
                 fontSize: 22,
-                //color: Colors.grey[700],
-                //fontWeight: FontWeight.bold,
-                //fontFamily: 'Cursive',
+                color: fontColor,
               ),
             ),
           ),
-        ),
+          Text(
+            'Click here to chat!',
+            style: TextStyle(
+              fontSize: 22,
+              color: Colors.grey[400],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -14,7 +14,13 @@ class ChatProvider with ChangeNotifier {
 
   //クラス中の関数
   void addchat(
-    Chat chat, //受け取りたいやつ
+    Chat chat,
+    int userId,
+    int isLeft,
+    String createdAt,
+    int isImage,
+    String imagePath,
+     //受け取りたいやつ
   ) {
     chatList.add(chat);
     notifyListeners();
@@ -24,6 +30,10 @@ class ChatProvider with ChangeNotifier {
     //2, うけとる
     int id,
     Chat newChat,
+    int isLeft,
+    String createdAt,
+    int isImage,
+    String imagePath,
   ) {
     final chatIndex = chatList.indexWhere(
       (chat) => chat.id == id,
@@ -37,4 +47,6 @@ class ChatProvider with ChangeNotifier {
     chatList.removeAt(chatIndex);
     notifyListeners();
   }
+
+  
 }
