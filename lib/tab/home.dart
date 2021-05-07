@@ -62,7 +62,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       //Navigator.of(context).pushNamed('/chatpage');
                     },
                     child: widget.image != null
-                        ? ClipOval(
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
                             child: Image.file(
                               widget.image,
                               height: 50,
@@ -235,7 +236,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               fontSize: 20,
               fontFamily: 'iconfont',
               color: fontColor,
-              
             ),
           ),
         ),
@@ -244,26 +244,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       body: Stack(
         children: [
-          Container(
-            //背景設定
-            decoration: BoxDecoration(
-              image: season.isImageSelected
-                  ? DecorationImage(
-                      image: AssetImage(
-                        imageList[season.selectedImageNumber],
-                      ),
-                      fit: BoxFit.cover,
-                    )
-                  : DecorationImage(
-                      image: AssetImage(
-                        'image/home.png',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+          if (season.isImageSelected)
+            Container(
+              //背景設定
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    imageList[season.selectedImageNumber],
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-          ),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(18),
             child: Column(
               children: [
                 //用户头像，保存ID名称和头像图片之后显示
@@ -280,11 +274,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         padding: const EdgeInsets.all(8.0),
                         child: _buildHomeName(),
                       ),
+
+                       _buildClickChatBox(),
                   ],
                 ),
                 SizedBox(height: 40),
                 //点击之后进入聊天页面
-                _buildClickChatBox(),
+               
               ],
             ),
           ),
@@ -295,7 +291,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
 // 関数はWidget　buildの外で書く
   Widget _buildHomeIconImage() {
-    return ClipOval(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
       child: Image.file(
         widget.image,
         height: 50,
@@ -319,12 +316,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           },
           child: Material(
             elevation: 5.0,
-            borderRadius: BorderRadius.circular(30.0),
-            //color: Color(0xff01A0C7),
+            borderRadius: BorderRadius.circular(10.0),
+            color: Color(0xff01A0C7),
             child: Icon(
               Icons.account_circle,
               size: 60,
-              color: Colors.grey[700],
+              color: Colors.yellow,
             ),
           ),
         ),
@@ -355,23 +352,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         );
       },
       child: SizedBox(
-        height: 150,
-        width: 300,
+        
         child: Material(
           elevation: 5.0,
-          borderRadius: BorderRadius.circular(30.0),
-          color: Colors.grey[200],
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                'Thank you for downloading!\nClick here to chat!',
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.grey[700],
-                  fontWeight: FontWeight.bold,
-                  //fontFamily: 'Cursive',
-                ),
+         
+          //color: Colors.grey[200],
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              'Click here to chat!',
+              style: TextStyle(
+                fontSize: 22,
+                //color: Colors.grey[700],
+                //fontWeight: FontWeight.bold,
+                //fontFamily: 'Cursive',
               ),
             ),
           ),
