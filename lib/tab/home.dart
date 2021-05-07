@@ -225,16 +225,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.green[200],
+        backgroundColor: themeColor,
 
-        title: Center(
+        title: Align(
+          alignment: Alignment.topLeft,
           child: Text(
-            'chat home',
+            'Wochat',
             style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Cursive',
-              letterSpacing: 1.0,
+              fontSize: 20,
+              fontFamily: 'iconfont',
+              color: fontColor,
+              
             ),
           ),
         ),
@@ -263,59 +264,29 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
           Padding(
             padding: const EdgeInsets.all(20),
-            child: Column(children: [
-              //用户头像，保存ID名称和头像图片之后显示
-              Row(
-                children: [
-                  //当image不为空时，显示头像
-                  widget.image != null
-                      ? _buildHomeIconImage()
-                      //image为空时显示空
-                      : _buildHomeIconBlank(),
-                  // 用户ID，保存ID名称和头像图片之后显示
-                  if (widget.idtext != null)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: _buildHomeName(),
-                    ),
-                ],
-              ),
-              SizedBox(height: 40),
-              //点击之后进入聊天页面
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatPage(),
-                    ),
-                  );
-                },
-                child: SizedBox(
-                  height: 150,
-                  width: 300,
-                  child: Material(
-                    elevation: 5.0,
-                    borderRadius: BorderRadius.circular(30.0),
-                    color: Colors.grey[200],
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          'Thank you for downloading!\nClick here to chat!',
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.grey[700],
-                            fontWeight: FontWeight.bold,
-                            //fontFamily: 'Cursive',
-                          ),
-                        ),
+            child: Column(
+              children: [
+                //用户头像，保存ID名称和头像图片之后显示
+                Row(
+                  children: [
+                    //当image不为空时，显示头像
+                    widget.image != null
+                        ? _buildHomeIconImage()
+                        //image为空时显示空
+                        : _buildHomeIconBlank(),
+                    // 用户ID，保存ID名称和头像图片之后显示
+                    if (widget.idtext != null)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _buildHomeName(),
                       ),
-                    ),
-                  ),
+                  ],
                 ),
-              ),
-            ]),
+                SizedBox(height: 40),
+                //点击之后进入聊天页面
+                _buildClickChatBox(),
+              ],
+            ),
           ),
         ],
       ),
@@ -369,6 +340,42 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         color: Colors.grey[700],
         fontWeight: FontWeight.bold,
         //fontFamily: 'Cursive',
+      ),
+    );
+  }
+
+  Widget _buildClickChatBox() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatPage(),
+          ),
+        );
+      },
+      child: SizedBox(
+        height: 150,
+        width: 300,
+        child: Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(30.0),
+          color: Colors.grey[200],
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                'Thank you for downloading!\nClick here to chat!',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.bold,
+                  //fontFamily: 'Cursive',
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
