@@ -179,14 +179,6 @@ class _TodoTaday extends StatelessWidget {
     );
   }
 
-  void deleteTodoSheet(
-    BuildContext context,
-    int index,
-  ) {
-    final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
-    notifier.deleteTodo(index);
-  }
-
 //编辑todo时上弹输入框
   void updateBottomSheet(
     BuildContext context,
@@ -313,5 +305,13 @@ class _TodoTaday extends StatelessWidget {
         );
       },
     );
+  }
+
+  void deleteTodoSheet(
+    BuildContext context,
+    int index,
+  ) {
+    final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
+    notifier.deleteTodo(index);
   }
 }

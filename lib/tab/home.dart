@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
+import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
+import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/home_notifier.dart';
 import 'package:wechat_like_memo/tab/todotoday.dart';
 
@@ -36,11 +38,11 @@ class _Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final season = Provider.of<SeasonsMode>(context);
     final notifier = Provider.of<HomeNotifier>(context, listen: false);
+    final userProvider = Provider.of<UserProvider>(context);
     // print(season.selectedImageNumber);
     return Scaffold(
       // 左ドロアー
       drawer: Drawer(
-        
         //key: drawerKey,
         child: Column(
           children: [
@@ -53,7 +55,6 @@ class _Home extends StatelessWidget {
                   //icon图标，当每上传照片时为登陆图标，上传照片后显示图片
                   currentAccountPicture: GestureDetector(
                     onTap: () {
-                      
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -247,7 +248,7 @@ class _Home extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              addUser(context);
+              openAddUserSheet(context);
             },
             child: Padding(
               padding: const EdgeInsets.all(15.0),
@@ -263,7 +264,6 @@ class _Home extends StatelessWidget {
         //tabBar
       ),
       body: Stack(
-        
         children: [
           if (season.isImageSelected)
             Container(
@@ -283,7 +283,6 @@ class _Home extends StatelessWidget {
               children: [
                 //用户头像，保存ID名称和头像图片之后显示
                 Row(
-                  
                   children: [
                     //当image不为空时，显示头像
                     notifier.image != null
@@ -301,12 +300,42 @@ class _Home extends StatelessWidget {
                     _buildClickChatBox(context),
                   ],
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 15),
+                const Divider(
+                  height: 2,
+                  thickness: 2,
+                  color: themeColor,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+
+                //每点加一次加号，增加一个user
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+                  itemCount: userProvider.userList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return user(
+                      context,
+                      // 1. Todo(id: 0, content: 'k', isChecked: 0)
+                      // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
+                      userProvider
+                          .userList[index], //调用user这个方法时，这获取画面中更新的每行Todo
+                    );
+                  },
+                ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget user(BuildContext context, User userNew) {
+    final userProvider = Provider.of<UserProvider>(context);
+    return Column(
+      children: [],
     );
   }
 
@@ -397,7 +426,7 @@ class _Home extends StatelessWidget {
     );
   }
 
-  void addUser(BuildContext context) {
+  void openAddUserSheet(BuildContext context) {
     final notifier = Provider.of<HomeNotifier>(context, listen: false);
     showModalBottomSheet(
       context: context,
