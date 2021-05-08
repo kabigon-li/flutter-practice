@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
@@ -37,7 +38,7 @@ class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final season = Provider.of<SeasonsMode>(context);
-    final notifier = Provider.of<HomeNotifier>(context, listen: false);
+    final notifier = Provider.of<HomeNotifier>(context);
     final userProvider = Provider.of<UserProvider>(context);
     // print(season.selectedImageNumber);
     return Scaffold(
@@ -333,9 +334,24 @@ class _Home extends StatelessWidget {
   }
 
   Widget user(BuildContext context, User userNew) {
-    final userProvider = Provider.of<UserProvider>(context);
-    return Column(
-      children: [],
+    final notifier = Provider.of<HomeNotifier>(context, listen: false);
+    return Row(
+      children: [
+        //当image不为空时，显示头像
+        notifier.image != null
+            ? _buildHomeIconImage(context)
+            //image为空时显示空
+            : _buildHomeIconBlank(context),
+        // 用户ID，保存ID名称和头像图片之后显示
+        if (notifier.idtext != null)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _buildHomeName(context),
+          ),
+
+        //点击之后进入聊天页面
+        _buildClickChatBox(context),
+      ],
     );
   }
 
@@ -427,65 +443,115 @@ class _Home extends StatelessWidget {
   }
 
   void openAddUserSheet(BuildContext context) {
+   // final userProvider = Provider.of<UserProvider>(context);
     final notifier = Provider.of<HomeNotifier>(context, listen: false);
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          color: Colors.white,
-          padding: const EdgeInsets.all(16.0),
+    Center(
+      child: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 80,
-                //width: size.width,
-                child: Row(
-                  //Row Column中・二個か二個以上widgetの間隙間決める
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      height: 200,
-                      width: 250,
-                      child: ColoredBox(
-                        color: Colors.white,
-                        child: TextField(
-                          maxLines: 20,
-                          onChanged: (String t) {
-                            notifier.chatbox(t);
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Please white a new User !',
-                            contentPadding: const EdgeInsets.all(10),
-                            // border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 0),
-                      child: SizedBox(
-                        height: 50,
-                        width: 70,
-                        child: ElevatedButton(
-                          child: Text(
-                            'Add',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.blueGrey,
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    )
-                  ],
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // SizedBox(
+              //   height: 155.0,
+              //   child: Image.asset(
+              //     "assets/logo.png",
+              //     fit: BoxFit.contain,
+              //   ),
+              // ),
+              SizedBox(height: 25.0),
+              iconImageField(context),
+              SizedBox(height: 25.0),
+
+              // ID name
+              TextFormField(
+                // controllerは入力されたやつ
+                controller: notifier.controller,
+                obscureText: false,
+                //style: style,
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    hintText: "User name",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0))),
+              ),
+              SizedBox(height: 25.0),
+
+              // 登陆按钮
+              Material(
+                elevation: 5.0,
+                borderRadius: BorderRadius.circular(30.0),
+                color: Color(0xff01A0C7),
+                child: MaterialButton(
+                  // minWidth: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  onPressed: () {
+                    notifier.onPressedAddButton();
+                  },
+                  child: Text(
+                    "Login",
+                    textAlign: TextAlign.center,
+                    // style: style.copyWith(
+                    //     color: Colors.white, fontWeight: FontWeight.bold
+                  ),
+                  //     ),
                 ),
               ),
+              SizedBox(height: 15.0),
             ],
           ),
-        );
+        ),
+      ),
+    );
+  }
+
+  iconImageField(BuildContext context) {
+    final notifier = Provider.of<HomeNotifier>(context, listen: false);
+    return InkWell(
+      onTap: () async {
+        // 点按”アルバムから選択”按钮后，获取相册照片
+        await notifier.getImage();
+
+        //只有在选择了照片时，向下一个页面移动
+        if (notifier.image != null) {
+          ClipOval(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Image.file(
+                notifier.image,
+              ),
+            ),
+          );
+        }
       },
+      child: Row(
+        children: [
+          ClipOval(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+              ),
+              child: notifier.image == null
+                  ? Icon(
+                      Icons.add_a_photo_outlined,
+                      color: Colors.black38,
+                      size: 50,
+                    )
+                  : ClipOval(
+                      child: Image.file(
+                        notifier.image,
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

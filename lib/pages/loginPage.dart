@@ -23,13 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController controller;
 
   @override
-  void initState() {
-    super.initState();
-
-    // 空文字で初期化 - TextFormで使う
-    controller = TextEditingController();
-    controller.text = '';
-  }
+  
 
   //头像拦
   iconImageField() {
