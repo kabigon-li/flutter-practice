@@ -244,13 +244,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Icon(
-              Icons.add_circle,
-               color: Colors.grey,
-               size: 30,
-               ),
+          GestureDetector(
+            onTap: () {
+              addUser();
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Icon(
+                Icons.add_circle,
+                color: Colors.grey,
+                size: 30,
+              ),
+            ),
           ),
         ],
 
@@ -384,6 +389,63 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ],
       ),
+    );
+  }
+
+  void addUser() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 80,
+                //width: size.width,
+                child: Row(
+                  //Row Column中・二個か二個以上widgetの間隙間決める
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: 250,
+                      child: ColoredBox(
+                        color: Colors.white,
+                        child: TextField(
+                          maxLines: 20,
+                          onChanged: (String t) {},
+                          decoration: InputDecoration(
+                            hintText: 'Please white a new User !',
+                            contentPadding: const EdgeInsets.all(10),
+                            // border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 0),
+                      child: SizedBox(
+                        height: 50,
+                        width: 70,
+                        child: ElevatedButton(
+                          child: Text('Add',style: TextStyle(fontSize: 20),),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blueGrey,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
