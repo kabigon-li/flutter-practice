@@ -6,42 +6,42 @@ import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
+import 'package:wechat_like_memo/tab/home_notifier.dart';
 import 'package:wechat_like_memo/tab/todotoday.dart';
 
-class Home extends StatefulWidget {
-  // クラスの初期化
-  Home({
+class Home extends StatelessWidget {
+  const Home({
     this.image, //class受け取る
     this.idtext,
   });
+
+  // 受け取りたい値
   final File image;
   final String idtext;
 
   @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  TabController _tabController;
-  final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = new TabController(
-      length: 5,
-      vsync: this,
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      // Notifier作成
+      create: (_) => HomeNotifier(
+        context: context,
+      ),
+      child: _Home(),
     );
   }
+}
 
+class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final season = Provider.of<SeasonsMode>(context);
-    print(season.selectedImageNumber);
+    final notifier = Provider.of<HomeNotifier>(context, listen: false);
+    // print(season.selectedImageNumber);
     return Scaffold(
       // 左ドロアー
       drawer: Drawer(
-        key: drawerKey,
+        
+        //key: drawerKey,
         child: Column(
           children: [
             ListView(
@@ -53,6 +53,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   //icon图标，当每上传照片时为登陆图标，上传照片后显示图片
                   currentAccountPicture: GestureDetector(
                     onTap: () {
+                      
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -61,11 +62,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       );
                       //Navigator.of(context).pushNamed('/chatpage');
                     },
-                    child: widget.image != null
+                    child: notifier.image != null
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.file(
-                              widget.image,
+                              notifier.image,
                               height: 50,
                               width: 50,
                               fit: BoxFit.cover,
@@ -94,9 +95,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
 
                   //ID name
-                  accountName: widget.idtext != null
+                  accountName: notifier.idtext != null
                       ? Text(
-                          widget.idtext,
+                          notifier.idtext,
                           style: TextStyle(
                             fontSize: 25,
                             color: Colors.grey[700],
@@ -246,7 +247,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         actions: [
           GestureDetector(
             onTap: () {
-              addUser();
+              addUser(context);
             },
             child: Padding(
               padding: const EdgeInsets.all(15.0),
@@ -262,6 +263,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         //tabBar
       ),
       body: Stack(
+        
         children: [
           if (season.isImageSelected)
             Container(
@@ -281,21 +283,22 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               children: [
                 //用户头像，保存ID名称和头像图片之后显示
                 Row(
+                  
                   children: [
                     //当image不为空时，显示头像
-                    widget.image != null
-                        ? _buildHomeIconImage()
+                    notifier.image != null
+                        ? _buildHomeIconImage(context)
                         //image为空时显示空
-                        : _buildHomeIconBlank(),
+                        : _buildHomeIconBlank(context),
                     // 用户ID，保存ID名称和头像图片之后显示
-                    if (widget.idtext != null)
+                    if (notifier.idtext != null)
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: _buildHomeName(),
+                        child: _buildHomeName(context),
                       ),
 
                     //点击之后进入聊天页面
-                    _buildClickChatBox(),
+                    _buildClickChatBox(context),
                   ],
                 ),
                 SizedBox(height: 40),
@@ -308,11 +311,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
 // 関数はWidget　buildの外で書く
-  Widget _buildHomeIconImage() {
+  Widget _buildHomeIconImage(BuildContext context) {
+    final notifier = Provider.of<HomeNotifier>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Image.file(
-        widget.image,
+        notifier.image,
         height: 50,
         width: 50,
         fit: BoxFit.cover,
@@ -320,7 +324,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildHomeIconBlank() {
+  Widget _buildHomeIconBlank(BuildContext context) {
     return Row(
       children: [
         MaterialButton(
@@ -347,9 +351,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildHomeName() {
+  Widget _buildHomeName(BuildContext context) {
+    final notifier = Provider.of<HomeNotifier>(context, listen: false);
     return Text(
-      widget.idtext,
+      notifier.idtext,
       style: TextStyle(
         fontSize: 25,
         color: Colors.grey[700],
@@ -359,11 +364,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildClickChatBox() {
+  Widget _buildClickChatBox(BuildContext content) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-          context,
+          content,
           MaterialPageRoute(
             builder: (context) => ChatPage(),
           ),
@@ -392,7 +397,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  void addUser() {
+  void addUser(BuildContext context) {
+    final notifier = Provider.of<HomeNotifier>(context, listen: false);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -416,7 +422,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         color: Colors.white,
                         child: TextField(
                           maxLines: 20,
-                          onChanged: (String t) {},
+                          onChanged: (String t) {
+                            notifier.chatbox(t);
+                          },
                           decoration: InputDecoration(
                             hintText: 'Please white a new User !',
                             contentPadding: const EdgeInsets.all(10),
@@ -431,7 +439,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         height: 50,
                         width: 70,
                         child: ElevatedButton(
-                          child: Text('Add',style: TextStyle(fontSize: 20),),
+                          child: Text(
+                            'Add',
+                            style: TextStyle(fontSize: 20),
+                          ),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.blueGrey,
                           ),
