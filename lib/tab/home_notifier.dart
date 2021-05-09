@@ -12,13 +12,8 @@ import 'package:wechat_like_memo/tab/home.dart';
 class HomeNotifier extends ChangeNotifier {
   HomeNotifier({
     this.context,
-    this.image,
-    this.idtext,
   });
   final BuildContext context;
-  final File image;
-  final String idtext;
-
   TabController _tabController;
   final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
 
@@ -77,10 +72,7 @@ class HomeNotifier extends ChangeNotifier {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Home(
-          image: _image,
-          idtext: controller.text,
-        ),
+        builder: (context) => Home(),
       ),
     );
   }
