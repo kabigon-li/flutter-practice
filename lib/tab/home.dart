@@ -264,10 +264,20 @@ class _Home extends StatelessWidget {
                 //用户头像，保存ID名称和头像图片之后显示
 
                 //每点加一次加号，增加一个user
-                ListView.builder(
+                ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true, // 高さ関連のエラーが出たら、使う
                   itemCount: userProvider.userList.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return // 分割线
+                        const Divider(
+                      height: 2,
+                      thickness: 2,
+                      color: themeColor,
+                      indent: 10,
+                      endIndent: 10,
+                    );
+                  },
                   itemBuilder: (BuildContext context, int index) {
                     return user(
                       context,
@@ -310,15 +320,6 @@ class _Home extends StatelessWidget {
 
         // 用户之间的间距
         SizedBox(height: 10),
-
-        // 分割线
-        const Divider(
-          height: 2,
-          thickness: 2,
-          color: themeColor,
-          indent: 10,
-          endIndent: 10,
-        ),
       ],
     );
   }
@@ -330,6 +331,7 @@ class _Home extends StatelessWidget {
   ) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
+      //データベース中の画像使う時だけ書くSQliteだけ
       child: Image.memory(
         base64Decode(userNew.userImage),
         gaplessPlayback: true,
