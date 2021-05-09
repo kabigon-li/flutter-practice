@@ -249,7 +249,12 @@ class _Home extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              openAddUserSheet(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(),
+                ),
+              );
             },
             child: Padding(
               padding: const EdgeInsets.all(15.0),
@@ -283,32 +288,6 @@ class _Home extends StatelessWidget {
             child: Column(
               children: [
                 //用户头像，保存ID名称和头像图片之后显示
-                Row(
-                  children: [
-                    //当image不为空时，显示头像
-                    notifier.image != null
-                        ? _buildHomeIconImage(context)
-                        //image为空时显示空
-                        : _buildHomeIconBlank(context),
-                    // 用户ID，保存ID名称和头像图片之后显示
-                    if (notifier.idtext != null)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: _buildHomeName(context),
-                      ),
-
-                    //点击之后进入聊天页面
-                    _buildClickChatBox(context),
-                  ],
-                ),
-                SizedBox(height: 15),
-                const Divider(
-                  height: 2,
-                  thickness: 2,
-                  color: themeColor,
-                  indent: 10,
-                  endIndent: 10,
-                ),
 
                 //每点加一次加号，增加一个user
                 ListView.builder(
@@ -334,29 +313,46 @@ class _Home extends StatelessWidget {
   }
 
   Widget user(BuildContext context, User userNew) {
+    final user = Provider.of<UserProvider>(context, listen: false); // List<User>
     final notifier = Provider.of<HomeNotifier>(context, listen: false);
+
     return Row(
       children: [
-        //当image不为空时，显示头像
-        notifier.image != null
-            ? _buildHomeIconImage(context)
-            //image为空时显示空
-            : _buildHomeIconBlank(context),
-        // 用户ID，保存ID名称和头像图片之后显示
+        //User由大致三部分组成，1。头像 2.昵称 3.显示聊天最后一行
+
+        //1. 头像：默认显示默认头像icon，登陆后显示头像图片
+        userNew.userImage != null
+            ? _buildUserIconImage(context)
+            //image为空时显示默认头像icon
+            : _buildUserIconBlank(context),
+
+        // 2. 昵称：保存ID名称和头像图片之后显示
         if (notifier.idtext != null)
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: _buildHomeName(context),
+            child: _buildUserName(context),
           ),
 
-        //点击之后进入聊天页面
-        _buildClickChatBox(context),
+        //3. 显示聊天最后一行内容（点击之后进入聊天页面）
+        _buildClickChatBox(context, userNew),
+
+        // 用户之间的间距
+        SizedBox(height: 10),
+
+        // 分割线
+        const Divider(
+          height: 2,
+          thickness: 2,
+          color: themeColor,
+          indent: 10,
+          endIndent: 10,
+        ),
       ],
     );
   }
 
 // 関数はWidget　buildの外で書く
-  Widget _buildHomeIconImage(BuildContext context) {
+  Widget _buildUserIconImage(BuildContext context) {
     final notifier = Provider.of<HomeNotifier>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -369,7 +365,7 @@ class _Home extends StatelessWidget {
     );
   }
 
-  Widget _buildHomeIconBlank(BuildContext context) {
+  Widget _buildUserIconBlank(BuildContext context) {
     return Row(
       children: [
         MaterialButton(
@@ -396,7 +392,7 @@ class _Home extends StatelessWidget {
     );
   }
 
-  Widget _buildHomeName(BuildContext context) {
+  Widget _buildUserName(BuildContext context) {
     final notifier = Provider.of<HomeNotifier>(context, listen: false);
     return Text(
       notifier.idtext,
@@ -404,16 +400,16 @@ class _Home extends StatelessWidget {
         fontSize: 25,
         color: Colors.grey[700],
         fontWeight: FontWeight.bold,
-        //fontFamily: 'Cursive',
+        
       ),
     );
   }
 
-  Widget _buildClickChatBox(BuildContext content) {
+  Widget _buildClickChatBox(BuildContext context, userNew) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-          content,
+          context,
           MaterialPageRoute(
             builder: (context) => ChatPage(),
           ),
@@ -424,7 +420,7 @@ class _Home extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'UserName',
+            userNew.userName,
             style: TextStyle(
               fontSize: 22,
               color: fontColor,
@@ -443,7 +439,7 @@ class _Home extends StatelessWidget {
   }
 
   void openAddUserSheet(BuildContext context) {
-   // final userProvider = Provider.of<UserProvider>(context);
+    // final userProvider = Provider.of<UserProvider>(context);
     final notifier = Provider.of<HomeNotifier>(context, listen: false);
     Center(
       child: Container(
@@ -472,10 +468,12 @@ class _Home extends StatelessWidget {
                 obscureText: false,
                 //style: style,
                 decoration: InputDecoration(
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    hintText: "User name",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0))),
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  hintText: "User name",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
+                ),
               ),
               SizedBox(height: 25.0),
 

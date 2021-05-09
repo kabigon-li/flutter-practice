@@ -23,7 +23,13 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController controller;
 
   @override
-  
+  void initState() {
+    super.initState();
+
+    // 空文字で初期化 - TextFormで使う
+    controller = TextEditingController();
+    controller.text = '';
+  }
 
   //头像拦
   iconImageField() {
@@ -131,11 +137,12 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: false,
                   //style: style,
                   decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      hintText: "User name",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0))),
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    hintText: "User name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
+                  ),
                 ),
                 SizedBox(height: 25.0),
 
@@ -151,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                       var fileName;
                       String imgString;
 
-                      fileName = basename(_image.path); 
+                      fileName = basename(_image.path);
 
                       // 画像を文字に変換する
                       // provider、データベースに画像保存する時、base64Stringに変換する
@@ -165,7 +172,6 @@ class _LoginPageState extends State<LoginPage> {
                         userName: controller.text,
                       );
 
-                      
                       userProvider.addUser(usernow);
 
                       userProvider.updateIslogined(true);
