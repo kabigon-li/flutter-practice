@@ -316,7 +316,7 @@ class _Home extends StatelessWidget {
             : _buildUserIconBlank(context),
 
         //3. 显示聊天最后一行内容（点击之后进入聊天页面）
-        _buildClickChatBox(context, userNew),
+        _buildUserName(context, userNew),
 
         // 用户之间的间距
         SizedBox(height: 10),
@@ -329,14 +329,18 @@ class _Home extends StatelessWidget {
     BuildContext context,
     User userNew,
   ) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      //データベース中の画像使う時だけ書くSQliteだけ
-      child: Image.memory(
-        base64Decode(userNew.userImage),
-        gaplessPlayback: true,
-        height: 50,
-        width: 50,
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        //データベース中の画像使う時だけ書くSQliteだけ
+        child: Image.memory(
+          base64Decode(userNew.userImage),
+          gaplessPlayback: true,
+          fit: BoxFit.cover,
+          height: 50,
+          width: 50,
+        ),
       ),
     );
   }
@@ -368,7 +372,7 @@ class _Home extends StatelessWidget {
     );
   }
 
-  Widget _buildClickChatBox(
+  Widget _buildUserName(
     BuildContext context,
     User userNew,
   ) {
@@ -385,18 +389,24 @@ class _Home extends StatelessWidget {
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            userNew.userName,
-            style: TextStyle(
-              fontSize: 22,
-              color: fontColor,
+          Padding(
+            padding: const EdgeInsets.only(left:15),
+            child: Text(
+              userNew.userName,
+              style: TextStyle(
+                fontSize: 25,
+                color: fontColor,
+              ),
             ),
           ),
-          Text(
-            'Click here to chat!',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[400],
+          Padding(
+            padding: const EdgeInsets.only(left:15),
+            child: Text(
+              'Click here to chat!',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[400],
+              ),
             ),
           ),
         ],
