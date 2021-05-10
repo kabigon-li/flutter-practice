@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/Utility/utility.dart';
+import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
@@ -55,38 +56,29 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Row(
         children: [
-          ClipOval(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-              ),
-              child: _image == null
-                  ? Icon(
-                      Icons.add_a_photo_outlined,
-                      color: Colors.black38,
-                      size: 50,
-                    )
-                  : ClipOval(
+          Container(
+            decoration: BoxDecoration(
+                //border: Border.all(color: Colors.grey),
+                ),
+            child: _image == null
+                ? Icon(
+                    Icons.add_a_photo_outlined,
+                    color: Colors.black38,
+                    size: 60,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
                       child: Image.file(
                         _image,
-                        height: 50,
-                        width: 50,
+                        height: 60,
+                        width: 60,
+                        fit: BoxFit.cover,
                       ),
                     ),
-            ),
+                  ),
           ),
-          // Container(
-          //   // decoration: BoxDecoration(
-          //   //   border: Border.all(color: Colors.grey[300]),
-          //   // ),
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(8.0),
-          //     child: Text(
-          //       '⬅️click to choose an icon',
-          //       style: TextStyle(fontSize: 16),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -109,7 +101,23 @@ class _LoginPageState extends State<LoginPage> {
     final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('log in'),
+        centerTitle: true,
+        backgroundColor: themeColor,
+        title: Align(
+          alignment: Alignment.topLeft,
+          child: Row(
+            children: [
+              Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontFamily: 'iconfont',
+                  color: themeColor,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Center(
         child: Container(
@@ -120,14 +128,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // SizedBox(
-                //   height: 155.0,
-                //   child: Image.asset(
-                //     "assets/logo.png",
-                //     fit: BoxFit.contain,
-                //   ),
-                // ),
-                SizedBox(height: 25.0),
+                //SizedBox(height: 25.0),
                 iconImageField(),
                 SizedBox(height: 25.0),
 
@@ -141,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                     contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                     hintText: "User name",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32.0),
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
@@ -149,55 +150,66 @@ class _LoginPageState extends State<LoginPage> {
 
                 // 登陆按钮
                 Material(
-                  elevation: 5.0,
+                  
+                  elevation: 10.0,
                   borderRadius: BorderRadius.circular(30.0),
-                  color: Color(0xff01A0C7),
-                  child: MaterialButton(
-                    // minWidth: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    onPressed: () {
-                      final databaseProvider =
-                          Provider.of<DataBaseProvider>(context, listen: false);
-                      var fileName;
-                      String imgString;
+                  color: Colors.grey[300],
+                  child: SizedBox(
+                       width: 500,
+                       height: 60,
+                    child: MaterialButton(
+                      
+                      // minWidth: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      onPressed: () {
+                        final databaseProvider =
+                            Provider.of<DataBaseProvider>(context, listen: false);
+                        var fileName;
+                        String imgString;
 
-                      fileName = basename(_image.path);
+                        fileName = basename(_image.path);
 
-                      // 画像を文字に変換する
-                      // provider、データベースに画像保存する時、base64Stringに変換する
-                      imgString =
-                          Utility.base64String(_image.readAsBytesSync());
+                        // 画像を文字に変換する
+                        // provider、データベースに画像保存する時、base64Stringに変換する
+                        imgString =
+                            Utility.base64String(_image.readAsBytesSync());
 
-                      // TODO: User追加 - addUser
-                      User userNow = User(
-                        id: userProvider.userList.length,
-                        userImage: imgString,
-                        userName: controller.text,
-                      );
+                        // TODO: User追加 - addUser
+                        User userNow = User(
+                          id: userProvider.userList.length,
+                          userImage: imgString,
+                          userName: controller.text,
+                        );
 
-                      userProvider.addUser(userNow);
+                        userProvider.addUser(userNow);
 
-                      userProvider.updateIslogined(true);
+                        userProvider.updateIslogined(true);
 
-                      databaseProvider.insertUser(
-                        // datebase and todo渡す
-                        user: userNow,
-                      );
+                        databaseProvider.insertUser(
+                          // datebase and todo渡す
+                          user: userNow,
+                        );
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Home(),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Home(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontFamily: 'iconfont',
+                          color: fontColor,
                         ),
-                      );
-                    },
-                    child: Text(
-                      "Login",
-                      textAlign: TextAlign.center,
-                      // style: style.copyWith(
-                      //     color: Colors.white, fontWeight: FontWeight.bold
+                        textAlign: TextAlign.center,
+                        // style: style.copyWith(
+                        //     color: Colors.white, fontWeight: FontWeight.bold
+                      ),
+                      //     ),
                     ),
-                    //     ),
                   ),
                 ),
                 SizedBox(height: 15.0),
