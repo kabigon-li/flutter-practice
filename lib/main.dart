@@ -41,6 +41,7 @@ void main() async {
 
   //todoListはreturnしたやつを代入(read)
   final todoList = await getTodo(database);
+  final userList = await getUser(database);
 
   // 使いたいProviderをここに書く
   runApp(
@@ -85,7 +86,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => UserProvider(
             isLogined: false,
-            userList: [],
+            userList: userList,
           ),
         ),
       ],
@@ -123,7 +124,7 @@ Future<List<User>> getUser(
   final Database db = await database;
 
   // databaseからtodoの全部アプリに持ってくる
-  final List<Map<String, dynamic>> maps = await db.query('user');
+  final List<Map<String, dynamic>> maps = await db.query('users');
 
   //Map<String, dynamic>からTodo型に変換
   return List.generate(maps.length, (i) {

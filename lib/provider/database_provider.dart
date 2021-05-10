@@ -78,7 +78,7 @@ class DataBaseProvider with ChangeNotifier {
     final Database db = await database;
     await db.insert(
       // tableの名前
-      'user',
+      'users',
       user.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -89,7 +89,7 @@ class DataBaseProvider with ChangeNotifier {
   Future<List<User>> getUser() async {
     final Database db = await database;
 
-    final List<Map<String, dynamic>> maps = await db.query('todo');
+    final List<Map<String, dynamic>> maps = await db.query('users');
     return List.generate(maps.length, (i) {
       return User(
         id: maps[i]['id'],
@@ -107,7 +107,7 @@ class DataBaseProvider with ChangeNotifier {
 
     // Remove the Dog from the Database.
     await db.delete(
-      'user',
+      'users',
       // Use a `where` clause to delete a specific dog.
       where: "id = ?",
       // Pass the Dog's id as a whereArg to prevent SQL injection.
@@ -120,7 +120,7 @@ class DataBaseProvider with ChangeNotifier {
   ) async {
     final Database db = await database;
     await db.update(
-      'user',
+      'users',
       user.toMap(),
       // Ensure that the Dog has a matching id.
       where: "id = ?",

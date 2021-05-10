@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:provider/provider.dart';
-import 'package:wechat_like_memo/Utility/utility.dart';
+
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
@@ -227,7 +226,6 @@ class _Home extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-
                   builder: (context) => LoginPage(),
                 ),
               );
@@ -264,8 +262,6 @@ class _Home extends StatelessWidget {
             padding: const EdgeInsets.all(18),
             child: Column(
               children: [
-
-                
                 //用户头像，保存ID名称和头像图片之后显示
 
                 //每点加一次加号，增加一个user
@@ -330,8 +326,6 @@ class _Home extends StatelessWidget {
       ],
     );
   }
-
-  
 
 // 関数はWidget　buildの外で書く
   Widget _buildUserIconImage(
@@ -399,7 +393,7 @@ class _Home extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left:15),
+            padding: const EdgeInsets.only(left: 15),
             child: Text(
               userNew.userName,
               style: TextStyle(
@@ -409,7 +403,7 @@ class _Home extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left:15),
+            padding: const EdgeInsets.only(left: 15),
             child: Text(
               'Click here to chat!',
               style: TextStyle(
