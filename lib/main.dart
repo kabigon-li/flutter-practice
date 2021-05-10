@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/chatRoom_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
@@ -24,9 +25,13 @@ void main() async {
 
     // 初期定義を行う（初期化）
     onCreate: (db, version) {
-      return db.execute(
+      db.execute(
         //tableの中身、todoはテーブルの名前
         "CREATE TABLE todo(id INTEGER PRIMARY KEY, content TEXT, ischecked INTEGER)",
+      );
+      db.execute(
+        //tableの中身、todoはテーブルの名前
+        "CREATE TABLE tweets(id INTEGER PRIMARY KEY, text TEXT, ischecked INTEGER, userName INTEGER, userImage INTEGER)",
       );
     },
 
@@ -89,6 +94,7 @@ void main() async {
   );
 }
 
+
 //todoを取得する(read)
 // getTodoのreturnしたデータ型はlist<Todo>
 Future<List<Todo>> getTodo(
@@ -106,6 +112,27 @@ Future<List<Todo>> getTodo(
       id: maps[i]['id'],
       content: maps[i]['content'],
       isChecked: maps[i]['isChecked'],
+    );
+  });
+}
+//User datebase5/10
+Future<List<User>> getUser(
+  Future<Database> database,
+) async {
+  //　database 本体をdbに代入
+  final Database db = await database;
+
+  // databaseからtodoの全部アプリに持ってくる
+  final List<Map<String, dynamic>> maps = await db.query('user');
+
+  //Map<String, dynamic>からTodo型に変換
+  return List.generate(maps.length, (i) {
+    return User(
+      id: maps[i]['id'],
+      
+      isLogined: maps[i]['isLogined'],
+      userName: maps[i]['userName'],
+      userImage: maps[i]['userImage'],
     );
   });
 }

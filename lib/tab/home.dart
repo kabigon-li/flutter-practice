@@ -261,6 +261,8 @@ class _Home extends StatelessWidget {
             padding: const EdgeInsets.all(18),
             child: Column(
               children: [
+
+                
                 //用户头像，保存ID名称和头像图片之后显示
 
                 //每点加一次加号，增加一个user
@@ -304,7 +306,7 @@ class _Home extends StatelessWidget {
   ) {
     return Row(
       children: [
-        //User由大致三部分组成，1。头像 2.昵称 3.显示聊天最后一行
+        //User由大致三部分组成，1。头像 2.昵称 3.显示最新聊天
 
         //1. 头像：默认显示默认头像icon，登陆后显示头像图片
         userNew.userImage != null
@@ -315,14 +317,18 @@ class _Home extends StatelessWidget {
             //image为空时显示默认头像icon
             : _buildUserIconBlank(context),
 
-        //3. 显示聊天最后一行内容（点击之后进入聊天页面）
+        //2. 昵称
         _buildUserName(context, userNew),
+
+        //3. 显示最新聊天和时间
 
         // 用户之间的间距
         SizedBox(height: 10),
       ],
     );
   }
+
+  
 
 // 関数はWidget　buildの外で書く
   Widget _buildUserIconImage(
