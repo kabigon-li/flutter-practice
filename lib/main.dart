@@ -31,8 +31,9 @@ void main() async {
       );
       db.execute(
         //tableの中身、usersはテーブルの名前
-        "CREATE TABLE users(id INTEGER PRIMARY KEY, text TEXT, ischecked INTEGER, userName INTEGER, userImage INTEGER)",
+        "CREATE TABLE users(id INTEGER PRIMARY KEY, text TEXT, isLogined INTEGER, userName INTEGER, userImage INTEGER)",
       );
+    
     },
 
     // 更新する時、２になる、次の更新３になる、毎回増える
