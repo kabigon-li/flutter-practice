@@ -30,8 +30,8 @@ void main() async {
         "CREATE TABLE todo(id INTEGER PRIMARY KEY, content TEXT, ischecked INTEGER)",
       );
       db.execute(
-        //tableの中身、todoはテーブルの名前
-        "CREATE TABLE tweets(id INTEGER PRIMARY KEY, text TEXT, ischecked INTEGER, userName INTEGER, userImage INTEGER)",
+        //tableの中身、usersはテーブルの名前
+        "CREATE TABLE users(id INTEGER PRIMARY KEY, text TEXT, ischecked INTEGER, userName INTEGER, userImage INTEGER)",
       );
     },
 
@@ -94,7 +94,6 @@ void main() async {
   );
 }
 
-
 //todoを取得する(read)
 // getTodoのreturnしたデータ型はlist<Todo>
 Future<List<Todo>> getTodo(
@@ -115,7 +114,8 @@ Future<List<Todo>> getTodo(
     );
   });
 }
-//User datebase5/10
+
+//User datebase 5/10
 Future<List<User>> getUser(
   Future<Database> database,
 ) async {
@@ -129,7 +129,6 @@ Future<List<User>> getUser(
   return List.generate(maps.length, (i) {
     return User(
       id: maps[i]['id'],
-      
       isLogined: maps[i]['isLogined'],
       userName: maps[i]['userName'],
       userImage: maps[i]['userImage'],

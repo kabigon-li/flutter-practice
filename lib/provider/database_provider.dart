@@ -71,6 +71,19 @@ class DataBaseProvider with ChangeNotifier {
     );
   }
 
+  //userを追加する(create)
+  Future<void> insertUser({
+    User user,
+  }) async {
+    final Database db = await database;
+    await db.insert(
+      // tableの名前
+      'user',
+      user.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
   //userを取得する(read)
 // getUserのreturnしたデータ型はlist<User>
   Future<List<User>> getUser() async {

@@ -221,15 +221,18 @@ class _Home extends StatelessWidget {
           ),
         ),
         actions: [
+          //点击添加按钮进入login页面，添加用户
           GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
+
                   builder: (context) => LoginPage(),
                 ),
               );
             },
+            // 添加按钮
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Icon(
