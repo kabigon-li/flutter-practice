@@ -58,12 +58,12 @@ class _LoginPageState extends State<LoginPage> {
         borderRadius: BorderRadius.circular(10),
         child: Container(
           decoration: BoxDecoration(
-            //border: Border.all(color: Colors.grey),
-          ),
+              //border: Border.all(color: Colors.grey),
+              ),
           child: _image == null
               ? Icon(
                   Icons.add_a_photo,
-                  color: Color.fromRGBO(156, 222, 246 ,1),
+                  color: Color.fromRGBO(124, 166, 221, 1),
                   size: 70,
                 )
               : Padding(
@@ -102,56 +102,43 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: themeColor,
-        title: Align(
-          alignment: Alignment.topLeft,
-          child: Row(
-            children: [
-              Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontFamily: 'iconfont',
-                  color: themeColor,
-                ),
-              ),
-            ],
-          ),
-        ),
+       
       ),
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
+      body: Container(
+        //color: Color.fromRGBO(232, 232, 229, 1),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              //mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                //SizedBox(height: 25.0),
+                SizedBox(height: 40.0),
                 iconImageField(),
-                SizedBox(height: 25.0),
+                SizedBox(height: 40.0),
 
                 // ID name
                 TextFormField(
-                  // controllerは入力されたやつ
-                  controller: controller,
-                  obscureText: false,
-                  //style: style,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    hintText: "User name",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                    // controllerは入力されたやつ
+                    controller: controller,
+                    //obscureText: false,
+                    //style: style,
+                    decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+                      hintText: "User name",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                     ),
                   ),
-                ),
                 SizedBox(height: 25.0),
 
                 // 登陆按钮
                 Material(
                   elevation: 10.0,
                   borderRadius: BorderRadius.circular(30.0),
-                  color: Color.fromRGBO(255, 223, 211,1),
+                  color: Color.fromRGBO(201, 218, 228, 1),
                   child: SizedBox(
                     width: 500,
                     height: 60,
@@ -159,9 +146,9 @@ class _LoginPageState extends State<LoginPage> {
                       // minWidth: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       onPressed: () {
-                        final databaseProvider = Provider.of<DataBaseProvider>(
-                            context,
-                            listen: false);
+                        final databaseProvider =
+                            Provider.of<DataBaseProvider>(context,
+                                listen: false);
                         var fileName;
                         String imgString;
 
@@ -200,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(
                           fontSize: 26,
                           fontFamily: 'iconfont',
-                          color: Color.fromRGBO(55,55,55,1),
+                          color: Color.fromRGBO(74, 61, 105, 1),
                         ),
                         textAlign: TextAlign.center,
                         // style: style.copyWith(
@@ -210,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15.0),
+               
               ],
             ),
           ),
