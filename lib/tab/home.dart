@@ -262,36 +262,38 @@ class _Home extends StatelessWidget {
             ),
           Padding(
             padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                //用户头像，保存ID名称和头像图片之后显示
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  //用户头像，保存ID名称和头像图片之后显示
 
-                //每点加一次加号，增加一个user
-                ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-                  itemCount: userProvider.userList.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return // 分割线
-                        const Divider(
-                      height: 2,
-                      thickness: 2,
-                      color: themeColor,
-                      indent: 10,
-                      endIndent: 10,
-                    );
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    return user(
-                      context,
-                      // 1. Todo(id: 0, content: 'k', isChecked: 0)
-                      // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
-                      userProvider
-                          .userList[index], //调用user这个方法时，这获取画面中更新的每行Todo
-                    );
-                  },
-                ),
-              ],
+                  //每点加一次加号，增加一个user
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+                    itemCount: userProvider.userList.length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return // 分割线
+                          const Divider(
+                        height: 2,
+                        thickness: 2,
+                        color: themeColor,
+                        indent: 10,
+                        endIndent: 10,
+                      );
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      return user(
+                        context,
+                        // 1. Todo(id: 0, content: 'k', isChecked: 0)
+                        // 2. Todo(id: 1, content: 'kabigon', isChecked: 0)
+                        userProvider
+                            .userList[index], //调用user这个方法时，这获取画面中更新的每行Todo
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -319,7 +321,9 @@ class _Home extends StatelessWidget {
             : _buildUserIconBlank(context),
 
         //2. 昵称
-        _buildUserName(context, userNew),
+        userNew.userName != null
+            ? _buildUserName(context, userNew)
+            : _buildUserNameBlank(context),
 
         //3. 显示最新聊天和时间
       ],
@@ -386,9 +390,8 @@ class _Home extends StatelessWidget {
     BuildContext context,
     User userNew,
   ) {
-     final notifier = Provider.of<HomeNotifier>(context);
+    final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
-     
       onTap: () {
         notifier.updateUserName(userNew);
       },
@@ -420,4 +423,89 @@ class _Home extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildUserNameBlank(BuildContext context) {
+  final notifier = Provider.of<HomeNotifier>(context);
+  return GestureDetector(
+      onTap: () {
+         showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 80,
+                //width: size.width,
+                child: Row(
+                  //Row Column中・二個か二個以上widgetの間隙間決める
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: ColoredBox(
+                        color: Colors.white,
+                        child: TextFormField(
+                          maxLines: 20,
+                          //initialValue: text,
+                          onChanged: (String t) {
+                            notifier.chatbox(t);
+                          },
+                          decoration: InputDecoration(
+                            //hintText: todoNew.content,
+                            contentPadding: const EdgeInsets.all(10),
+                            // border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                      width: 60,
+                      child: ElevatedButton(
+                        child: Text('編集'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey,
+                        ),
+                        onPressed: () {
+                          //クタスの実体化、Todoをtodoに代入
+                          notifier.addUserName();
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  
+      },
+      child: Column(
+        //竖列两个组件对其
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              'userName',
+              style: TextStyle(
+                fontSize: 23,
+                color: fontColor,
+              ),
+            ),
+          ),
+          
+        ],
+      ),
+    );
+  }
+
+  
 }

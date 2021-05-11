@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/Utility/utility.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
+import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/home.dart';
 
@@ -155,10 +156,11 @@ class HomeNotifier extends ChangeNotifier {
                       height: 40,
                       width: 70,
                       child: ElevatedButton(
-                        child: Text('編集',),
+                        child: Text(
+                          '編集',
+                        ),
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromRGBO(175, 209, 171,1),
-                          
+                          primary: Color.fromRGBO(175, 209, 171, 1),
                         ),
                         onPressed: () {
                           User newUser = userNew.copyWith(
@@ -168,6 +170,92 @@ class HomeNotifier extends ChangeNotifier {
                           userProvider.updateUser(
                             //1, 渡す 0
                             newUser,
+                          );
+
+                          // 一つ前の画面に戻る
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    // 更新する時にcontextだけ更新したい時、CopyWithを使う
+  }
+
+  void addUserName() async {
+    // TodoProviderの実体化
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 80,
+                //width: size.width,
+                child: Row(
+                  //Row Column中・二個か二個以上widgetの間隙間決める
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 60,
+                      width: 250,
+                      child: ColoredBox(
+                        color: Colors.white,
+                        child: TextFormField(
+                          maxLines: 8,
+                          //initialValue: userNew.userName,
+                          onChanged: (String t) {
+                            chatbox(t);
+                          },
+                          decoration: InputDecoration(
+                            //hintText: userNew.userName,
+                            contentPadding: const EdgeInsets.all(10),
+                            // border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                      width: 70,
+                      child: ElevatedButton(
+                        child: Text(
+                          '編集',
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(175, 209, 171, 1),
+                        ),
+                        onPressed: () {
+                          final userProvider =
+                              Provider.of<UserProvider>(context, listen: false);
+                          final databaseProvider =
+                              Provider.of<DataBaseProvider>(context,
+                                  listen: false);
+                          //クタスの実体化、Todoをtodoに代入
+                          User userNow = User(
+                            id: userProvider.userList.length,
+                            userImage: imgString,
+                            userName: controller.text,
+                          );
+                          userProvider.addUser(userNow);
+
+                          //databaseに追加
+                          databaseProvider.insertUser(
+                            // datebase and todo渡す
+                            user: userNow,
                           );
 
                           // 一つ前の画面に戻る
