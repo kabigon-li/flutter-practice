@@ -262,7 +262,7 @@ class _Home extends StatelessWidget {
               ),
             ),
           Padding(
-            padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.all(8),
             child: Column(
               children: [
                 //用户头像，保存ID名称和头像图片之后显示
@@ -324,8 +324,7 @@ class _Home extends StatelessWidget {
 
         //3. 显示最新聊天和时间
 
-        // 用户之间的间距
-        SizedBox(height: 10),
+        
       ],
     );
   }
@@ -337,10 +336,11 @@ class _Home extends StatelessWidget {
   ) {
     final notifier = Provider.of<HomeNotifier>(context);
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(3.0),
       child: MaterialButton(
         onPressed: () {
             notifier.getImage();
+            notifier.updateUserImage(userNew);
           },
               child: ClipRRect(
           
@@ -405,17 +405,17 @@ class _Home extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 15),
+            padding: const EdgeInsets.only(left: 8),
             child: Text(
               userNew.userName,
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 23,
                 color: fontColor,
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 15),
+            padding: const EdgeInsets.only(left: 8),
             child: Text(
               'Click here to chat!',
               style: TextStyle(

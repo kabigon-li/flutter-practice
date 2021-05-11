@@ -29,6 +29,7 @@ class HomeNotifier extends ChangeNotifier {
   String text = '';
   TextEditingController controller;
   File _image;
+  
 
   final picker = ImagePicker();
   void chatbox(String input) {
@@ -76,4 +77,30 @@ class HomeNotifier extends ChangeNotifier {
       ),
     );
   }
+
+ void updateUserImage(
+    // 更新したいやつここで受け取る
+    User userNew,
+   
+  ) {
+    // TodoProviderの実体化
+    //imgString = Utility.base64String(_image.readAsBytesSync());
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    // 更新する時にcontextだけ更新したい時、CopyWithを使う
+    User newUser = userNew.copyWith(
+      userImage: userNew.userImage,
+    );
+
+    userProvider.updateUser(
+      
+      newUser,
+    );
+
+    // 一つ前の画面に戻る
+    Navigator.of(context).pop();
+  }
+
 }
+
+

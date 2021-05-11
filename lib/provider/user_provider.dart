@@ -30,13 +30,13 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateuser(
+  void updateUser(
     //2, うけとる
-    int id,
+   
     User newuser,
   ) {
     final userIndex = userList.indexWhere(
-      (user) => user.id == id,
+      (user) => user.id == newuser.id,
     );
     userList[userIndex] = newuser;
     notifyListeners();

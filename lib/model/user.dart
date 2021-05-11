@@ -10,6 +10,20 @@ class User {
   final int isLogined;
   final String userImage;
   final String userName;
+ 
+  User copyWith({
+    int id,
+    int isLogined,
+    String userImage,
+    String userName,
+  }) {
+    return User(
+      id: id ?? this.id,
+      isLogined: isLogined ?? this.isLogined,
+      userImage: userImage ?? this.userImage,
+      userName: userName ?? this.userName,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
