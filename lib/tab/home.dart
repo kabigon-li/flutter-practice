@@ -323,7 +323,7 @@ class _Home extends StatelessWidget {
         //2. 昵称
         userNew.userName != null
             ? _buildUserName(context, userNew)
-            : _buildUserNameBlank(context),
+            : _buildUserNameBlank(context,userNew),
 
         //3. 显示最新聊天和时间
       ],
@@ -409,13 +409,23 @@ class _Home extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Text(
-              'Click here to chat!',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[400],
+          GestureDetector(
+            onTap: (){
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatPage(),
+              ),
+            );
+            },
+                      child: Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                'Click here to chat!',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey[400],
+                ),
               ),
             ),
           ),
@@ -424,7 +434,7 @@ class _Home extends StatelessWidget {
     );
   }
 
-  Widget _buildUserNameBlank(BuildContext context) {
+  Widget _buildUserNameBlank(BuildContext context,todoNew) {
   final notifier = Provider.of<HomeNotifier>(context);
   return GestureDetector(
       onTap: () {
@@ -473,7 +483,7 @@ class _Home extends StatelessWidget {
                         ),
                         onPressed: () {
                           //クタスの実体化、Todoをtodoに代入
-                          notifier.addUserName();
+                          notifier.updateUserName(todoNew);
                         },
                       ),
                     )
