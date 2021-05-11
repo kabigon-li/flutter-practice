@@ -54,32 +54,31 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
       },
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                //border: Border.all(color: Colors.grey),
-                ),
-            child: _image == null
-                ? Icon(
-                    Icons.add_a_photo_outlined,
-                    color: Colors.black38,
-                    size: 60,
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.file(
-                        _image,
-                        height: 60,
-                        width: 60,
-                        fit: BoxFit.cover,
-                      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          decoration: BoxDecoration(
+            //border: Border.all(color: Colors.grey),
+          ),
+          child: _image == null
+              ? Icon(
+                  Icons.add_a_photo,
+                  color: Color.fromRGBO(156, 222, 246 ,1),
+                  size: 70,
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.file(
+                      _image,
+                      height: 60,
+                      width: 60,
+                      fit: BoxFit.cover,
                     ),
                   ),
-          ),
-        ],
+                ),
+        ),
       ),
     );
   }
@@ -150,20 +149,19 @@ class _LoginPageState extends State<LoginPage> {
 
                 // 登陆按钮
                 Material(
-                  
                   elevation: 10.0,
                   borderRadius: BorderRadius.circular(30.0),
-                  color: Colors.grey[300],
+                  color: Color.fromRGBO(255, 223, 211,1),
                   child: SizedBox(
-                       width: 500,
-                       height: 60,
+                    width: 500,
+                    height: 60,
                     child: MaterialButton(
-                      
                       // minWidth: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       onPressed: () {
-                        final databaseProvider =
-                            Provider.of<DataBaseProvider>(context, listen: false);
+                        final databaseProvider = Provider.of<DataBaseProvider>(
+                            context,
+                            listen: false);
                         var fileName;
                         String imgString;
 
@@ -202,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(
                           fontSize: 26,
                           fontFamily: 'iconfont',
-                          color: fontColor,
+                          color: Color.fromRGBO(55,55,55,1),
                         ),
                         textAlign: TextAlign.center,
                         // style: style.copyWith(
