@@ -104,11 +104,11 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: themeColor,
        
       ),
-      body: Container(
-        //color: Color.fromRGBO(232, 232, 229, 1),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
+      body: SingleChildScrollView(
+              child: Container(
+          //color: Color.fromRGBO(232, 232, 229, 1),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               //crossAxisAlignment: CrossAxisAlignment.center,
               //mainAxisAlignment: MainAxisAlignment.center,

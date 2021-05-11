@@ -386,14 +386,11 @@ class _Home extends StatelessWidget {
     BuildContext context,
     User userNew,
   ) {
+     final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
+     
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatPage(),
-          ),
-        );
+        notifier.updateUserName(userNew);
       },
       child: Column(
         //竖列两个组件对其
