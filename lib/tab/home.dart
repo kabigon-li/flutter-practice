@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:provider/provider.dart';
 
@@ -27,6 +29,7 @@ class Home extends StatelessWidget {
     );
   }
 }
+
 
 class _Home extends StatelessWidget {
   @override
@@ -332,21 +335,30 @@ class _Home extends StatelessWidget {
     BuildContext context,
     User userNew,
   ) {
+    final notifier = Provider.of<HomeNotifier>(context);
     return Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        //データベース中の画像使う時だけ書くSQliteだけ
-        child: Image.memory(
-          base64Decode(userNew.userImage),
-          gaplessPlayback: true,
-          fit: BoxFit.cover,
-          height: 50,
-          width: 50,
+      padding: const EdgeInsets.all(4.0),
+      child: MaterialButton(
+        onPressed: () {
+            notifier.getImage();
+          },
+              child: ClipRRect(
+          
+          borderRadius: BorderRadius.circular(10),
+          //データベース中の画像使う時だけ書くSQliteだけ
+          child: Image.memory(
+            base64Decode(userNew.userImage),
+            gaplessPlayback: true,
+            fit: BoxFit.cover,
+            height: 50,
+            width: 50,
+          ),
         ),
       ),
     );
   }
+  
+
 
   Widget _buildUserIconBlank(BuildContext context) {
     return Row(
