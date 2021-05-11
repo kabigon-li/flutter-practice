@@ -321,11 +321,18 @@ class _Home extends StatelessWidget {
             : _buildUserIconBlank(context),
 
         //2. 昵称
-        userNew.userName != null
-            ? _buildUserName(context, userNew)
-            : _buildUserNameBlank(context,userNew),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            userNew.userName != null && userNew.userName.isNotEmpty
+                ? _buildUserName(context, userNew)
+                : _buildUserNameBlank(context, userNew),
 
-        //3. 显示最新聊天和时间
+            //3. 显示最新聊天和时间
+            _buildUserChat(context),
+          ],
+        ),
       ],
     );
   }
@@ -409,93 +416,99 @@ class _Home extends StatelessWidget {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: (){
-              Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChatPage(),
-              ),
-            );
-            },
-                      child: Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text(
-                'Click here to chat!',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey[400],
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildUserNameBlank(BuildContext context,todoNew) {
-  final notifier = Provider.of<HomeNotifier>(context);
-  return GestureDetector(
+  Widget _buildUserChat(
+    BuildContext context,
+  ) {
+    return GestureDetector(
       onTap: () {
-         showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          color: Colors.white,
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 80,
-                //width: size.width,
-                child: Row(
-                  //Row Column中・二個か二個以上widgetの間隙間決める
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      height: 200,
-                      width: 200,
-                      child: ColoredBox(
-                        color: Colors.white,
-                        child: TextFormField(
-                          maxLines: 20,
-                          //initialValue: text,
-                          onChanged: (String t) {
-                            notifier.chatbox(t);
-                          },
-                          decoration: InputDecoration(
-                            //hintText: todoNew.content,
-                            contentPadding: const EdgeInsets.all(10),
-                            // border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      width: 60,
-                      child: ElevatedButton(
-                        child: Text('編集'),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blueGrey,
-                        ),
-                        onPressed: () {
-                          //クタスの実体化、Todoをtodoに代入
-                          notifier.updateUserName(todoNew);
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatPage(),
           ),
         );
       },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: Text(
+          'Click here to chat!',
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.grey[400],
+          ),
+        ),
+      ),
     );
-  
+  }
+
+  Widget _buildUserNameBlank(BuildContext context, todoNew) {
+    final notifier = Provider.of<HomeNotifier>(context);
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) {
+            return Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 80,
+                    //width: size.width,
+                    child: Row(
+                      //Row Column中・二個か二個以上widgetの間隙間決める
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          height: 200,
+                          width: 200,
+                          child: ColoredBox(
+                            color: Colors.white,
+
+                            // 输入框
+                            child: TextFormField(
+                              maxLines: 20,
+                              //initialValue: text,
+                              onChanged: (String t) {
+                                notifier.chatbox(t);
+                              },
+                              decoration: InputDecoration(
+                                //hintText: todoNew.content,
+                                contentPadding: const EdgeInsets.all(10),
+                                // border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          width: 60,
+                          child: ElevatedButton(
+                            child: Text('編集'),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blueGrey,
+                            ),
+                            onPressed: () {
+                              //クタスの実体化、Todoをtodoに代入
+                              notifier.updateUserName(todoNew);
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
       },
       child: Column(
         //竖列两个组件对其
@@ -511,11 +524,8 @@ class _Home extends StatelessWidget {
               ),
             ),
           ),
-          
         ],
       ),
     );
   }
-
-  
 }
