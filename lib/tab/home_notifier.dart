@@ -27,9 +27,9 @@ class HomeNotifier extends ChangeNotifier {
   // }
 
   String text = '';
+  String imgString;
   TextEditingController controller;
   File _image;
-  
 
   final picker = ImagePicker();
   void chatbox(String input) {
@@ -46,6 +46,15 @@ class HomeNotifier extends ChangeNotifier {
     } else {
       print('No image selected.');
     }
+
+    var fileName;
+
+    fileName = basename(_image.path);
+
+    // 画像を文字に変換する
+    // provider、データベースに画像保存する時、base64Stringに変換する
+    imgString = Utility.base64String(_image.readAsBytesSync());
+
     notifyListeners();
   }
 
@@ -78,29 +87,26 @@ class HomeNotifier extends ChangeNotifier {
     );
   }
 
- void updateUserImage(
+  void updateUserImage(
     // 更新したいやつここで受け取る
     User userNew,
-   
-  ) {
+  ) async {
     // TodoProviderの実体化
     //imgString = Utility.base64String(_image.readAsBytesSync());
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
+    await getImage();
     // 更新する時にcontextだけ更新したい時、CopyWithを使う
     User newUser = userNew.copyWith(
-      userImage: userNew.userImage,
+      userImage: imgString,
     );
 
     userProvider.updateUser(
-      
       newUser,
     );
+    
 
     // 一つ前の画面に戻る
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
-
 }
-
-

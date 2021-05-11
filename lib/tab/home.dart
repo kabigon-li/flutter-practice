@@ -30,7 +30,6 @@ class Home extends StatelessWidget {
   }
 }
 
-
 class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -323,8 +322,6 @@ class _Home extends StatelessWidget {
         _buildUserName(context, userNew),
 
         //3. 显示最新聊天和时间
-
-        
       ],
     );
   }
@@ -339,11 +336,11 @@ class _Home extends StatelessWidget {
       padding: const EdgeInsets.all(3.0),
       child: MaterialButton(
         onPressed: () {
-            notifier.getImage();
-            notifier.updateUserImage(userNew);
-          },
-              child: ClipRRect(
-          
+          notifier.updateUserImage(userNew);
+          //点击图片后更新头像
+          //notifier.updateUserImage(userNew);
+        },
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           //データベース中の画像使う時だけ書くSQliteだけ
           child: Image.memory(
@@ -357,8 +354,6 @@ class _Home extends StatelessWidget {
       ),
     );
   }
-  
-
 
   Widget _buildUserIconBlank(BuildContext context) {
     return Row(
