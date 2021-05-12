@@ -237,7 +237,7 @@ class _Home extends StatelessWidget {
               padding: const EdgeInsets.all(15.0),
               child: Icon(
                 Icons.add_circle,
-                color: Colors.grey,
+                color: Color.fromRGBO(107, 173, 206,1),
                 size: 30,
               ),
             ),
@@ -308,10 +308,12 @@ class _Home extends StatelessWidget {
     User userNew,
   ) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      //crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         //User由大致三部分组成，1。头像 2.昵称 3.显示最新聊天
 
-        //1. 头像：默认显示默认头像icon，登陆后显示头像图片
+        //1. 用户头像：默认显示默认头像icon，登陆后显示头像图片
         userNew.userImage != null
             ? _buildUserIconImage(
                 context,
@@ -320,7 +322,7 @@ class _Home extends StatelessWidget {
             //image为空时显示默认头像icon
             : _buildUserIconBlank(context),
 
-        //2. 昵称
+        //2. 用户名称
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,10 +331,18 @@ class _Home extends StatelessWidget {
                 ? _buildUserName(context, userNew)
                 : _buildUserNameBlank(context, userNew),
 
-            //3. 显示最新聊天和时间
+        //3. 显示最新聊天和时间
             _buildUserChat(context),
+
+        
           ],
         ),
+
+        //4. 删除用户
+           Padding(
+             padding: const EdgeInsets.only(left:35.0),
+             child: _buildUserDelete(context),
+           ),
       ],
     );
   }
@@ -444,6 +454,10 @@ class _Home extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildUserDelete(BuildContext context,){
+    return Icon(Icons.delete,color: Color.fromRGBO(231, 201, 206,1),);
   }
 
   Widget _buildUserNameBlank(BuildContext context, todoNew) {
