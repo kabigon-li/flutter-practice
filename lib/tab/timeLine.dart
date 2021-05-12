@@ -66,11 +66,8 @@ class _TimeLine extends StatelessWidget {
                 shrinkWrap: true, // 高さ関連のエラーが出たら、使う
                 itemCount: timelineProvider.timelineList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return timeline(
-                    timelineProvider.timelineList[index],
-                    notifier.image,
-                    context
-                  );
+                  return timeline(timelineProvider.timelineList[index],
+                      notifier.image, context);
                 },
               ),
 
@@ -83,12 +80,12 @@ class _TimeLine extends StatelessWidget {
   }
 
   // 上弹窗口
-  showPictureUpdateSheet(BuildContext context) {
+  showPictureUpdateSheet(BuildContext context){
+    final timelineProvider = Provider.of<TimelineProvider>(context,listen:false);
+    final notifier = Provider.of<TimeLineNotifier>(context, listen: false);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        final timelineProvider = Provider.of<TimelineProvider>(context);
-        final notifier = Provider.of<TimeLineNotifier>(context, listen: false);
         return Container(
           color: Colors.white,
           child: SizedBox(
@@ -170,7 +167,6 @@ class _TimeLine extends StatelessWidget {
   }
 
   Widget timeline(
-    
     Timeline timelineNew,
     File image,
     BuildContext context,

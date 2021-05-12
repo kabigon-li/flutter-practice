@@ -6,6 +6,7 @@ import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/Utility/utility.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
+
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
@@ -16,7 +17,7 @@ class HomeNotifier extends ChangeNotifier {
     this.context,
   });
   final BuildContext context;
-  TabController _tabController;
+  //TabController _tabController;
   final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
 
   // @override
@@ -271,20 +272,54 @@ class HomeNotifier extends ChangeNotifier {
         );
       },
     );
-
-   
   }
 
-  void deleteUser(int index,userNew){
-     // TodoProviderクラスのインスタンス(コピー)を変数に代入
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    //　databaseの実体化
-    final databaseProvider =
-        Provider.of<DataBaseProvider>(context, listen: false);
-    userProvider.deleteUser(
-      //1, 渡す 0
-      index,
+  showSimpleDialog() async {
+    String result = "";
+    result = await showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text('Select account'),
+          ),
+          children: <Widget>[
+            SimpleDialogOption(
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.orange.shade200,
+                  child: Icon(Icons.delete_outline),
+                ),
+                title: Text('delete',
+                    style: TextStyle(
+                      color: fontColor,
+                      fontSize: 22,
+                    ),),
+              ),
+              onPressed: () {
+                Navigator.pop(
+                  context,
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
-    databaseProvider.deleteUser(index);
   }
 }
+
+// void deleteUser(int index,userNew){
+//    // TodoProviderクラスのインスタンス(コピー)を変数に代入
+//   final userProvider = Provider.of<UserProvider>(context, listen: false);
+//   //　databaseの実体化
+//   final databaseProvider =
+//       Provider.of<DataBaseProvider>(context, listen: false);
+//   userProvider.deleteUser(
+//     //1, 渡す 0
+//     index,
+//   );
+//   databaseProvider.deleteUser(index);
+// }

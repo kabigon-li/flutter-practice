@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
+
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 
 import 'package:provider/provider.dart';
 
@@ -34,7 +34,7 @@ class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final season = Provider.of<SeasonsMode>(context);
-    final notifier = Provider.of<HomeNotifier>(context);
+    
     final userProvider = Provider.of<UserProvider>(context);
     // print(season.selectedImageNumber);
     return Scaffold(
@@ -410,9 +410,9 @@ class _Home extends StatelessWidget {
       onTap: () {
         notifier.updateUserName(userNew);
       },
-      //  onLongPress: (){
-      //    notifier.deleteUser(userNew.id);
-      //  },
+       onLongPress: (){
+         notifier.showSimpleDialog();
+       },
       child: Column(
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -464,7 +464,7 @@ class _Home extends StatelessWidget {
     final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
       onTap:(){
-       notifier.deleteUser(userNew.id,userNew);
+       //notifier.deleteUser(userNew.id,userNew);
       },
         child: Icon(
       Icons.delete,

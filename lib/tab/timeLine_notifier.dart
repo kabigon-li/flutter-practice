@@ -13,7 +13,7 @@ class TimeLineNotifier extends ChangeNotifier {
     this.color,
   });
   final int id;
-  final String context;
+  final BuildContext context;
   final String imagePath;
   final Color color;
 
