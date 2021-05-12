@@ -42,7 +42,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteuser(int id) {
+  void deleteUser(int id) {
     final userIndex = userList.indexWhere((user) => user.id == id);
     userList.removeAt(userIndex);
     notifyListeners();

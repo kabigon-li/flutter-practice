@@ -237,7 +237,7 @@ class _Home extends StatelessWidget {
               padding: const EdgeInsets.all(15.0),
               child: Icon(
                 Icons.add_circle,
-                color: Color.fromRGBO(107, 173, 206,1),
+                color: Color.fromRGBO(107, 173, 206, 1),
                 size: 30,
               ),
             ),
@@ -331,18 +331,16 @@ class _Home extends StatelessWidget {
                 ? _buildUserName(context, userNew)
                 : _buildUserNameBlank(context, userNew),
 
-        //3. 显示最新聊天和时间
+            //3. 显示最新聊天和时间
             _buildUserChat(context),
-
-        
           ],
         ),
 
         //4. 删除用户
-           Padding(
-             padding: const EdgeInsets.only(left:35.0),
-             child: _buildUserDelete(context),
-           ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0),
+          child: _buildUserDelete(context,userNew),
+        ),
       ],
     );
   }
@@ -412,6 +410,9 @@ class _Home extends StatelessWidget {
       onTap: () {
         notifier.updateUserName(userNew);
       },
+      //  onLongPress: (){
+      //    notifier.deleteUser(userNew.id);
+      //  },
       child: Column(
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -456,11 +457,22 @@ class _Home extends StatelessWidget {
     );
   }
 
-  Widget _buildUserDelete(BuildContext context,){
-    return Icon(Icons.delete,color: Color.fromRGBO(231, 201, 206,1),);
+  Widget _buildUserDelete(
+    BuildContext context,
+    userNew,
+  ) {
+    final notifier = Provider.of<HomeNotifier>(context);
+    return GestureDetector(
+      onTap:(){
+       notifier.deleteUser(userNew.id);
+      },
+        child: Icon(
+      Icons.delete,
+      color: Color.fromRGBO(231, 201, 206, 1),
+    ));
   }
 
-  Widget _buildUserNameBlank(BuildContext context, todoNew) {
+  Widget _buildUserNameBlank(BuildContext context, userNew) {
     final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
       onTap: () {
@@ -511,7 +523,7 @@ class _Home extends StatelessWidget {
                             ),
                             onPressed: () {
                               //クタスの実体化、Todoをtodoに代入
-                              notifier.updateUserName(todoNew);
+                              notifier.updateUserName(userNew);
                             },
                           ),
                         )

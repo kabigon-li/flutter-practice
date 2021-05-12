@@ -272,6 +272,19 @@ class HomeNotifier extends ChangeNotifier {
       },
     );
 
-    // 更新する時にcontextだけ更新したい時、CopyWithを使う
+   
+  }
+
+  void deleteUser(int index){
+     // TodoProviderクラスのインスタンス(コピー)を変数に代入
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    //　databaseの実体化
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
+    userProvider.deleteUser(
+      //1, 渡す 0
+      index,
+    );
+    databaseProvider.deleteUser(index);
   }
 }
