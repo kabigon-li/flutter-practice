@@ -50,7 +50,7 @@ class _TodoTaday extends StatelessWidget {
         title: Align(
           alignment: Alignment.topLeft,
           child: Padding(
-            padding: const EdgeInsets.only(left:30.0),
+            padding: const EdgeInsets.only(left: 30.0),
             child: Text(
               'To do',
               style: TextStyle(
@@ -64,19 +64,20 @@ class _TodoTaday extends StatelessWidget {
         Positioned.fill(
           child: Container(
             decoration: BoxDecoration(
-                image: season.isImageSelected
-                    ? DecorationImage(
-                        image: AssetImage(
-                          imageList[season.selectedImageNumber],
-                        ),
-                        fit: BoxFit.cover,
-                      )
-                    : DecorationImage(
-                        image: AssetImage(
-                          'image/chatpageimage.jpg',
-                        ),
-                        fit: BoxFit.cover,
-                      )),
+              color: Color.fromRGBO(209, 246, 255, 1),
+              // image: season.isImageSelected
+              //     ? DecorationImage(
+              //         image: AssetImage(
+              //           imageList[season.selectedImageNumber],
+              //         ),
+              //         fit: BoxFit.cover,
+              //       )
+              //     : DecorationImage(
+                      
+              //         fit: BoxFit.cover,
+              //       ),
+
+            ),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: SingleChildScrollView(
@@ -108,7 +109,7 @@ class _TodoTaday extends StatelessWidget {
         backgroundColor: Colors.lightBlue[200],
         child: Icon(Icons.add_box_outlined),
         onPressed: () {
-          return openModalBottomSheet(context);
+          return addTodo(context);
         },
       ),
     );
@@ -128,9 +129,10 @@ class _TodoTaday extends StatelessWidget {
           color: Colors.grey[200],
           child: CheckboxListTile(
             // 1.右边打勾框
+            
             activeColor: Colors.blue,
-            value: todoNew.isChecked == 0 ? false : true,
-            onChanged: (v) {
+            value: todoNew.isChecked == 0 ? true : false,
+            onChanged: (value) {
               notifier.updateCheckBox(todoNew);
             },
 
@@ -153,8 +155,8 @@ class _TodoTaday extends StatelessWidget {
                     color: Colors.black,
                     fontSize: 20,
                     decoration: todoNew.isChecked == 0
-                        ? null
-                        : TextDecoration.lineThrough,
+                        ? TextDecoration.lineThrough
+                        : null,
                   ),
                 ),
               ),
@@ -251,7 +253,7 @@ class _TodoTaday extends StatelessWidget {
   }
 
 //添加新的todo
-  void openModalBottomSheet(BuildContext context) {
+  void addTodo(BuildContext context) {
     final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
     showModalBottomSheet(
       context: context,

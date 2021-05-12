@@ -20,6 +20,7 @@ class TodoTodayNotifier extends ChangeNotifier {
   bool checked = false;
   String text = '';
   var flag = false;
+  
 
   // Dart
 
@@ -88,7 +89,7 @@ class TodoTodayNotifier extends ChangeNotifier {
     Todo todoNow = Todo(
       id: todoProvider.todoList.length,
       content: text,
-      isChecked: 0,
+      isChecked: 1,
     );
     todoProvider.addTodo(todoNow);
 
