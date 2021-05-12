@@ -5,6 +5,7 @@ import 'package:wechat_like_memo/model/todo.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
+import 'package:wechat_like_memo/tab/home.dart';
 import 'package:wechat_like_memo/tab/todotoday_notifier.dart';
 
 class TodoTaday extends StatelessWidget {
@@ -41,17 +42,20 @@ class _TodoTaday extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.green[200],
-        leading: notifier.isNavigateFromDrawer == false
-            ? Icon(
-                Icons.account_circle,
-                color: Colors.black,
-              )
-            : Icon(Icons.arrow_back),
-        title: Center(
-          child: Text(
-            'To do',
-            style: TextStyle(fontFamily: 'Cursive', fontSize: 30),
+        backgroundColor: themeColor,
+        // leading: Icon(
+        //   Icons.arrow_back,
+        //   color: fontColor,
+        // ),
+        title: Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left:30.0),
+            child: Text(
+              'To do',
+              style: TextStyle(
+                  fontFamily: 'iconfont', fontSize: 22, color: fontColor),
+            ),
           ),
         ),
       ),
