@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/todo.dart';
-import 'package:wechat_like_memo/provider/database_provider.dart';
+
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
-import 'package:wechat_like_memo/tab/home.dart';
+
 import 'package:wechat_like_memo/tab/todotoday_notifier.dart';
 
 class TodoTaday extends StatelessWidget {
@@ -131,7 +131,7 @@ class _TodoTaday extends StatelessWidget {
             // 1.右边打勾框
             
             activeColor: Colors.blue,
-            value: todoNew.isChecked == 0 ? true : false,
+            value: todoNew.isChecked == 0 ? false : true,
             onChanged: (value) {
               notifier.updateCheckBox(todoNew);
             },
@@ -155,8 +155,8 @@ class _TodoTaday extends StatelessWidget {
                     color: Colors.black,
                     fontSize: 20,
                     decoration: todoNew.isChecked == 0
-                        ? TextDecoration.lineThrough
-                        : null,
+                        ? null
+                        : TextDecoration.lineThrough,
                   ),
                 ),
               ),

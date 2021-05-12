@@ -89,7 +89,7 @@ class TodoTodayNotifier extends ChangeNotifier {
     Todo todoNow = Todo(
       id: todoProvider.todoList.length,
       content: text,
-      isChecked: 1,
+      isChecked: 0,
     );
     todoProvider.addTodo(todoNow);
 

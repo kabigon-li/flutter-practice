@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
 import 'package:wechat_like_memo/model/timeline.dart';
 import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
@@ -47,7 +48,7 @@ class _TimeLineState extends State<TimeLine> {
         toolbarHeight: 100,
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
-        backgroundColor: Colors.green[200],
+        backgroundColor: Color.fromRGBO(201, 218, 228,1),
       ),
       body: SingleChildScrollView(
         child: Container(
