@@ -83,7 +83,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                     // //クタスの実体化、Todoをtodoに代入
                     Timeline timelineNow = Timeline(
                       id: timelineProvider.timelineList.length,
-                      content: text,
+                      context: text,
                       imagePath: imageString,
                     );
 

@@ -9,52 +9,39 @@ import 'package:wechat_like_memo/model/timeline.dart';
 import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
+import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
 
-class TimeLine extends StatefulWidget {
+class TimeLine extends StatelessWidget {
   const TimeLine();
 
   @override
-  _TimeLineState createState() => _TimeLineState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      // Notifier作成
+      create: (_) => TimeLineNotifier(
+        context: context,
+      ),
+      child: _TimeLine(),
+    );
+  }
 }
 
-class _TimeLineState extends State<TimeLine> {
+class _TimeLine extends StatelessWidget {
   @override
-  String text = '';
-
-  void chatbox(String input) {
-    text = input;
-    setState(() {});
-  }
-
-  File _image;
-  final picker = ImagePicker();
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    // 写真取得する（获取照片）
-    if (pickedFile != null) {
-      _image = File(pickedFile.path);
-    } else {
-      print('No image selected.');
-    }
-    setState(() {});
-  }
-
-  Widget build(BuildContext context) {
+  Widget build(context) {
+    final notifier = Provider.of<TimeLineNotifier>(context, listen: false);
     final timelineProvider = Provider.of<TimelineProvider>(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
-        backgroundColor: Color.fromRGBO(201, 218, 228,1),
+        backgroundColor: Color.fromRGBO(201, 218, 228, 1),
       ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
             children: [
-
               // 发朋友圈按钮
               Align(
                 alignment: Alignment.topRight,
@@ -68,7 +55,7 @@ class _TimeLineState extends State<TimeLine> {
                     ),
                   ),
                   onTap: () {
-                    showPictureUpdateSheet();
+                    showPictureUpdateSheet(context);
                   },
                 ),
               ),
@@ -81,7 +68,8 @@ class _TimeLineState extends State<TimeLine> {
                 itemBuilder: (BuildContext context, int index) {
                   return timeline(
                     timelineProvider.timelineList[index],
-                    _image,
+                    notifier.image,
+                    context
                   );
                 },
               ),
@@ -95,12 +83,12 @@ class _TimeLineState extends State<TimeLine> {
   }
 
   // 上弹窗口
-  showPictureUpdateSheet() {
+  showPictureUpdateSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         final timelineProvider = Provider.of<TimelineProvider>(context);
-       
+        final notifier = Provider.of<TimeLineNotifier>(context, listen: false);
         return Container(
           color: Colors.white,
           child: SizedBox(
@@ -124,32 +112,32 @@ class _TimeLineState extends State<TimeLine> {
                 InkWell(
                   onTap: () async {
                     // 点按”アルバムから選択”按钮后，获取相册照片
-                    await getImage();
+                    await notifier.getImage();
 
                     //　timelintInputにpush、image渡す
                     Timeline timelineNow = Timeline(
                       id: timelineProvider.timelineList.length,
-                      content: text,
-                      imagePath: _image.path,
+                      context: notifier.text,
+                      imagePath: notifier.image.path,
                     );
 
                     // 切换画面后，下弹拦收起
                     Navigator.of(context).pop();
 
                     // 只有在选择了照片时，向下一个页面移动
-                    if (_image != null) {
+                    if (notifier.image != null) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => TimelineInputPage(
-                            image: _image, //次のクラスに渡す
+                            image: notifier.image, //次のクラスに渡す
                             timelineNew: timelineNow,
                           ),
                         ),
                       );
                     }
                   },
-                 child: Text(
+                  child: Text(
                     'アルバムから選択',
                     style: TextStyle(fontSize: 16),
                   ),
@@ -182,8 +170,10 @@ class _TimeLineState extends State<TimeLine> {
   }
 
   Widget timeline(
+    
     Timeline timelineNew,
     File image,
+    BuildContext context,
   ) {
     final userProvider = Provider.of<UserProvider>(context);
 
@@ -240,7 +230,7 @@ class _TimeLineState extends State<TimeLine> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      timelineNew.content,
+                      timelineNew.context,
                       style: TextStyle(fontSize: 18),
                     ),
                   ),

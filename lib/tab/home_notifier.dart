@@ -275,7 +275,7 @@ class HomeNotifier extends ChangeNotifier {
    
   }
 
-  void deleteUser(int index){
+  void deleteUser(int index,userNew){
      // TodoProviderクラスのインスタンス(コピー)を変数に代入
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     //　databaseの実体化

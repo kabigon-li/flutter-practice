@@ -464,7 +464,7 @@ class _Home extends StatelessWidget {
     final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
       onTap:(){
-       notifier.deleteUser(userNew.id);
+       notifier.deleteUser(userNew.id,userNew);
       },
         child: Icon(
       Icons.delete,
