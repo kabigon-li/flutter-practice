@@ -7,7 +7,6 @@ import 'package:wechat_like_memo/model/user.dart';
 
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
-import 'package:wechat_like_memo/tab/home_notifier.dart';
 
 class ChatPage extends StatefulWidget {
   ChatPage({
@@ -32,6 +31,10 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     final season = Provider.of<SeasonsMode>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
+    //寻找chatlist 中的userID和 UsernewID 相同的id
+    final currentUserChatList = chatProvider.chatList
+        .where((chat) => chat.userId == widget.userNew.id)
+        .toList();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeColor,
@@ -77,20 +80,20 @@ class _ChatPageState extends State<ChatPage> {
           ListView.builder(
             //physics: const AlwaysScrollableScrollPhysics(),
             shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-            itemCount: chatProvider.chatList.length,
+            itemCount: currentUserChatList.length,
             itemBuilder: (BuildContext context, int index) {
               return chat(
-                chatProvider.chatList[index],
+                currentUserChatList[index],
               );
             },
           ),
-          textfild(),
+          textfild(widget.userNew),
         ],
       ),
     );
   }
 
-  Widget textfild() {
+  Widget textfild(userNew) {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return Padding(
@@ -145,6 +148,7 @@ class _ChatPageState extends State<ChatPage> {
                       final chatNow = Chat(
                         id: chatProvider.chatList.length,
                         content: text,
+                        userId: userNew.id,
                       );
                       chatProvider.addchat(
                         chatNow,

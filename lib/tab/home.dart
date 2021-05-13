@@ -322,41 +322,42 @@ class _Home extends StatelessWidget {
             : _buildUserIconBlank(context),
 
         //2. 用户名称
-        SizedBox(
-          width: 250,
-          height: 60,
-          child: GestureDetector(
-            // 跳转到聊天页面
-            onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatPage(
-                userNew: userNew,
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatPage(
+                  userNew: userNew,
+                ),
               ),
-            ),
-          );
-      },
-            //长按显示dialog，删除用户
-            onLongPress: () {
-              notifier.showSimpleDialog(userNew);
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                userNew.userName != null && userNew.userName.isNotEmpty
-                    ? _buildUserName(context, userNew)
-                    : _buildUserNameBlank(context, userNew),
+            );
+          },
+          child: SizedBox(
+            width: 250,
+            //height: 60,
+            child: GestureDetector(
+              // 跳转到聊天页面
 
-             //3. 当用户名为空白时新建用户
-                _buildUserChat(context, userNew),
-              ],
+              //长按显示dialog，删除用户
+              onLongPress: () {
+                notifier.showSimpleDialog(userNew);
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  userNew.userName != null && userNew.userName.isNotEmpty
+                      ? _buildUserName(context, userNew)
+                      : _buildUserNameBlank(context, userNew),
+
+                  //3. 当用户名为空白时新建用户
+                  _buildUserChat(context, userNew),
+                ],
+              ),
             ),
           ),
         ),
-
-        
       ],
     );
   }
@@ -476,7 +477,6 @@ class _Home extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildUserNameBlank(BuildContext context, userNew) {
     final notifier = Provider.of<HomeNotifier>(context);
