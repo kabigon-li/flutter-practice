@@ -323,10 +323,11 @@ class _Home extends StatelessWidget {
 
         //2. 用户名称
         GestureDetector(
+          //长按显示dialog，删除用户
           onLongPress: () {
-        notifier.showSimpleDialog(userNew);
-      },
-                  child: Column(
+            notifier.showSimpleDialog(userNew);
+          },
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -416,7 +417,7 @@ class _Home extends StatelessWidget {
       },
 
       // 长按用户名称删除用户
-      
+
       child: Column(
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -446,11 +447,12 @@ class _Home extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ChatPage(userNew: userNew,),
+            builder: (context) => ChatPage(
+              userNew: userNew,
+            ),
           ),
         );
       },
-      
       child: Padding(
         padding: const EdgeInsets.only(left: 8),
         child: Text(

@@ -30,7 +30,6 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     final season = Provider.of<SeasonsMode>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
     return Scaffold(
@@ -202,30 +201,35 @@ class _ChatPageState extends State<ChatPage> {
               ),
 
               //对话框文字
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.green[200],
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: SizedBox(
-                    width: 250,
-                    //height: 50,
-                    child: Padding(
-                      padding: const EdgeInsets.all(7.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          updateChat(
-                            chatNew.id,
+              GestureDetector(
+                onLongPress: () {
+                  showSimpleDialog(chatNew);
+                  },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.green[200],
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: SizedBox(
+                      width: 250,
+                      //height: 50,
+                      child: Padding(
+                        padding: const EdgeInsets.all(7.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            updateChat(
+                              chatNew.id,
+                              chatNew.content,
+                            );
+                          },
+                          child: Text(
                             chatNew.content,
-                          );
-                        },
-                        child: Text(
-                          chatNew.content,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
@@ -317,4 +321,44 @@ class _ChatPageState extends State<ChatPage> {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
     chatProvider.deletechat(index);
   }
+
+  void showSimpleDialog(userNew) async {
+                    String result = "";
+                    result = await showDialog(
+                      barrierDismissible: true,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SimpleDialog(
+                          title: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text('Select account'),
+                          ),
+                          children: <Widget>[
+                            SimpleDialogOption(
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.orange.shade200,
+                                  child: Icon(Icons.delete_outline),
+                                ),
+                                title: Text(
+                                  'delete',
+                                  style: TextStyle(
+                                    color: fontColor,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                              ),
+                              // onPressed: () {
+                              //   deleteUser(userNew.id, userNew);
+                              //   Navigator.pop(
+                              //     context,
+                              //   );
+                              // },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+               
 }
