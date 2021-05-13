@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
-
 
 import 'package:provider/provider.dart';
 
@@ -34,7 +32,7 @@ class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final season = Provider.of<SeasonsMode>(context);
-    
+
     final userProvider = Provider.of<UserProvider>(context);
     // print(season.selectedImageNumber);
     return Scaffold(
@@ -307,6 +305,7 @@ class _Home extends StatelessWidget {
     //Userのひとり分、UserimageとUserName使いたい時、User.imageで呼ぶ
     User userNew,
   ) {
+    final notifier = Provider.of<HomeNotifier>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       //crossAxisAlignment: CrossAxisAlignment.end,
@@ -323,17 +322,22 @@ class _Home extends StatelessWidget {
             : _buildUserIconBlank(context),
 
         //2. 用户名称
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            userNew.userName != null && userNew.userName.isNotEmpty
-                ? _buildUserName(context, userNew)
-                : _buildUserNameBlank(context, userNew),
+        GestureDetector(
+          onLongPress: () {
+        notifier.showSimpleDialog(userNew);
+      },
+                  child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              userNew.userName != null && userNew.userName.isNotEmpty
+                  ? _buildUserName(context, userNew)
+                  : _buildUserNameBlank(context, userNew),
 
-            //3. 显示最新聊天和时间
-            _buildUserChat(context),
-          ],
+              //3. 显示最新聊天和时间
+              _buildUserChat(context, userNew),
+            ],
+          ),
         ),
 
         //4. 删除用户
@@ -412,9 +416,7 @@ class _Home extends StatelessWidget {
       },
 
       // 长按用户名称删除用户
-       onLongPress: (){
-         notifier.showSimpleDialog(userNew);
-       },
+      
       child: Column(
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -436,7 +438,9 @@ class _Home extends StatelessWidget {
 
   Widget _buildUserChat(
     BuildContext context,
+    User userNew,
   ) {
+    //final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -446,6 +450,7 @@ class _Home extends StatelessWidget {
           ),
         );
       },
+      
       child: Padding(
         padding: const EdgeInsets.only(left: 8),
         child: Text(

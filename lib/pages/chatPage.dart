@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/chat.dart';
-import 'package:wechat_like_memo/model/user.dart';
+
 
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
-import 'package:wechat_like_memo/provider/user_provider.dart';
+
 
 class ChatPage extends StatefulWidget {
   ChatPage({Key key}) : super(key: key);
@@ -36,7 +36,7 @@ class _ChatPageState extends State<ChatPage> {
           'chatpage',
           style: TextStyle(
             color: Colors.black,
-            fontFamily: 'Cursive',
+            //fontFamily: ,
             fontSize: 30,
           ),
         ),
