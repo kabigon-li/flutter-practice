@@ -322,30 +322,41 @@ class _Home extends StatelessWidget {
             : _buildUserIconBlank(context),
 
         //2. 用户名称
-        GestureDetector(
-          //长按显示dialog，删除用户
-          onLongPress: () {
-            notifier.showSimpleDialog(userNew);
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              userNew.userName != null && userNew.userName.isNotEmpty
-                  ? _buildUserName(context, userNew)
-                  : _buildUserNameBlank(context, userNew),
+        SizedBox(
+          width: 250,
+          height: 60,
+          child: GestureDetector(
+            // 跳转到聊天页面
+            onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatPage(
+                userNew: userNew,
+              ),
+            ),
+          );
+      },
+            //长按显示dialog，删除用户
+            onLongPress: () {
+              notifier.showSimpleDialog(userNew);
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                userNew.userName != null && userNew.userName.isNotEmpty
+                    ? _buildUserName(context, userNew)
+                    : _buildUserNameBlank(context, userNew),
 
-              //3. 显示最新聊天和时间
-              _buildUserChat(context, userNew),
-            ],
+             //3. 当用户名为空白时新建用户
+                _buildUserChat(context, userNew),
+              ],
+            ),
           ),
         ),
 
-        //4. 删除用户
-        // Padding(
-        //   padding: const EdgeInsets.only(left: 35.0),
-        //   child: _buildUserDelete(context,userNew),
-        // ),
+        
       ],
     );
   }
@@ -443,16 +454,16 @@ class _Home extends StatelessWidget {
   ) {
     //final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatPage(
-              userNew: userNew,
-            ),
-          ),
-        );
-      },
+      // onTap: () {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => ChatPage(
+      //         userNew: userNew,
+      //       ),
+      //     ),
+      //   );
+      // },
       child: Padding(
         padding: const EdgeInsets.only(left: 8),
         child: Text(
@@ -466,20 +477,6 @@ class _Home extends StatelessWidget {
     );
   }
 
-  // Widget buildUserDelete(
-  //   BuildContext context,
-  //   userNew,
-  // ) {
-  //   final notifier = Provider.of<HomeNotifier>(context);
-  //   return GestureDetector(
-  //     onTap:(){
-  //      notifier.deleteUser(userNew.id,userNew);
-  //     },
-  //       child: Icon(
-  //     Icons.delete,
-  //     color: Color.fromRGBO(231, 201, 206, 1),
-  //   ));
-  // }
 
   Widget _buildUserNameBlank(BuildContext context, userNew) {
     final notifier = Provider.of<HomeNotifier>(context);

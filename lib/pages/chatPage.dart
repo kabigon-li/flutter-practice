@@ -183,28 +183,17 @@ class _ChatPageState extends State<ChatPage> {
     // final chatProvider = Provider.of<ChatProvider>(context);
     // final size = MediaQuery.of(context).size;
     return Scrollbar(
+      //对话框文字
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              //删除对话框图标
               GestureDetector(
-                child: Icon(
-                  Icons.delete_outline_rounded,
-                  color: Colors.grey,
-                  size: 35,
-                ),
-                onTap: () {
-                  deleteChat(chatNew.id);
-                },
-              ),
-
-              //对话框文字
-              GestureDetector(
+                //删除对话框图标
                 onLongPress: () {
                   showSimpleDialog(chatNew);
-                  },
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: DecoratedBox(
@@ -323,42 +312,41 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void showSimpleDialog(userNew) async {
-                    String result = "";
-                    result = await showDialog(
-                      barrierDismissible: true,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                          title: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text('Select account'),
-                          ),
-                          children: <Widget>[
-                            SimpleDialogOption(
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.orange.shade200,
-                                  child: Icon(Icons.delete_outline),
-                                ),
-                                title: Text(
-                                  'delete',
-                                  style: TextStyle(
-                                    color: fontColor,
-                                    fontSize: 22,
-                                  ),
-                                ),
-                              ),
-                              // onPressed: () {
-                              //   deleteUser(userNew.id, userNew);
-                              //   Navigator.pop(
-                              //     context,
-                              //   );
-                              // },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-               
+    String result = "";
+    result = await showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text('Select account'),
+          ),
+          children: <Widget>[
+            SimpleDialogOption(
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.orange.shade200,
+                  child: Icon(Icons.delete_outline),
+                ),
+                title: Text(
+                  'delete',
+                  style: TextStyle(
+                    color: fontColor,
+                    fontSize: 22,
+                  ),
+                ),
+              ),
+              onPressed: () {
+                deleteChat(userNew.id);
+                Navigator.pop(
+                  context,
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
