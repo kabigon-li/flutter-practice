@@ -446,7 +446,7 @@ class _Home extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ChatPage(),
+            builder: (context) => ChatPage(userNew: userNew,),
           ),
         );
       },

@@ -322,6 +322,8 @@ class HomeNotifier extends ChangeNotifier {
   );
   databaseProvider.deleteUser(index);
 }
+
+
 }
 
 

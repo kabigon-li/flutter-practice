@@ -3,13 +3,17 @@ import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/model/chat.dart';
+import 'package:wechat_like_memo/model/user.dart';
 
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
+import 'package:wechat_like_memo/tab/home_notifier.dart';
 
 class ChatPage extends StatefulWidget {
-  ChatPage({Key key}) : super(key: key);
-
+  ChatPage({
+    this.userNew,
+  });
+  final User userNew;
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -26,6 +30,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     final season = Provider.of<SeasonsMode>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
     return Scaffold(
@@ -36,7 +41,7 @@ class _ChatPageState extends State<ChatPage> {
           child: Row(
             children: [
               Text(
-                'ChatPage',
+                widget.userNew.userName,
                 style: TextStyle(
                   fontSize: 22,
                   fontFamily: 'iconfont',
@@ -61,19 +66,14 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Container(
             decoration: BoxDecoration(
-                image: season.isImageSelected
-                    ? DecorationImage(
-                        image: AssetImage(
-                          imageList[season.selectedImageNumber],
-                        ),
-                        fit: BoxFit.cover,
-                      )
-                    : DecorationImage(
-                        image: AssetImage(
-                          'image/chatpageimage.jpg',
-                        ),
-                        fit: BoxFit.cover,
-                      )),
+              color: Color.fromRGBO(209, 246, 255, 1),
+              // ? DecorationImage(
+              //     image: AssetImage(
+              //       imageList[season.selectedImageNumber],
+              //     ),
+              //     fit: BoxFit.cover,
+              //   )
+            ),
           ),
           ListView.builder(
             //physics: const AlwaysScrollableScrollPhysics(),
