@@ -274,7 +274,7 @@ class HomeNotifier extends ChangeNotifier {
     );
   }
 
-  showSimpleDialog() async {
+  showSimpleDialog(userNew) async {
     String result = "";
     result = await showDialog(
       barrierDismissible: true,
@@ -299,6 +299,7 @@ class HomeNotifier extends ChangeNotifier {
                     ),),
               ),
               onPressed: () {
+                deleteUser(userNew.id, userNew);
                 Navigator.pop(
                   context,
                 );
@@ -309,17 +310,19 @@ class HomeNotifier extends ChangeNotifier {
       },
     );
   }
+  void deleteUser(int index,userNew){
+   // TodoProviderクラスのインスタンス(コピー)を変数に代入
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+  //　databaseの実体化
+  final databaseProvider =
+      Provider.of<DataBaseProvider>(context, listen: false);
+  userProvider.deleteUser(
+    //1, 渡す 0
+    index,
+  );
+  databaseProvider.deleteUser(index);
+}
 }
 
-// void deleteUser(int index,userNew){
-//    // TodoProviderクラスのインスタンス(コピー)を変数に代入
-//   final userProvider = Provider.of<UserProvider>(context, listen: false);
-//   //　databaseの実体化
-//   final databaseProvider =
-//       Provider.of<DataBaseProvider>(context, listen: false);
-//   userProvider.deleteUser(
-//     //1, 渡す 0
-//     index,
-//   );
-//   databaseProvider.deleteUser(index);
-// }
+
+

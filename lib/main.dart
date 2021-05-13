@@ -27,13 +27,12 @@ void main() async {
     onCreate: (db, version) {
       db.execute(
         //tableの中身、todoはテーブルの名前
-        "CREATE TABLE todo(id INTEGER PRIMARY KEY, content TEXT, ischecked INTEGER)",
+        "CREATE TABLE todo(id INTEGER PRIMARY KEY, content TEXT, isChecked INTEGER)",
       );
       db.execute(
         //tableの中身、usersはテーブルの名前
-        "CREATE TABLE users(id INTEGER PRIMARY KEY, text TEXT, isLogined INTEGER, userName INTEGER, userImage INTEGER)",
+        "CREATE TABLE users(id INTEGER PRIMARY KEY, isLogined INTEGER, userName INTEGER, userImage INTEGER)",
       );
-    
     },
 
     // 更新する時、２になる、次の更新３になる、毎回増える

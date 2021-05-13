@@ -337,10 +337,10 @@ class _Home extends StatelessWidget {
         ),
 
         //4. 删除用户
-        Padding(
-          padding: const EdgeInsets.only(left: 35.0),
-          child: _buildUserDelete(context,userNew),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 35.0),
+        //   child: _buildUserDelete(context,userNew),
+        // ),
       ],
     );
   }
@@ -410,8 +410,10 @@ class _Home extends StatelessWidget {
       onTap: () {
         notifier.updateUserName(userNew);
       },
+
+      // 长按用户名称删除用户
        onLongPress: (){
-         notifier.showSimpleDialog();
+         notifier.showSimpleDialog(userNew);
        },
       child: Column(
         //竖列两个组件对其
@@ -457,20 +459,20 @@ class _Home extends StatelessWidget {
     );
   }
 
-  Widget _buildUserDelete(
-    BuildContext context,
-    userNew,
-  ) {
-    final notifier = Provider.of<HomeNotifier>(context);
-    return GestureDetector(
-      onTap:(){
-       //notifier.deleteUser(userNew.id,userNew);
-      },
-        child: Icon(
-      Icons.delete,
-      color: Color.fromRGBO(231, 201, 206, 1),
-    ));
-  }
+  // Widget buildUserDelete(
+  //   BuildContext context,
+  //   userNew,
+  // ) {
+  //   final notifier = Provider.of<HomeNotifier>(context);
+  //   return GestureDetector(
+  //     onTap:(){
+  //      notifier.deleteUser(userNew.id,userNew);
+  //     },
+  //       child: Icon(
+  //     Icons.delete,
+  //     color: Color.fromRGBO(231, 201, 206, 1),
+  //   ));
+  // }
 
   Widget _buildUserNameBlank(BuildContext context, userNew) {
     final notifier = Provider.of<HomeNotifier>(context);
