@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
-import 'package:wechat_like_memo/model/chat.dart';
 
+import 'package:wechat_like_memo/model/chat.dart';
 
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
-
 
 class ChatPage extends StatefulWidget {
   ChatPage({Key key}) : super(key: key);
@@ -31,13 +30,20 @@ class _ChatPageState extends State<ChatPage> {
     final chatProvider = Provider.of<ChatProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
-        title: Text(
-          'chatpage',
-          style: TextStyle(
-            color: Colors.black,
-            //fontFamily: ,
-            fontSize: 30,
+        backgroundColor: themeColor,
+        title: Align(
+          alignment: Alignment.topLeft,
+          child: Row(
+            children: [
+              Text(
+                'ChatPage',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontFamily: 'iconfont',
+                  color: fontColor,
+                ),
+              ),
+            ],
           ),
         ),
         toolbarHeight: 50,
@@ -50,15 +56,6 @@ class _ChatPageState extends State<ChatPage> {
             color: Colors.black,
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(4),
-            child: Icon(
-              Icons.double_arrow_rounded,
-              color: Colors.grey,
-            ),
-          ),
-        ],
       ),
       body: Stack(
         children: [
@@ -85,7 +82,6 @@ class _ChatPageState extends State<ChatPage> {
             itemBuilder: (BuildContext context, int index) {
               return chat(
                 chatProvider.chatList[index],
-                
               );
             },
           ),
@@ -184,7 +180,6 @@ class _ChatPageState extends State<ChatPage> {
   //绿色对话框和删除键
   Widget chat(
     Chat chatNew,
-   
   ) {
     // final chatProvider = Provider.of<ChatProvider>(context);
     // final size = MediaQuery.of(context).size;
