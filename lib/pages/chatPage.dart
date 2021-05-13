@@ -7,6 +7,7 @@ import 'package:wechat_like_memo/model/user.dart';
 
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
+import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   ChatPage({
@@ -20,6 +21,9 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   bool like = false;
   String text = '';
+
+  final now = DateTime.now();
+
   final formKey = GlobalKey<FormState>();
 
   void chatbox(String input) {
@@ -149,6 +153,7 @@ class _ChatPageState extends State<ChatPage> {
                         id: chatProvider.chatList.length,
                         content: text,
                         userId: userNew.id,
+                        createdAt: now.toIso8601String(),
                       );
                       chatProvider.addchat(
                         chatNow,
@@ -186,51 +191,53 @@ class _ChatPageState extends State<ChatPage> {
   ) {
     // final chatProvider = Provider.of<ChatProvider>(context);
     // final size = MediaQuery.of(context).size;
+    String outputFormat = DateFormat('MM-dd-H:mm').format(now);
     return Scrollbar(
       //对话框文字
-      child: Column(
+      child: Row(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              GestureDetector(
-                //删除对话框图标
-                onLongPress: () {
-                  showSimpleDialog(chatNew);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.green[200],
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: SizedBox(
-                      width: 250,
-                      //height: 50,
-                      child: Padding(
-                        padding: const EdgeInsets.all(7.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            updateChat(
-                              chatNew.id,
-                              chatNew.content,
-                            );
-                          },
-                          child: Text(
-                            chatNew.content,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                            ),
-                          ),
+          GestureDetector(
+            //删除对话框图标
+            onLongPress: () {
+              showSimpleDialog(chatNew);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.green[200],
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: SizedBox(
+                  width: 180,
+                  //height: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.all(7.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        updateChat(
+                          chatNew.id,
+                          chatNew.content,
+                        );
+                      },
+                      child: Text(
+                        chatNew.content,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right:8.0),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Text(outputFormat)),
           ),
         ],
       ),
