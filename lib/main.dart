@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:wechat_like_memo/model/chat.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/chatRoom_provider.dart';
@@ -33,6 +34,10 @@ void main() async {
         //tableの中身、usersはテーブルの名前
         "CREATE TABLE users(id INTEGER PRIMARY KEY, isLogined INTEGER, userName INTEGER, userImage INTEGER)",
       );
+      db.execute(
+        //tableの中身、chatはテーブルの名前
+        "CREATE TABLE chat(id INTEGER PRIMARY KEY, content TEXT, userID INTEGER, isLeft INTEGER, createdAt INTEGER, isImage INTEGER, imagePath INTEGER)",
+      );
     },
 
     // 更新する時、２になる、次の更新３になる、毎回増える
@@ -42,6 +47,7 @@ void main() async {
   //todoListはreturnしたやつを代入(read)
   final todoList = await getTodo(database);
   final userList = await getUser(database);
+  final chatList = await getChat(database);
 
   // 使いたいProviderをここに書く
   runApp(
@@ -56,7 +62,7 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => ChatProvider(
-            chatList: [],
+            chatList: chatList,
           ),
         ),
         ChangeNotifierProvider(
@@ -133,6 +139,30 @@ Future<List<User>> getUser(
       isLogined: maps[i]['isLogined'],
       userName: maps[i]['userName'],
       userImage: maps[i]['userImage'],
+    );
+  });
+}
+
+//Chat database 5/14
+Future<List<Chat>> getChat(
+  Future<Database> database,
+) async {
+  //　database 本体をdbに代入
+  final Database db = await database;
+
+  // databaseからtodoの全部アプリに持ってくる
+  final List<Map<String, dynamic>> maps = await db.query('chat');
+
+  //Map<String, dynamic>からTodo型に変換
+  return List.generate(maps.length, (i) {
+    return Chat(
+      id: maps[i]['id'],
+      content: maps[i]['content'],
+      userId: maps[i]['userId'],
+      isLeft: maps[i]['isLeft'],
+      createdAt: maps[i]['createdAt'],
+      isImage: maps[i]['isImage'],
+      imagePath: maps[i]['imagePath'],
     );
   });
 }
