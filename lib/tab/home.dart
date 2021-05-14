@@ -348,8 +348,8 @@ class _Home extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   userNew.userName != null && userNew.userName.isNotEmpty
-                      ? _buildUserName(context, userNew)
-                      : _buildUserNameBlank(context, userNew),
+                  ?_buildUserName(context, userNew)
+                  : _buildUserNameBlank(context, userNew),
 
                   //3. 当用户名为空白时新建用户
                   _buildUserChat(context, userNew),
@@ -427,9 +427,6 @@ class _Home extends StatelessWidget {
       onTap: () {
         notifier.updateUserName(userNew);
       },
-
-      // 长按用户名称删除用户
-
       child: Column(
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -482,66 +479,8 @@ class _Home extends StatelessWidget {
     final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
       onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (BuildContext context) {
-            return Container(
-              color: Colors.white,
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 80,
-                    //width: size.width,
-                    child: Row(
-                      //Row Column中・二個か二個以上widgetの間隙間決める
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        SizedBox(
-                          height: 200,
-                          width: 200,
-                          child: ColoredBox(
-                            color: Colors.white,
-
-                            // 输入框
-                            child: TextFormField(
-                              maxLines: 20,
-                              //initialValue: text,
-                              onChanged: (String t) {
-                                notifier.chatbox(t);
-                              },
-                              decoration: InputDecoration(
-                                //hintText: todoNew.content,
-                                contentPadding: const EdgeInsets.all(10),
-                                // border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          width: 60,
-                          child: ElevatedButton(
-                            child: Text('編集'),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.blueGrey,
-                            ),
-                            onPressed: () {
-                              //クタスの実体化、Todoをtodoに代入
-                              notifier.updateUserName(userNew);
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
+        notifier.updateUserName(userNew);
+         },
       child: Column(
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -549,7 +488,7 @@ class _Home extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8),
             child: Text(
-              'userName',
+              'No userName',
               style: TextStyle(
                 fontSize: 23,
                 color: fontColor,
