@@ -6,14 +6,17 @@ import 'package:wechat_like_memo/model/chat.dart';
 import 'package:wechat_like_memo/model/user.dart';
 
 import 'package:wechat_like_memo/provider/chat_provider.dart';
+import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   ChatPage({
     this.userNew,
+    
   });
   final User userNew;
+  
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -99,6 +102,8 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget textfild(userNew) {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    final databaseProvider =
+      Provider.of<DataBaseProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -158,6 +163,8 @@ class _ChatPageState extends State<ChatPage> {
                       chatProvider.addchat(
                         chatNow,
                       );
+                      databaseProvider.insertChat();
+
                       chatbox('');
 
                       // 入力内容リセット
