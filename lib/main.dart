@@ -36,7 +36,7 @@ void main() async {
       );
       db.execute(
         //tableの中身、chatはテーブルの名前
-        "CREATE TABLE chat(id INTEGER PRIMARY KEY, content TEXT, userID INTEGER, isLeft INTEGER, createdAt INTEGER, isImage INTEGER, imagePath INTEGER)",
+        "CREATE TABLE chat(id INTEGER PRIMARY KEY, content TEXT, userID INTEGER, isLeft INTEGER, createdAt TEXT, isImage INTEGER, imagePath INTEGER)",
       );
     },
 

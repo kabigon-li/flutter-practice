@@ -163,7 +163,7 @@ class _ChatPageState extends State<ChatPage> {
                       chatProvider.addchat(
                         chatNow,
                       );
-                      databaseProvider.insertChat();
+                      //databaseProvider.insertChat();
 
                       chatbox('');
 

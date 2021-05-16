@@ -23,10 +23,9 @@ class Chat {
       'content': content,
       'userId': userId,
       'isLeft': isLeft,
-      'createdAt':createdAt,
+      'createdAt': createdAt,
       'isImage': isImage,
       'imagePath': imagePath,
-
     };
   }
 }
