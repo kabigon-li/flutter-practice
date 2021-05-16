@@ -12,33 +12,37 @@ import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatelessWidget {
-  const ChatPage(User userNew);
-  
-  
+  const ChatPage(
+    this.userNew,
+  );
+
+  final User userNew;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       // Notifier作成
       create: (_) => ChatPageNotifier(
+        //受け取る
         context: context,
+        userNew: userNew,
       ),
       child: _ChatPage(),
     );
   }
 }
 
-
-  
 class _ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   // final season = Provider.of<SeasonsMode>(context);
-   final notifier = Provider.of<ChatPageNotifier>(context);
+    // final season = Provider.of<SeasonsMode>(context);
+    final notifier = Provider.of<ChatPageNotifier>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
     //寻找chatlist 中的userID和 UsernewID 相同的id
     final currentUserChatList = chatProvider.chatList
         .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeColor,
@@ -92,17 +96,17 @@ class _ChatPage extends StatelessWidget {
               );
             },
           ),
-          textfild(context,notifier.userNew),
+          textfild(context, notifier.userNew),
         ],
       ),
     );
   }
 
-  Widget textfild( BuildContext context,userNew) {
+  Widget textfild(BuildContext context, userNew) {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
     final notifier = Provider.of<ChatPageNotifier>(context);
     final databaseProvider =
-      Provider.of<DataBaseProvider>(context, listen: false);
+        Provider.of<DataBaseProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -162,7 +166,7 @@ class _ChatPage extends StatelessWidget {
                       chatProvider.addchat(
                         chatNow,
                       );
-                      //databaseProvider.insertChat();
+                      databaseProvider.insertChat();
 
                       notifier.chatbox('');
 
@@ -198,7 +202,8 @@ class _ChatPage extends StatelessWidget {
   ) {
     // final chatProvider = Provider.of<ChatProvider>(context);
     // final size = MediaQuery.of(context).size;
-   final notifier = Provider.of<ChatPageNotifier>(context);
+    final notifier = Provider.of<ChatPageNotifier>(context);
+     
     String outputFormat = DateFormat('MM-dd-H:mm').format(notifier.now);
     return Scrollbar(
       //对话框文字
@@ -207,7 +212,7 @@ class _ChatPage extends StatelessWidget {
           GestureDetector(
             //删除对话框图标
             onLongPress: () {
-              showSimpleDialog(context,chatNew);
+              showSimpleDialog(context, chatNew);
             },
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -228,6 +233,7 @@ class _ChatPage extends StatelessWidget {
                           chatNew.id,
                           chatNew.content,
                         );
+                        
                       },
                       child: Text(
                         chatNew.content,
@@ -243,10 +249,9 @@ class _ChatPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right:8.0),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Text(outputFormat)),
+            padding: const EdgeInsets.only(right: 8.0),
+            child:
+                Align(alignment: Alignment.topRight, child: Text(outputFormat)),
           ),
         ],
       ),
@@ -258,8 +263,10 @@ class _ChatPage extends StatelessWidget {
     int index,
     String input,
   ) {
-    final notifier = Provider.of<ChatPageNotifier>(context);
+    final notifier = Provider.of<ChatPageNotifier>(context, listen: false);
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    final databaseProvider =
+      Provider.of<DataBaseProvider>(context, listen: false);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -314,6 +321,7 @@ class _ChatPage extends StatelessWidget {
                             index,
                             newChat,
                           );
+                          databaseProvider.updateChat(newChat);
                           Navigator.of(context).pop();
                         },
                       ),
@@ -328,13 +336,17 @@ class _ChatPage extends StatelessWidget {
     );
   }
 
-  void deleteChat(BuildContext context,int index) {
-    
+  void deleteChat(BuildContext context, int index) {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    final databaseProvider =
+      Provider.of<DataBaseProvider>(context, listen: false);
+
     chatProvider.deletechat(index);
+    
+    databaseProvider.deleteChat(index);
   }
 
-  void showSimpleDialog(BuildContext context,userNew) async {
+  void showSimpleDialog(BuildContext context, userNew) async {
     String result = "";
     result = await showDialog(
       barrierDismissible: true,
@@ -362,7 +374,7 @@ class _ChatPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                deleteChat(context,notifier.userNew.id);
+                deleteChat(context, notifier.userNew.id);
                 Navigator.pop(
                   context,
                 );
@@ -373,5 +385,4 @@ class _ChatPage extends StatelessWidget {
       },
     );
   }
-
 }

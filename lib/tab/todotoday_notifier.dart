@@ -20,7 +20,6 @@ class TodoTodayNotifier extends ChangeNotifier {
   bool checked = false;
   String text = '';
   var flag = false;
-  
 
   // Dart
 
@@ -39,6 +38,8 @@ class TodoTodayNotifier extends ChangeNotifier {
     Todo todoNew,
   ) {
     // TodoProviderの実体化
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
 
     // 更新する時にcontextだけ更新したい時、CopyWithを使う
@@ -47,7 +48,11 @@ class TodoTodayNotifier extends ChangeNotifier {
     );
 
     todoProvider.updateTodo(
-      //1, 渡す 0
+      //1, 渡す 0f
+      newTodo,
+    );
+
+    databaseProvider.updateTodo(
       newTodo,
     );
 

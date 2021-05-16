@@ -34,6 +34,7 @@ class _Home extends StatelessWidget {
     final season = Provider.of<SeasonsMode>(context);
 
     final userProvider = Provider.of<UserProvider>(context);
+    User userNew;
     // print(season.selectedImageNumber);
     return Scaffold(
       // 左ドロアー
@@ -137,9 +138,9 @@ class _Home extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChatPage(),
-                        ),
-                      );
+                          builder: (context) => ChatPage(userNew)),
+                        );
+                      
                       //Navigator.of(context).pushNamed('/chatpage');
                     },
                     child: Text('Move to chatpage'),
@@ -149,7 +150,7 @@ class _Home extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChatPage(),
+                          builder: (context) => ChatPage(userNew),
                         ),
                       );
                       //Navigator.of(context).pushNamed('/chatpage');
