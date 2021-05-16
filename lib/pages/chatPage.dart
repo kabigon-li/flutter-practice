@@ -4,43 +4,40 @@ import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/model/chat.dart';
 import 'package:wechat_like_memo/model/user.dart';
+import 'package:wechat_like_memo/pages/chatPage_notifier.dart';
 
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
-import 'package:wechat_like_memo/provider/settings_provider.dart';
+
 import 'package:intl/intl.dart';
 
-class ChatPage extends StatefulWidget {
-  ChatPage({
-    this.userNew,
-    
-  });
-  final User userNew;
+class ChatPage extends StatelessWidget {
+  const ChatPage(User userNew);
+  
   
   @override
-  _ChatPageState createState() => _ChatPageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      // Notifier作成
+      create: (_) => ChatPageNotifier(
+        context: context,
+      ),
+      child: _ChatPage(),
+    );
+  }
 }
 
-class _ChatPageState extends State<ChatPage> {
-  bool like = false;
-  String text = '';
 
-  final now = DateTime.now();
-
-  final formKey = GlobalKey<FormState>();
-
-  void chatbox(String input) {
-    text = input;
-    setState(() {});
-  }
-
+  
+class _ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final season = Provider.of<SeasonsMode>(context);
+   // final season = Provider.of<SeasonsMode>(context);
+   final notifier = Provider.of<ChatPageNotifier>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
     //寻找chatlist 中的userID和 UsernewID 相同的id
     final currentUserChatList = chatProvider.chatList
-        .where((chat) => chat.userId == widget.userNew.id)
+        .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +47,7 @@ class _ChatPageState extends State<ChatPage> {
           child: Row(
             children: [
               Text(
-                widget.userNew.userName,
+                notifier.userNew.userName,
                 style: TextStyle(
                   fontSize: 22,
                   fontFamily: 'iconfont',
@@ -90,18 +87,20 @@ class _ChatPageState extends State<ChatPage> {
             itemCount: currentUserChatList.length,
             itemBuilder: (BuildContext context, int index) {
               return chat(
+                context,
                 currentUserChatList[index],
               );
             },
           ),
-          textfild(widget.userNew),
+          textfild(context,notifier.userNew),
         ],
       ),
     );
   }
 
-  Widget textfild(userNew) {
+  Widget textfild( BuildContext context,userNew) {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    final notifier = Provider.of<ChatPageNotifier>(context);
     final databaseProvider =
       Provider.of<DataBaseProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
@@ -118,7 +117,7 @@ class _ChatPageState extends State<ChatPage> {
               children: [
                 //textfild
                 Form(
-                  key: formKey,
+                  key: notifier.formKey,
                   child: SizedBox(
                     height: 90,
                     width: size.width * .7,
@@ -127,7 +126,7 @@ class _ChatPageState extends State<ChatPage> {
                       child: TextFormField(
                         maxLines: 20,
                         onChanged: (String text) {
-                          chatbox(text);
+                          notifier.chatbox(text);
                         },
                         decoration: InputDecoration(
                           hintText: 'Tell me your thinking',
@@ -156,19 +155,19 @@ class _ChatPageState extends State<ChatPage> {
                     onPressed: () {
                       final chatNow = Chat(
                         id: chatProvider.chatList.length,
-                        content: text,
+                        content: notifier.text,
                         userId: userNew.id,
-                        createdAt: now.toIso8601String(),
+                        createdAt: notifier.now.toIso8601String(),
                       );
                       chatProvider.addchat(
                         chatNow,
                       );
                       //databaseProvider.insertChat();
 
-                      chatbox('');
+                      notifier.chatbox('');
 
                       // 入力内容リセット
-                      formKey.currentState.reset();
+                      notifier.formKey.currentState.reset();
 
                       // フォームにフォーカスがある際に、解除する(输入栏收回)
                       FocusScope.of(context).requestFocus(FocusNode());
@@ -194,11 +193,13 @@ class _ChatPageState extends State<ChatPage> {
 
   //绿色对话框和删除键
   Widget chat(
+    BuildContext context,
     Chat chatNew,
   ) {
     // final chatProvider = Provider.of<ChatProvider>(context);
     // final size = MediaQuery.of(context).size;
-    String outputFormat = DateFormat('MM-dd-H:mm').format(now);
+   final notifier = Provider.of<ChatPageNotifier>(context);
+    String outputFormat = DateFormat('MM-dd-H:mm').format(notifier.now);
     return Scrollbar(
       //对话框文字
       child: Row(
@@ -206,7 +207,7 @@ class _ChatPageState extends State<ChatPage> {
           GestureDetector(
             //删除对话框图标
             onLongPress: () {
-              showSimpleDialog(chatNew);
+              showSimpleDialog(context,chatNew);
             },
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -223,6 +224,7 @@ class _ChatPageState extends State<ChatPage> {
                     child: GestureDetector(
                       onTap: () {
                         updateChat(
+                          context,
                           chatNew.id,
                           chatNew.content,
                         );
@@ -252,9 +254,11 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void updateChat(
+    BuildContext context,
     int index,
     String input,
   ) {
+    final notifier = Provider.of<ChatPageNotifier>(context);
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
     showModalBottomSheet(
       context: context,
@@ -281,7 +285,7 @@ class _ChatPageState extends State<ChatPage> {
                           maxLines: 20,
                           initialValue: input,
                           onChanged: (String t) {
-                            chatbox(t);
+                            notifier.chatbox(t);
                           },
                           decoration: InputDecoration(
                             //hintText: 'chat',
@@ -303,7 +307,7 @@ class _ChatPageState extends State<ChatPage> {
                           //クタスの実体化、Todoをtodoに代入
                           Chat newChat = Chat(
                             id: index,
-                            content: text,
+                            content: notifier.text,
                           );
                           chatProvider.updatechat(
                             //1, 渡す 0
@@ -324,17 +328,19 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void deleteChat(int index) {
+  void deleteChat(BuildContext context,int index) {
+    
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
     chatProvider.deletechat(index);
   }
 
-  void showSimpleDialog(userNew) async {
+  void showSimpleDialog(BuildContext context,userNew) async {
     String result = "";
     result = await showDialog(
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
+        final notifier = Provider.of<ChatPageNotifier>(context);
         return SimpleDialog(
           title: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -356,7 +362,7 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               ),
               onPressed: () {
-                deleteChat(userNew.id);
+                deleteChat(context,notifier.userNew.id);
                 Navigator.pop(
                   context,
                 );
@@ -367,4 +373,5 @@ class _ChatPageState extends State<ChatPage> {
       },
     );
   }
+
 }

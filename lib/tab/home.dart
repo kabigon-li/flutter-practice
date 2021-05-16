@@ -328,7 +328,8 @@ class _Home extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => ChatPage(
-                  userNew: userNew,
+                  
+                  userNew,
                 ),
               ),
             );
