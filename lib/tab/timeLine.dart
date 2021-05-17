@@ -189,8 +189,8 @@ class _TimeLine extends StatelessWidget {
               Row(
                 children: [
                   // ID icon
-                  userProvider.isLogined == true
-                      ? ClipOval(
+                  // userProvider.isLogined == true
+                      ClipOval(
                           child: Image.memory(
                             base64Decode(
                               userProvider.getFirstUser().userImage,
@@ -199,9 +199,9 @@ class _TimeLine extends StatelessWidget {
                             width: 50,
                             fit: BoxFit.cover,
                           ),
-                        )
+                        ),
                       //image为空时显示空
-                      : Container(),
+                      //: Container(),
 
                   // ID name
                   Padding(
@@ -210,9 +210,9 @@ class _TimeLine extends StatelessWidget {
                       userProvider.getFirstUser().userName,
                       style: TextStyle(
                         fontSize: 22,
-                        color: Colors.grey[700],
+                        color: Colors.blueGrey,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Cursive',
+                        fontFamily: 'iconfont',
                       ),
                     ),
                   ),
