@@ -97,7 +97,8 @@ class HomeNotifier extends ChangeNotifier {
     // TodoProviderの実体化
     //imgString = Utility.base64String(_image.readAsBytesSync());
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
     await getImage();
     // 更新する時にcontextだけ更新したい時、CopyWithを使う
     User newUser = userNew.copyWith(
@@ -105,6 +106,10 @@ class HomeNotifier extends ChangeNotifier {
     );
 
     userProvider.updateUser(
+      newUser,
+    );
+
+    databaseProvider.updateUser(
       newUser,
     );
 
