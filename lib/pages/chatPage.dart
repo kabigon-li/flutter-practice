@@ -103,10 +103,9 @@ class _ChatPage extends StatelessWidget {
   }
 
   Widget textfild(BuildContext context, userNew) {
-    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    
     final notifier = Provider.of<ChatPageNotifier>(context);
-    final databaseProvider =
-        Provider.of<DataBaseProvider>(context, listen: false);
+   
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -157,33 +156,9 @@ class _ChatPage extends StatelessWidget {
 
                     //チャット追加
                     onPressed: () {
-                      final chatNow = Chat(
-                        id: chatProvider.chatList.length,
-                        content: notifier.text,
-                        userId: userNew.id,
-                        createdAt: notifier.now.toIso8601String(),
-                      );
-                      chatProvider.addchat(
-                        chatNow,
-                      );
-                      databaseProvider.insertChat();
+                      notifier.addChatContent();
 
-                      notifier.chatbox('');
-
-                      // 入力内容リセット
-                      notifier.formKey.currentState.reset();
-
-                      // フォームにフォーカスがある際に、解除する(输入栏收回)
-                      FocusScope.of(context).requestFocus(FocusNode());
-
-                      //收起输入框
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) {
-                      //       return ChatPage();
-                      //     },
-                      //   ),
-                      // );
+          
                     },
                   ),
                 ),
