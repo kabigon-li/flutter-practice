@@ -96,16 +96,14 @@ class _ChatPage extends StatelessWidget {
               );
             },
           ),
-          textfild(context, notifier.userNew),
+          textfild(context),
         ],
       ),
     );
   }
 
-  Widget textfild(BuildContext context, userNew) {
-    
+  Widget textfild(BuildContext context) {
     final notifier = Provider.of<ChatPageNotifier>(context);
-   
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -157,8 +155,6 @@ class _ChatPage extends StatelessWidget {
                     //チャット追加
                     onPressed: () {
                       notifier.addChatContent();
-
-          
                     },
                   ),
                 ),
@@ -286,7 +282,7 @@ class _ChatPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           //クタスの実体化、Todoをtodoに代入
-                          notifier. updateChatContent(chatNew);
+                          notifier.updateChatContent(chatNew);
                         },
                       ),
                     )

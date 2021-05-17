@@ -37,29 +37,31 @@ class _TimeLine extends StatelessWidget {
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
         backgroundColor: Color.fromRGBO(201, 218, 228, 1),
+        actions: [
+          // 发朋友圈按钮
+          Align(
+            alignment: Alignment.topRight,
+            child: GestureDetector(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Icon(
+                  Icons.add_a_photo,
+                  color: Colors.grey,
+                  size: 45,
+                ),
+              ),
+              onTap: () {
+                showPictureUpdateSheet(context);
+              },
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
             children: [
-              // 发朋友圈按钮
-              Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Icon(
-                      Icons.add_a_photo,
-                      color: Colors.grey,
-                      size: 45,
-                    ),
-                  ),
-                  onTap: () {
-                    showPictureUpdateSheet(context);
-                  },
-                ),
-              ),
-
+  
               // timeline
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -71,7 +73,6 @@ class _TimeLine extends StatelessWidget {
                 },
               ),
 
-              //投稿内容追加アイコン
             ],
           ),
         ),
@@ -80,8 +81,9 @@ class _TimeLine extends StatelessWidget {
   }
 
   // 上弹窗口
-  showPictureUpdateSheet(BuildContext context){
-    final timelineProvider = Provider.of<TimelineProvider>(context,listen:false);
+  showPictureUpdateSheet(BuildContext context) {
+    final timelineProvider =
+        Provider.of<TimelineProvider>(context, listen: false);
     final notifier = Provider.of<TimeLineNotifier>(context, listen: false);
     showModalBottomSheet(
       context: context,

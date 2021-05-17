@@ -138,9 +138,9 @@ class _Home extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChatPage(userNew)),
-                        );
-                      
+                            builder: (context) => ChatPage(userNew)),
+                      );
+
                       //Navigator.of(context).pushNamed('/chatpage');
                     },
                     child: Text('Move to chatpage'),
@@ -329,7 +329,6 @@ class _Home extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => ChatPage(
-                  
                   userNew,
                 ),
               ),
@@ -350,8 +349,8 @@ class _Home extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   userNew.userName != null && userNew.userName.isNotEmpty
-                  ?_buildUserName(context, userNew)
-                  : _buildUserNameBlank(context, userNew),
+                      ? _buildUserName(context, userNew)
+                      : _buildUserNameBlank(context, userNew),
 
                   //3. 当用户名为空白时新建用户
                   _buildUserChat(context, userNew),
@@ -482,7 +481,7 @@ class _Home extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         notifier.updateUserName(userNew);
-         },
+      },
       child: Column(
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
