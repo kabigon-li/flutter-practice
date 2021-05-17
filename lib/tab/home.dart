@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
+import 'package:wechat_like_memo/pages/chatPage_notifier.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
+import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/home_notifier.dart';
@@ -34,6 +36,7 @@ class _Home extends StatelessWidget {
     final season = Provider.of<SeasonsMode>(context);
 
     final userProvider = Provider.of<UserProvider>(context);
+
     User userNew;
     // print(season.selectedImageNumber);
     return Scaffold(
@@ -424,6 +427,12 @@ class _Home extends StatelessWidget {
     User userNew,
   ) {
     final notifier = Provider.of<HomeNotifier>(context);
+    final chatProvider = Provider.of<ChatProvider>(context);
+
+    final lastChat = chatProvider.chatList.firstWhere(
+      (chat) => chat.userId == userNew.id,
+      orElse: null,
+    );
     return GestureDetector(
       onTap: () {
         notifier.updateUserName(userNew);
@@ -432,15 +441,47 @@ class _Home extends StatelessWidget {
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Text(
-              userNew.userName,
-              style: TextStyle(
-                fontSize: 23,
-                color: fontColor,
+          Row(
+            children: [
+              //点击用户名，更改新的用户名
+              SizedBox(
+                width: 80,
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: ColoredBox(
+                    color: Colors.cyan,
+                    child: Text(
+                      userNew.userName,
+                      style: TextStyle(
+                        fontSize: 23,
+                        color: fontColor,
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
+              //点击用户名称右边进入聊天页面
+              GestureDetector(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: ColoredBox(
+                    color: Colors.blueGrey,
+                    child: SizedBox(
+                      width: 160,
+                      height:40,
+                      child: Text(
+                        '',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ],
       ),
@@ -451,25 +492,28 @@ class _Home extends StatelessWidget {
     BuildContext context,
     User userNew,
   ) {
+    final chatProvider = Provider.of<ChatProvider>(context);
+
+    final lastChat = chatProvider.chatList.firstWhere(
+      (chat) => chat.userId == userNew.id,
+      orElse: null,
+    );
     //final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
-      // onTap: () {
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => ChatPage(
-      //         userNew: userNew,
-      //       ),
-      //     ),
-      //   );
-      // },
       child: Padding(
         padding: const EdgeInsets.only(left: 8),
-        child: Text(
-          'Click here to chat!',
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.grey[400],
+        child: ColoredBox(
+          color: Colors.blueGrey,
+          child: SizedBox(
+            width: 300,
+            height:30,
+            child: Text(
+              chatProvider.chatList != null ? lastChat.content.toString() : '',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[400],
+              ),
+            ),
           ),
         ),
       ),
