@@ -308,13 +308,14 @@ class _ChatPage extends StatelessWidget {
     databaseProvider.deleteChat(index);
   }
 
-  void showSimpleDialog(BuildContext context, userNew) async {
+  void showSimpleDialog(BuildContext context, chatNew) async {
+    final notifier = Provider.of<ChatPageNotifier>(context, listen: false);
     String result = "";
     result = await showDialog(
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
-        final notifier = Provider.of<ChatPageNotifier>(context);
+        
         return SimpleDialog(
           title: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -336,7 +337,7 @@ class _ChatPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                deleteChat(context, notifier.userNew.id);
+                deleteChat(context, chatNew.id);
                 Navigator.pop(
                   context,
                 );

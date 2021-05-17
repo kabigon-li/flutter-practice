@@ -427,64 +427,63 @@ class _Home extends StatelessWidget {
     User userNew,
   ) {
     final notifier = Provider.of<HomeNotifier>(context);
-    final chatProvider = Provider.of<ChatProvider>(context);
 
-    final lastChat = chatProvider.chatList.firstWhere(
-      (chat) => chat.userId == userNew.id,
-      orElse: null,
-    );
-    return GestureDetector(
-      onTap: () {
-        notifier.updateUserName(userNew);
-      },
-      child: Column(
-        //竖列两个组件对其
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            notifier.updateUserName(userNew);
+          },
+          child: Column(
+            //竖列两个组件对其
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //点击用户名，更改新的用户名
-              SizedBox(
-                width: 80,
-                height: 40,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: ColoredBox(
-                    color: Colors.cyan,
-                    child: Text(
-                      userNew.userName,
-                      style: TextStyle(
-                        fontSize: 23,
-                        color: fontColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              //点击用户名称右边进入聊天页面
-              GestureDetector(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: ColoredBox(
-                    color: Colors.blueGrey,
-                    child: SizedBox(
-                      width: 160,
-                      height:40,
+              Row(
+                children: [
+                  //点击用户名，更改新的用户名
+                  SizedBox(
+                    width: 80,
+                    height: 40,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
                       child: Text(
-                        '',
+                        userNew.userName,
                         style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey[400],
+                          fontSize: 25,
+                          color: fontColor,
                         ),
                       ),
                     ),
                   ),
-                ),
-              )
+                ],
+              ),
             ],
           ),
-        ],
-      ),
+        ),
+
+        //点击用户名称右边进入聊天页面
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatPage(userNew),
+              ),
+            );
+          },
+          child: SizedBox(
+            width: 170,
+            height: 40,
+            child: Text(
+              '',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey[400],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -494,25 +493,30 @@ class _Home extends StatelessWidget {
   ) {
     final chatProvider = Provider.of<ChatProvider>(context);
 
-    final lastChat = chatProvider.chatList.firstWhere(
+    final lastChat = chatProvider?.chatList?.lastWhere(
       (chat) => chat.userId == userNew.id,
-      orElse: null,
+      orElse: () => null,
     );
     //final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatPage(userNew),
+          ),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.only(left: 8),
-        child: ColoredBox(
-          color: Colors.blueGrey,
-          child: SizedBox(
-            width: 300,
-            height:30,
-            child: Text(
-              chatProvider.chatList != null ? lastChat.content.toString() : '',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[400],
-              ),
+        child: SizedBox(
+          width: 300,
+          height: 30,
+          child: Text(
+            lastChat != null ? lastChat.content.toString() : '',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey[400],
             ),
           ),
         ),
