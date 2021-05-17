@@ -203,7 +203,7 @@ class _ChatPage extends StatelessWidget {
     // final chatProvider = Provider.of<ChatProvider>(context);
     // final size = MediaQuery.of(context).size;
     final notifier = Provider.of<ChatPageNotifier>(context);
-     
+
     String outputFormat = DateFormat('MM-dd-H:mm').format(notifier.now);
     return Scrollbar(
       //对话框文字
@@ -228,12 +228,12 @@ class _ChatPage extends StatelessWidget {
                     padding: const EdgeInsets.all(7.0),
                     child: GestureDetector(
                       onTap: () {
-                        updateChat(
+                        updateChatBottomSheet(
                           context,
                           chatNew.id,
                           chatNew.content,
+                          chatNew,
                         );
-                        
                       },
                       child: Text(
                         chatNew.content,
@@ -258,15 +258,14 @@ class _ChatPage extends StatelessWidget {
     );
   }
 
-  void updateChat(
+  void updateChatBottomSheet(
     BuildContext context,
     int index,
     String input,
+    Chat chatNew,
   ) {
     final notifier = Provider.of<ChatPageNotifier>(context, listen: false);
-    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
-    final databaseProvider =
-      Provider.of<DataBaseProvider>(context, listen: false);
+
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -312,17 +311,7 @@ class _ChatPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           //クタスの実体化、Todoをtodoに代入
-                          Chat newChat = Chat(
-                            id: index,
-                            content: notifier.text,
-                          );
-                          chatProvider.updatechat(
-                            //1, 渡す 0
-                            index,
-                            newChat,
-                          );
-                          databaseProvider.updateChat(newChat);
-                          Navigator.of(context).pop();
+                          notifier. updateChatContent(chatNew);
                         },
                       ),
                     )
@@ -339,10 +328,10 @@ class _ChatPage extends StatelessWidget {
   void deleteChat(BuildContext context, int index) {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
     final databaseProvider =
-      Provider.of<DataBaseProvider>(context, listen: false);
+        Provider.of<DataBaseProvider>(context, listen: false);
 
     chatProvider.deletechat(index);
-    
+
     databaseProvider.deleteChat(index);
   }
 

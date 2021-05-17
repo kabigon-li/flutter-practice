@@ -17,6 +17,24 @@ class Chat {
   final int isImage;
   final String imagePath;
 
+  Chat copyWith({
+    int id,
+    String content,
+    int userId,
+    int isLeft,
+    String createdAt,
+    int isImage,
+    String imagePath,
+  }) {
+    return Chat(
+      //idもし指定されなかったら、そのままのid
+    
+      id: id ?? this.id,
+      content: content ?? this.content,
+      userId: userId ?? this.userId,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
