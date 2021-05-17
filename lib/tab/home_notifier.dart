@@ -117,7 +117,8 @@ class HomeNotifier extends ChangeNotifier {
   ) async {
     // TodoProviderの実体化
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -172,6 +173,9 @@ class HomeNotifier extends ChangeNotifier {
                             //1, 渡す 0
                             newUser,
                           );
+                          databaseProvider.updateUser(
+                            newUser,
+                          );
 
                           // 一つ前の画面に戻る
                           Navigator.of(context).pop();
@@ -186,11 +190,8 @@ class HomeNotifier extends ChangeNotifier {
         );
       },
     );
-
-    
   }
 
- 
   showSimpleDialog(userNew) async {
     String result = "";
     result = await showDialog(
@@ -209,11 +210,13 @@ class HomeNotifier extends ChangeNotifier {
                   backgroundColor: Colors.orange.shade200,
                   child: Icon(Icons.delete_outline),
                 ),
-                title: Text('delete',
-                    style: TextStyle(
-                      color: fontColor,
-                      fontSize: 22,
-                    ),),
+                title: Text(
+                  'delete',
+                  style: TextStyle(
+                    color: fontColor,
+                    fontSize: 22,
+                  ),
+                ),
               ),
               onPressed: () {
                 deleteUser(userNew.id, userNew);
@@ -227,21 +230,17 @@ class HomeNotifier extends ChangeNotifier {
       },
     );
   }
-  void deleteUser(int index,userNew){
-   // TodoProviderクラスのインスタンス(コピー)を変数に代入
-  final userProvider = Provider.of<UserProvider>(context, listen: false);
-  //　databaseの実体化
-  final databaseProvider =
-      Provider.of<DataBaseProvider>(context, listen: false);
-  userProvider.deleteUser(
-    //1, 渡す 0
-    index,
-  );
-  databaseProvider.deleteUser(index);
+
+  void deleteUser(int index, userNew) {
+    // TodoProviderクラスのインスタンス(コピー)を変数に代入
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    //　databaseの実体化
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
+    userProvider.deleteUser(
+      //1, 渡す 0
+      index,
+    );
+    databaseProvider.deleteUser(index);
+  }
 }
-
-
-}
-
-
-
