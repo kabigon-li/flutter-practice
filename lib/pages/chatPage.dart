@@ -38,10 +38,12 @@ class _ChatPage extends StatelessWidget {
     // final season = Provider.of<SeasonsMode>(context);
     final notifier = Provider.of<ChatPageNotifier>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
-    //寻找chatlist 中的userID和 UsernewID 相同的id
+    // print(notifier.userNew.id);
+    //寻找chatlist 中的userID和 UsernewID 相同的id,每一个聊天页面中显示不同聊天内容
     final currentUserChatList = chatProvider.chatList
         .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
+  
 
     return Scaffold(
       appBar: AppBar(

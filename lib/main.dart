@@ -5,7 +5,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:wechat_like_memo/model/chat.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
-import 'package:wechat_like_memo/provider/chatRoom_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
@@ -36,7 +35,7 @@ void main() async {
       );
       db.execute(
         //tableの中身、chatはテーブルの名前
-        "CREATE TABLE chat(id INTEGER PRIMARY KEY, content TEXT, userID INTEGER, isLeft INTEGER, createdAt TEXT, isImage INTEGER, imagePath INTEGER)",
+        "CREATE TABLE chat(id INTEGER PRIMARY KEY, content TEXT, userId INTEGER, isLeft INTEGER, createdAt TEXT, isImage INTEGER, imagePath INTEGER)",
       );
     },
 
@@ -63,11 +62,6 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => ChatProvider(
             chatList: chatList,
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ChatRoomProvider(
-            chatRoomList: [],
           ),
         ),
         ChangeNotifierProvider(

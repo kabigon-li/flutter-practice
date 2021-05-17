@@ -28,7 +28,6 @@ class Chat {
   }) {
     return Chat(
       //idもし指定されなかったら、そのままのid
-    
       id: id ?? this.id,
       content: content ?? this.content,
       userId: userId ?? this.userId,
