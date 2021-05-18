@@ -43,10 +43,12 @@ class _ChatPage extends StatelessWidget {
     final currentUserChatList = chatProvider.chatList
         .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeColor,
+        
         title: Align(
           alignment: Alignment.topLeft,
           child: Row(
@@ -88,18 +90,23 @@ class _ChatPage extends StatelessWidget {
                 //   )
               ),
             ),
-            ListView.builder(
-              //physics: const AlwaysScrollableScrollPhysics(),
-              shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-              itemCount: currentUserChatList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return chat(
-                  context,
-                  currentUserChatList[index],
-                );
-              },
+            SingleChildScrollView(
+                          child: SizedBox(
+                height: size.height * .64,
+                child: ListView.builder(
+                  //physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+                  itemCount: currentUserChatList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return chat(
+                      context,
+                      currentUserChatList[index],
+                    );
+                  },
+                ),
+              ),
             ),
-            textfild(context),
+            SizedBox(child: textfild(context)),
           ],
         ),
       ),
@@ -125,7 +132,7 @@ class _ChatPage extends StatelessWidget {
                   key: notifier.formKey,
                   child: SizedBox(
                     height: 70,
-                    width: 230,
+                    width: 260,
                     child: ColoredBox(
                       color: Colors.white,
                       child: TextFormField(
@@ -183,7 +190,7 @@ class _ChatPage extends StatelessWidget {
     final notifier = Provider.of<ChatPageNotifier>(context);
 
     String outputFormat = DateFormat('MM-dd-H:mm').format(notifier.now);
-    double m = chatNew.content.length.toDouble();
+
     return Scrollbar(
       //对话框文字
       child: Column(
@@ -202,25 +209,22 @@ class _ChatPage extends StatelessWidget {
                     color: Colors.green[200],
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: SizedBox(
-                    width: 180,
-                    child: GestureDetector(
-                      onTap: () {
-                        updateChatBottomSheet(
-                          context,
-                          chatNew.id,
-                          chatNew.content,
-                          chatNew,
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          chatNew.content,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                          ),
+                  child: GestureDetector(
+                    onTap: () {
+                      updateChatBottomSheet(
+                        context,
+                        chatNew.id,
+                        chatNew.content,
+                        chatNew,
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        chatNew.content,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
                         ),
                       ),
                     ),
