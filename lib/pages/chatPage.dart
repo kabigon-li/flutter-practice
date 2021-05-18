@@ -43,7 +43,6 @@ class _ChatPage extends StatelessWidget {
     final currentUserChatList = chatProvider.chatList
         .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
-  
 
     return Scaffold(
       appBar: AppBar(
@@ -178,27 +177,28 @@ class _ChatPage extends StatelessWidget {
     final notifier = Provider.of<ChatPageNotifier>(context);
 
     String outputFormat = DateFormat('MM-dd-H:mm').format(notifier.now);
+    double m = chatNew.content.length.toDouble();
     return Scrollbar(
       //对话框文字
-      child: Row(
+      child: Column(
         children: [
-          GestureDetector(
-            //删除对话框图标
-            onLongPress: () {
-              showSimpleDialog(context, chatNew);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.green[200],
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: SizedBox(
-                  width: 180,
-                  //height: 50,
-                  child: Padding(
-                    padding: const EdgeInsets.all(7.0),
+          Align(
+            alignment: Alignment.topRight,
+            child: GestureDetector(
+              //删除对话框图标
+              onLongPress: () {
+                showSimpleDialog(context, chatNew);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.green[200],
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: SizedBox(
+                    width: 180,
+                    
                     child: GestureDetector(
                       onTap: () {
                         updateChatBottomSheet(
@@ -208,11 +208,14 @@ class _ChatPage extends StatelessWidget {
                           chatNew,
                         );
                       },
-                      child: Text(
-                        chatNew.content,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          chatNew.content,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),
@@ -222,9 +225,14 @@ class _ChatPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child:
-                Align(alignment: Alignment.topRight, child: Text(outputFormat)),
+            padding: const EdgeInsets.only(right: 8.0, bottom: 8),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Text(
+                outputFormat,
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
           ),
         ],
       ),
@@ -315,11 +323,10 @@ class _ChatPage extends StatelessWidget {
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
-        
         return SimpleDialog(
           title: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Text('Select account'),
+            child: Text('Are you sure to delete this chat ?'),
           ),
           children: <Widget>[
             SimpleDialogOption(
