@@ -356,7 +356,7 @@ class _Home extends StatelessWidget {
                       : _buildUserNameBlank(context, userNew),
 
                   //3. 当用户名为空白时新建用户
-                  _buildUserChat(context, userNew),
+                  _buildUserLastChat(context, userNew),
                 ],
               ),
             ),
@@ -443,7 +443,7 @@ class _Home extends StatelessWidget {
                   //点击用户名，更改新的用户名
                   SizedBox(
                     width: 80,
-                    height: 40,
+                    height: 35,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Text(
@@ -487,7 +487,7 @@ class _Home extends StatelessWidget {
     );
   }
 
-  Widget _buildUserChat(
+  Widget _buildUserLastChat(
     BuildContext context,
     User userNew,
   ) {
@@ -515,9 +515,11 @@ class _Home extends StatelessWidget {
           child: Text(
             lastChat != null ? lastChat.content.toString() : '',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               color: Colors.grey[400],
+              
             ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
