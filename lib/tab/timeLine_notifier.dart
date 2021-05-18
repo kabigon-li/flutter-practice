@@ -5,8 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:wechat_like_memo/Utility/utility.dart';
 
-class TimeLineNotifier extends ChangeNotifier {
-  TimeLineNotifier({
+class TimeLinePageNotifier extends ChangeNotifier {
+  TimeLinePageNotifier({
     this.id,
     this.context,
     this.imagePath,

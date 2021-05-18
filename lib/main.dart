@@ -13,6 +13,7 @@ import 'package:wechat_like_memo/provider/todo_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/tab.dart';
 
+import 'package:wechat_like_memo/model/timeline.dart';
 import 'model/todo.dart';
 import 'route/route.dart';
 
@@ -37,6 +38,10 @@ void main() async {
         //tableの中身、chatはテーブルの名前
         "CREATE TABLE chat(id INTEGER PRIMARY KEY, content TEXT, userId INTEGER, isLeft INTEGER, createdAt TEXT, isImage INTEGER, imagePath INTEGER)",
       );
+      db.execute(
+        //tableの中身、timelineはテーブルの名前
+        "CREATE TABLE timeline(id INTEGER PRIMARY KEY, content TEXT, imagePath INTEGER, color INTEGER)",
+      );
     },
 
     // 更新する時、２になる、次の更新３になる、毎回増える
@@ -47,7 +52,7 @@ void main() async {
   final todoList = await getTodo(database);
   final userList = await getUser(database);
   final chatList = await getChat(database);
-
+  final timelineList = await getTimeLine(database);
   // 使いたいProviderをここに書く
   runApp(
     (MultiProvider(
@@ -66,7 +71,7 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => TimelineProvider(
-            timelineList: [],
+            timelineList: timelineList,
           ),
         ),
         ChangeNotifierProvider(
@@ -157,6 +162,28 @@ Future<List<Chat>> getChat(
       createdAt: maps[i]['createdAt'],
       isImage: maps[i]['isImage'],
       imagePath: maps[i]['imagePath'],
+    );
+  });
+}
+//timeline database 5/18
+Future<List<TimeLine>> getTimeLine(
+  Future<Database> database,
+) async {
+  //　database 本体をdbに代入
+  final Database db = await database;
+
+  // databaseからtimelineの全部アプリに持ってくる
+  final List<Map<String, dynamic>> maps = await db.query('timeline');
+
+  //Map<String, dynamic>からTodo型に変換
+  return List.generate(maps.length, (i) {
+    return TimeLine(
+      id: maps[i]['id'],
+      content: maps[i]['content'],
+      
+      imagePath: maps[i]['imagePath'],
+      color: maps[i]['color'],
+
     );
   });
 }

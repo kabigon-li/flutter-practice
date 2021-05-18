@@ -16,7 +16,7 @@ class TimelineInputPage extends StatefulWidget {
 
    
   final File image;
-  final Timeline timelineNew;
+  final TimeLine timelineNew;
 
   @override
   _TimelineInputPageState createState() => _TimelineInputPageState();
@@ -81,9 +81,9 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                         Utility.base64String(widget.image.readAsBytesSync());
 
                     // //クタスの実体化、Todoをtodoに代入
-                    Timeline timelineNow = Timeline(
+                    TimeLine timelineNow = TimeLine(
                       id: timelineProvider.timelineList.length,
-                      context: text,
+                      content: text,
                       imagePath: imageString,
                     );
 

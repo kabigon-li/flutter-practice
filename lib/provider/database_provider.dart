@@ -3,6 +3,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:wechat_like_memo/model/chat.dart';
 import 'package:wechat_like_memo/model/todo.dart';
 import 'package:wechat_like_memo/model/user.dart';
+import 'package:wechat_like_memo/model/timeline.dart';
+
 
 class DataBaseProvider with ChangeNotifier {
   DataBaseProvider({
@@ -190,4 +192,65 @@ class DataBaseProvider with ChangeNotifier {
       whereArgs: [chat.id],
     );
   }
+
+  //timelineを追加する(create)
+  Future<void> insertTimeLine({
+    Chat chat,
+  }) async {
+    final Database db = await database;
+    await db.insert(
+      // tableの名前
+      'chat',
+      chat.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+   //timelineを取得する(read)
+// getChatのreturnしたデータ型はlist<Chat>
+  Future<List<TimeLine>> getTimeLine() async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query('timeline');
+    return List.generate(maps.length, (i) {
+      return TimeLine(
+       id: maps[i]['id'],
+      content: maps[i]['content'],
+      
+      imagePath: maps[i]['imagePath'],
+      color: maps[i]['color'],
+
+      );
+    });
+  }
+
+  // delete chat 
+  Future<void> deleteLine(int id) async {
+    // Get a reference to the database.
+    final db = await database;
+
+    // Remove the Dog from the Database.
+    await db.delete(
+      'timeline',
+      // Use a `where` clause to delete a specific dog.
+      where: "id = ?",
+      // Pass the Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [id],
+    );
+  }
+
+  Future<void> updateTimeLine(
+    TimeLine timeline,
+  ) async {
+    final Database db = await database;
+    await db.update(
+      'timeline',
+      timeline.toMap(),
+      // Ensure that the Dog has a matching id.
+      where: "id = ?",
+      // Pass the Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [timeline.id],
+    );
+  }
+
 }

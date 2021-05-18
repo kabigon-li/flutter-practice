@@ -7,14 +7,14 @@ class TimelineProvider with ChangeNotifier {
     this.timelineList,
   });
 
-  List<Timeline> timelineList;
+  List<TimeLine> timelineList;
 
   // 追加、削除、更新、取得
   // Create, Read, Update, Delete == CRUD
 
   //クラス中の関数
   void addTimeline(
-    Timeline timeline, //受け取りたいやつ
+    TimeLine timeline, //受け取りたいやつ
   ) {
     timelineList.add(timeline);
     notifyListeners();
@@ -23,7 +23,7 @@ class TimelineProvider with ChangeNotifier {
   void updateTimeline(
     //2, うけとる
     int id,
-    Timeline newTimeline,
+    TimeLine newTimeline,
     Image picture,
     Color color,
   ) {

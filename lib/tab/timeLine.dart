@@ -5,24 +5,25 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:wechat_like_memo/model/timeline.dart';
+
 import 'package:wechat_like_memo/model/user.dart';
 
 import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
-import 'package:wechat_like_memo/route/route.dart';
-import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
 
-class TimeLine extends StatelessWidget {
-  const TimeLine(this.userNew,);
+import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
+import 'package:wechat_like_memo/model/timeline.dart';
+
+class TimeLinePage extends StatelessWidget {
+  const TimeLinePage(this.userNew,);
 
    final User userNew;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       // Notifier作成
-      create: (_) => TimeLineNotifier(
+      create: (_) => TimeLinePageNotifier(
         context: context,
       ),
       child: _TimeLine(),
@@ -33,7 +34,7 @@ class TimeLine extends StatelessWidget {
 class _TimeLine extends StatelessWidget {
   @override
   Widget build(context) {
-    final notifier = Provider.of<TimeLineNotifier>(context, listen: false);
+    final notifier = Provider.of<TimeLinePageNotifier>(context, listen: false);
     final timelineProvider = Provider.of<TimelineProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -86,7 +87,7 @@ class _TimeLine extends StatelessWidget {
   showPictureUpdateSheet(BuildContext context) {
     final timelineProvider =
         Provider.of<TimelineProvider>(context, listen: false);
-    final notifier = Provider.of<TimeLineNotifier>(context, listen: false);
+    final notifier = Provider.of<TimeLinePageNotifier>(context, listen: false);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -116,9 +117,9 @@ class _TimeLine extends StatelessWidget {
                     await notifier.getImage();
 
                     //　timelintInputにpush、image渡す
-                    Timeline timelineNow = Timeline(
+                    TimeLine timelineNow = TimeLine(
                       id: timelineProvider.timelineList.length,
-                      context: notifier.text,
+                      content: notifier.text,
                       imagePath: notifier.image.path,
                     );
 
@@ -171,7 +172,7 @@ class _TimeLine extends StatelessWidget {
   }
 
   Widget timeline(
-    Timeline timelineNew,
+    TimeLine timelineNew,
     File image,
     BuildContext context,
     
@@ -179,10 +180,10 @@ class _TimeLine extends StatelessWidget {
     final userProvider = Provider.of<UserProvider>(context);
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[300]),
+          border: Border.all(color: Colors.grey[200]),
           //color: Colors.yellow[50],
         ),
         child: Padding(
@@ -233,9 +234,9 @@ class _TimeLine extends StatelessWidget {
                   //height: 100,
                   width: 300,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(left:15.0),
                     child: Text(
-                      timelineNew.context,
+                      timelineNew.content,
                       style: TextStyle(fontSize: 18),
                     ),
                   ),

@@ -129,7 +129,7 @@ class _TabScreenState extends State<TabScreen> {
           case 2:
             return CupertinoTabView(
               builder: (context) {
-                return TimeLine(userNew);
+                return TimeLinePage(userNew);
               },
             );
           case 3:
