@@ -111,29 +111,32 @@ class _ChatPage extends StatelessWidget {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: SizedBox(
-          height: 100,
+          height: 80,
           width: size.width,
           child: ColoredBox(
-            color: Colors.grey[200],
+            color: themeColor,
             child: Row(
               children: [
-                //textfild
-                Form(
-                  key: notifier.formKey,
-                  child: SizedBox(
-                    height: 90,
-                    width: size.width * .7,
-                    child: ColoredBox(
-                      color: Colors.white,
-                      child: TextFormField(
-                        maxLines: 20,
-                        onChanged: (String text) {
-                          notifier.chatbox(text);
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Tell me your thinking',
-                          contentPadding: const EdgeInsets.all(10),
-                          border: InputBorder.none,
+                //输入框
+                Padding(
+                  padding: const EdgeInsets.only(left:8.0),
+                  child: Form(
+                    key: notifier.formKey,
+                    child: SizedBox(
+                      height: 70,
+                      width: 230,
+                      child: ColoredBox(
+                        color: Colors.white,
+                        child: TextFormField(
+                          maxLines: 20,
+                          onChanged: (String text) {
+                            notifier.chatbox(text);
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Tell me your thinking',
+                            contentPadding: const EdgeInsets.all(10),
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
                     ),
@@ -141,22 +144,25 @@ class _ChatPage extends StatelessWidget {
                 ),
 
                 //送信button
-                SizedBox(width: 10),
-                SizedBox(
-                  height: 50,
-                  width: size.width * .2,
-                  child: ElevatedButton(
-                    child: Text(
-                      '送信',
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green[300],
-                    ),
+                //SizedBox(width: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left:10.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: size.width * .2,
+                    child: ElevatedButton(
+                      child: Text(
+                        '送信',
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green[300],
+                      ),
 
-                    //チャット追加
-                    onPressed: () {
-                      notifier.addChatContent();
-                    },
+                      //チャット追加
+                      onPressed: () {
+                        notifier.addChatContent();
+                      },
+                    ),
                   ),
                 ),
               ],
