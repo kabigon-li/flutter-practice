@@ -48,7 +48,6 @@ class _ChatPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeColor,
-        
         title: Align(
           alignment: Alignment.topLeft,
           child: Row(
@@ -91,7 +90,7 @@ class _ChatPage extends StatelessWidget {
               ),
             ),
             SingleChildScrollView(
-                          child: SizedBox(
+              child: SizedBox(
                 height: size.height * .64,
                 child: ListView.builder(
                   //physics: const AlwaysScrollableScrollPhysics(),
@@ -132,7 +131,7 @@ class _ChatPage extends StatelessWidget {
                   key: notifier.formKey,
                   child: SizedBox(
                     height: 70,
-                    width: 260,
+                    width: 230,
                     child: ColoredBox(
                       color: Colors.white,
                       child: TextFormField(
@@ -153,25 +152,53 @@ class _ChatPage extends StatelessWidget {
 
               //送信button
               //SizedBox(width: 10),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: SizedBox(
-                  height: 50,
-                  width: size.width * .2,
-                  child: ElevatedButton(
-                    child: Text(
-                      '送信',
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green[300],
-                    ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: SizedBox(
+                     
+                      height: 40,
+                      width: size.width * .13,
+                      child: ElevatedButton(
+                        child: Text(
+                          '◀︎　',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green[300],
+                        ),
 
-                    //チャット追加
-                    onPressed: () {
-                      notifier.addChatContent();
-                    },
+                        //チャット追加
+                        onPressed: () {
+                          notifier.addChatContent();
+                        },
+                      ),
+                    ),
                   ),
-                ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: SizedBox(
+                      height: 40,
+                      width: size.width * .13,
+                      child: ElevatedButton(
+                        child: Text(
+                          '▶︎ ',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green[300],
+                        ),
+
+                        //チャット追加
+                        onPressed: () {
+                          notifier.addChatContent();
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
