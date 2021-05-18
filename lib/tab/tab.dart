@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:wechat_like_memo/pages/calender.dart';
+import 'package:wechat_like_memo/route/route.dart';
 import 'package:wechat_like_memo/tab/todotoday.dart';
 import 'package:wechat_like_memo/tab/home.dart';
 import 'package:wechat_like_memo/tab/mypage.dart';
@@ -128,7 +129,7 @@ class _TabScreenState extends State<TabScreen> {
           case 2:
             return CupertinoTabView(
               builder: (context) {
-                return TimeLine();
+                return TimeLine(userNew);
               },
             );
           case 3:

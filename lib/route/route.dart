@@ -15,7 +15,7 @@ final routes = {
   '/mypage': (context) => MyPage(),
   '/todotoday': (context) => TodoTaday(),
   '/chatpage': (context) => ChatPage(userNew),
-  '/timeline': (context) => TimeLine(),
+  '/timeline': (context) => TimeLine(userNew),
   '/loginpage' : (context) => LoginPage(),
   '/timelineInputpage' : (context) => TimelineInputPage(),
 };

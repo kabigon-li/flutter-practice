@@ -2,18 +2,22 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:wechat_like_memo/model/timeline.dart';
+import 'package:wechat_like_memo/model/user.dart';
+
 import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
+import 'package:wechat_like_memo/route/route.dart';
 import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
 
 class TimeLine extends StatelessWidget {
-  const TimeLine();
+  const TimeLine(this.userNew,);
 
+   final User userNew;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -61,7 +65,6 @@ class _TimeLine extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
-  
               // timeline
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -72,7 +75,6 @@ class _TimeLine extends StatelessWidget {
                       notifier.image, context);
                 },
               ),
-
             ],
           ),
         ),
@@ -172,6 +174,7 @@ class _TimeLine extends StatelessWidget {
     Timeline timelineNew,
     File image,
     BuildContext context,
+    
   ) {
     final userProvider = Provider.of<UserProvider>(context);
 
@@ -189,8 +192,9 @@ class _TimeLine extends StatelessWidget {
               Row(
                 children: [
                   // ID icon
-                  // userProvider.isLogined == true
-                      ClipOval(
+                  userProvider.getFirstUser().userImage != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
                           child: Image.memory(
                             base64Decode(
                               userProvider.getFirstUser().userImage,
@@ -199,9 +203,12 @@ class _TimeLine extends StatelessWidget {
                             width: 50,
                             fit: BoxFit.cover,
                           ),
-                        ),
+                        )
                       //image为空时显示空
-                      //: Container(),
+                      : Icon(
+                          Icons.account_circle,
+                          size: 60,
+                        ),
 
                   // ID name
                   Padding(

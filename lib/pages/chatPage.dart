@@ -44,6 +44,7 @@ class _ChatPage extends StatelessWidget {
         .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
     final size = MediaQuery.of(context).size;
+    final isLeft = 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -115,6 +116,7 @@ class _ChatPage extends StatelessWidget {
   Widget textfild(BuildContext context) {
     final notifier = Provider.of<ChatPageNotifier>(context);
     final size = MediaQuery.of(context).size;
+    
     return Align(
       alignment: Alignment.bottomCenter,
       child: SizedBox(
@@ -151,19 +153,19 @@ class _ChatPage extends StatelessWidget {
               ),
 
               //送信button
-              //SizedBox(width: 10),
+
               Row(
                 children: [
+                  //发送左边消息
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: SizedBox(
-                     
                       height: 40,
                       width: size.width * .13,
                       child: ElevatedButton(
                         child: Text(
-                          '◀︎　',
-                          style: TextStyle(fontSize: 12),
+                          '◀︎',
+                          style: TextStyle(fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.green[300],
@@ -177,6 +179,7 @@ class _ChatPage extends StatelessWidget {
                     ),
                   ),
 
+                  //发送右边消息
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: SizedBox(
@@ -184,8 +187,8 @@ class _ChatPage extends StatelessWidget {
                       width: size.width * .13,
                       child: ElevatedButton(
                         child: Text(
-                          '▶︎ ',
-                          style: TextStyle(fontSize: 12),
+                          '▶︎',
+                          style: TextStyle(fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.green[300],
@@ -207,7 +210,7 @@ class _ChatPage extends StatelessWidget {
     );
   }
 
-  //绿色对话框和删除键
+  //绿色对话框
   Widget chat(
     BuildContext context,
     Chat chatNew,
@@ -245,6 +248,8 @@ class _ChatPage extends StatelessWidget {
                         chatNew,
                       );
                     },
+
+                    //聊天内容
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
