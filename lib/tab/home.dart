@@ -387,8 +387,8 @@ class _Home extends StatelessWidget {
             base64Decode(userNew.userImage),
             gaplessPlayback: true,
             fit: BoxFit.cover,
-            height: 60,
-            width: 60,
+            height: 50,
+            width: 50,
           ),
         ),
       ),
@@ -413,7 +413,7 @@ class _Home extends StatelessWidget {
             color: Color.fromRGBO(185, 224, 225,1),
             child: Icon(
               Icons.account_circle,
-              size: 60,
+              size: 50,
               color: Color.fromRGBO(140, 140, 140,1),
             ),
           ),
@@ -442,13 +442,16 @@ class _Home extends StatelessWidget {
                 children: [
                   //点击用户名，更改新的用户名
                   SizedBox(
-                      width: 80,
+                      width: 90,
                       height: 35,
-                      child: Text(
-                        userNew.userName,
-                        style: TextStyle(
-                          fontSize: 26,
-                          color: fontColor,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top:8.0),
+                        child: Text(
+                          userNew.userName,
+                          style: TextStyle(
+                            fontSize: 26,
+                            color: fontColor,
+                          ),
                         ),
                       ),
                     ),
@@ -468,20 +471,11 @@ class _Home extends StatelessWidget {
               ),
             );
           },
-          child: ColoredBox(
-            color: Colors.black12,
-                      child: SizedBox(
+          child: SizedBox(
               width: 160,
               height: 40,
-              child: Text(
-                '',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey[400],
-                ),
-              ),
+              
             ),
-          ),
         ),
       ],
     );
