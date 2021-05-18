@@ -48,6 +48,17 @@ void main() async {
     version: 1,
   );
 
+  final defaultUser = User(
+    id: 0,
+    userName: 'Wochat',
+    isLogined: 0,
+   
+  );
+  insertUser(
+    user: defaultUser,
+    database: database,
+  );
+
   //todoListはreturnしたやつを代入(read)
   final todoList = await getTodo(database);
   final userList = await getUser(database);
@@ -121,6 +132,19 @@ Future<List<Todo>> getTodo(
   });
 }
 
+Future<void> insertUser({
+  Future<Database> database,
+  User user,
+}) async {
+  final Database db = await database;
+  await db.insert(
+    // tableの名前
+    'users',
+    user.toMap(),
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
+}
+
 //User datebase 5/10
 Future<List<User>> getUser(
   Future<Database> database,
@@ -165,6 +189,7 @@ Future<List<Chat>> getChat(
     );
   });
 }
+
 //timeline database 5/18
 Future<List<TimeLine>> getTimeLine(
   Future<Database> database,
@@ -180,10 +205,8 @@ Future<List<TimeLine>> getTimeLine(
     return TimeLine(
       id: maps[i]['id'],
       content: maps[i]['content'],
-      
       imagePath: maps[i]['imagePath'],
       color: maps[i]['color'],
-
     );
   });
 }

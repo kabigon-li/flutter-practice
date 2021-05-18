@@ -387,8 +387,8 @@ class _Home extends StatelessWidget {
             base64Decode(userNew.userImage),
             gaplessPlayback: true,
             fit: BoxFit.cover,
-            height: 50,
-            width: 50,
+            height: 60,
+            width: 60,
           ),
         ),
       ),
@@ -410,11 +410,11 @@ class _Home extends StatelessWidget {
           child: Material(
             elevation: 5.0,
             borderRadius: BorderRadius.circular(10.0),
-            color: Color(0xff01A0C7),
+            color: Color.fromRGBO(185, 224, 225,1),
             child: Icon(
               Icons.account_circle,
               size: 60,
-              color: Colors.yellow,
+              color: Color.fromRGBO(140, 140, 140,1),
             ),
           ),
         ),
@@ -442,19 +442,16 @@ class _Home extends StatelessWidget {
                 children: [
                   //点击用户名，更改新的用户名
                   SizedBox(
-                    width: 80,
-                    height: 35,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
+                      width: 80,
+                      height: 35,
                       child: Text(
                         userNew.userName,
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 26,
                           color: fontColor,
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ],
@@ -471,14 +468,17 @@ class _Home extends StatelessWidget {
               ),
             );
           },
-          child: SizedBox(
-            width: 170,
-            height: 40,
-            child: Text(
-              '',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey[400],
+          child: ColoredBox(
+            color: Colors.black12,
+                      child: SizedBox(
+              width: 160,
+              height: 40,
+              child: Text(
+                '',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey[400],
+                ),
               ),
             ),
           ),
