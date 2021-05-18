@@ -116,7 +116,7 @@ class _ChatPage extends StatelessWidget {
   Widget textfild(BuildContext context) {
     final notifier = Provider.of<ChatPageNotifier>(context);
     final size = MediaQuery.of(context).size;
-    
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: SizedBox(
@@ -173,7 +173,7 @@ class _ChatPage extends StatelessWidget {
 
                         //チャット追加
                         onPressed: () {
-                          notifier.addChatContent();
+                          notifier.addChatContent(isLeft: 0);
                         },
                       ),
                     ),
@@ -196,7 +196,7 @@ class _ChatPage extends StatelessWidget {
 
                         //チャット追加
                         onPressed: () {
-                          notifier.addChatContent();
+                          notifier.addChatContent(isLeft: 1);
                         },
                       ),
                     ),
@@ -215,7 +215,7 @@ class _ChatPage extends StatelessWidget {
     BuildContext context,
     Chat chatNew,
   ) {
-    // final chatProvider = Provider.of<ChatProvider>(context);
+    final chatProvider = Provider.of<ChatProvider>(context);
     // final size = MediaQuery.of(context).size;
     final notifier = Provider.of<ChatPageNotifier>(context);
 
@@ -226,7 +226,9 @@ class _ChatPage extends StatelessWidget {
       child: Column(
         children: [
           Align(
-            alignment: Alignment.topRight,
+            
+            alignment: chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
+           
             child: GestureDetector(
               //删除对话框图标
               onLongPress: () {
@@ -265,13 +267,14 @@ class _ChatPage extends StatelessWidget {
               ),
             ),
           ),
+          //聊天时间
           Padding(
-            padding: const EdgeInsets.only(right: 8.0, bottom: 8),
+            padding: const EdgeInsets.only(left:8,right: 8.0, bottom: 8),
             child: Align(
-              alignment: Alignment.topRight,
+              alignment: chatNew.isLeft == 0 ?Alignment.topLeft : Alignment.topRight,
               child: Text(
                 outputFormat,
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 13),
               ),
             ),
           ),

@@ -474,7 +474,13 @@ class _Home extends StatelessWidget {
           child: SizedBox(
               width: 160,
               height: 40,
-              
+              child: Text(
+                '',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey[400],
+                ),
+              ),
             ),
         ),
       ],
