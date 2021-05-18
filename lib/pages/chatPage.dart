@@ -73,32 +73,35 @@ class _ChatPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(209, 246, 255, 1),
-              // ? DecorationImage(
-              //     image: AssetImage(
-              //       imageList[season.selectedImageNumber],
-              //     ),
-              //     fit: BoxFit.cover,
-              //   )
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(209, 246, 255, 1),
+                // ? DecorationImage(
+                //     image: AssetImage(
+                //       imageList[season.selectedImageNumber],
+                //     ),
+                //     fit: BoxFit.cover,
+                //   )
+              ),
             ),
-          ),
-          ListView.builder(
-            //physics: const AlwaysScrollableScrollPhysics(),
-            shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-            itemCount: currentUserChatList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return chat(
-                context,
-                currentUserChatList[index],
-              );
-            },
-          ),
-          textfild(context),
-        ],
+            ListView.builder(
+              //physics: const AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+              itemCount: currentUserChatList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return chat(
+                  context,
+                  currentUserChatList[index],
+                );
+              },
+            ),
+            textfild(context),
+          ],
+        ),
       ),
     );
   }
@@ -106,67 +109,64 @@ class _ChatPage extends StatelessWidget {
   Widget textfild(BuildContext context) {
     final notifier = Provider.of<ChatPageNotifier>(context);
     final size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: SizedBox(
-          height: 80,
-          width: size.width,
-          child: ColoredBox(
-            color: themeColor,
-            child: Row(
-              children: [
-                //输入框
-                Padding(
-                  padding: const EdgeInsets.only(left:8.0),
-                  child: Form(
-                    key: notifier.formKey,
-                    child: SizedBox(
-                      height: 70,
-                      width: 230,
-                      child: ColoredBox(
-                        color: Colors.white,
-                        child: TextFormField(
-                          maxLines: 20,
-                          onChanged: (String text) {
-                            notifier.chatbox(text);
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Tell me your thinking',
-                            contentPadding: const EdgeInsets.all(10),
-                            border: InputBorder.none,
-                          ),
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        height: 80,
+        width: size.width,
+        child: ColoredBox(
+          color: themeColor,
+          child: Row(
+            children: [
+              //输入框
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Form(
+                  key: notifier.formKey,
+                  child: SizedBox(
+                    height: 70,
+                    width: 230,
+                    child: ColoredBox(
+                      color: Colors.white,
+                      child: TextFormField(
+                        maxLines: 20,
+                        onChanged: (String text) {
+                          notifier.chatbox(text);
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Tell me your thinking',
+                          contentPadding: const EdgeInsets.all(10),
+                          border: InputBorder.none,
                         ),
                       ),
                     ),
                   ),
                 ),
+              ),
 
-                //送信button
-                //SizedBox(width: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left:10.0),
-                  child: SizedBox(
-                    height: 50,
-                    width: size.width * .2,
-                    child: ElevatedButton(
-                      child: Text(
-                        '送信',
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green[300],
-                      ),
-
-                      //チャット追加
-                      onPressed: () {
-                        notifier.addChatContent();
-                      },
+              //送信button
+              //SizedBox(width: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: SizedBox(
+                  height: 50,
+                  width: size.width * .2,
+                  child: ElevatedButton(
+                    child: Text(
+                      '送信',
                     ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green[300],
+                    ),
+
+                    //チャット追加
+                    onPressed: () {
+                      notifier.addChatContent();
+                    },
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -204,7 +204,6 @@ class _ChatPage extends StatelessWidget {
                   ),
                   child: SizedBox(
                     width: 180,
-                    
                     child: GestureDetector(
                       onTap: () {
                         updateChatBottomSheet(
