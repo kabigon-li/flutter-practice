@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,6 @@ class _Home extends StatelessWidget {
 
     final userProvider = Provider.of<UserProvider>(context);
 
-    
     // print(season.selectedImageNumber);
     return Scaffold(
       // 左ドロアー
@@ -193,7 +193,7 @@ class _Home extends StatelessWidget {
                       : _buildUserNameBlank(context, userNew),
 
                   //3. 当用户名为空白时新建用户
-                  _buildUserLastChat(context, userNew),
+                  _buildUserLastChat(context, userNew,)
                 ],
               ),
             ),
@@ -252,7 +252,7 @@ class _Home extends StatelessWidget {
             child: Icon(
               Icons.account_box,
               size: 50,
-              color: Color.fromRGBO(130, 176, 104,05),
+              color: Color.fromRGBO(130, 176, 104, 05),
             ),
           ),
         ),
@@ -265,6 +265,7 @@ class _Home extends StatelessWidget {
     User userNew,
   ) {
     final notifier = Provider.of<HomeNotifier>(context);
+    
 
     return Row(
       children: [
@@ -280,19 +281,19 @@ class _Home extends StatelessWidget {
                 children: [
                   //点击用户名，更改新的用户名
                   SizedBox(
-                      width: 90,
-                      height: 40,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top:8.0),
-                        child: Text(
-                          userNew.userName,
-                          style: TextStyle(
-                            fontSize: 26,
-                            color: fontColor,
-                          ),
+                    width: 90,
+                    height: 40,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        userNew.userName,
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: fontColor,
                         ),
                       ),
                     ),
+                  ),
                 ],
               ),
             ],
@@ -309,7 +310,9 @@ class _Home extends StatelessWidget {
               ),
             );
           },
-          child: SizedBox(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: SizedBox(
               width: 160,
               height: 40,
               child: Text(
@@ -320,6 +323,7 @@ class _Home extends StatelessWidget {
                 ),
               ),
             ),
+          ),
         ),
       ],
     );
@@ -328,13 +332,18 @@ class _Home extends StatelessWidget {
   Widget _buildUserLastChat(
     BuildContext context,
     User userNew,
+    
   ) {
     final chatProvider = Provider.of<ChatProvider>(context);
 
     final lastChat = chatProvider?.chatList?.lastWhere(
       (chat) => chat.userId == userNew.id,
       orElse: () => null,
+    
     );
+     DateTime chattime = DateTime.parse(lastChat.createdAt);
+    String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+
     //final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
       onTap: () {
@@ -348,14 +357,18 @@ class _Home extends StatelessWidget {
       child: SizedBox(
         width: 300,
         height: 30,
-        child: Text(
-          lastChat != null ? lastChat.content.toString() : '',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey[400],
-            
-          ),
-          overflow: TextOverflow.ellipsis,
+        child: Row(
+          children: [
+            Text(
+              lastChat != null ? lastChat.content.toString() : '',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[400],
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(lastChat != null ? outputFormat : '',)
+          ],
         ),
       ),
     );

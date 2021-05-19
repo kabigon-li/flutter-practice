@@ -64,7 +64,7 @@ class _TodoTaday extends StatelessWidget {
         Positioned.fill(
           child: Container(
             decoration: BoxDecoration(
-              color: Color.fromRGBO(209, 246, 255, 1),
+              color: Color.fromRGBO(212, 241, 248, 1),
               // image: season.isImageSelected
               //     ? DecorationImage(
               //         image: AssetImage(
@@ -110,8 +110,8 @@ class _TodoTaday extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
-            backgroundColor: Color.fromRGBO(237, 225, 175,1),
-            child: Icon(Icons.add_box,color: Colors.grey[700],),
+            backgroundColor: Color.fromRGBO(166, 205, 240,1),
+            child: Icon(Icons.add_box,color: Colors.grey[600],),
             onPressed: () {
               return addTodo(context);
             },
