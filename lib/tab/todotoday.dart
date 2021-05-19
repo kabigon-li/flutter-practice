@@ -50,7 +50,7 @@ class _TodoTaday extends StatelessWidget {
         title: Align(
           alignment: Alignment.topLeft,
           child: Padding(
-            padding: const EdgeInsets.only(left: 30.0),
+            padding: const EdgeInsets.only(left: 20.0),
             child: Text(
               'To do',
               style: TextStyle(
@@ -105,12 +105,18 @@ class _TodoTaday extends StatelessWidget {
         ),
       ]),
       //右下角添加新的todo
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightBlue[200],
-        child: Icon(Icons.add_box_outlined),
-        onPressed: () {
-          return addTodo(context);
-        },
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom:30.0,right:10,),
+        child: Align(
+          alignment: Alignment.bottomRight,
+                child: FloatingActionButton(
+            backgroundColor: Color.fromRGBO(237, 225, 175,1),
+            child: Icon(Icons.add_box,color: Colors.grey[700],),
+            onPressed: () {
+              return addTodo(context);
+            },
+          ),
+        ),
       ),
     );
   }
@@ -265,14 +271,14 @@ class _TodoTaday extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 80,
+                height: 50,
                 //width: size.width,
                 child: Row(
                   //Row Column中・二個か二個以上widgetの間隙間決める
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SizedBox(
-                      height: 200,
+                      //height: 200,
                       width: 200,
                       child: ColoredBox(
                         color: Colors.white,
@@ -292,12 +298,12 @@ class _TodoTaday extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 0),
                       child: SizedBox(
-                        height: 30,
-                        width: 60,
+                        height: 50,
+                        width: 80,
                         child: ElevatedButton(
-                          child: Text('追加'),
+                          child: Text('add',style:TextStyle(fontSize: 20),),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.blueGrey,
+                            primary: Color.fromRGBO(130, 176, 104,1),
                           ),
                           onPressed: notifier.addTodo,
                         ),
