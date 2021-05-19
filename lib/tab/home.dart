@@ -339,7 +339,7 @@ class _Home extends StatelessWidget {
 
     final lastChat = chatProvider?.chatList?.lastWhere(
       (chat) => chat.userId == userNew.id,
-      orElse: () => null,
+      orElse: () => null,  
     );
     DateTime chattime = DateTime.parse(lastChat.createdAt);
     String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
@@ -358,14 +358,19 @@ class _Home extends StatelessWidget {
         width: 300,
         height: 30,
         child: Row(
+         
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              lastChat != null ? lastChat.content.toString() : '',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[400],
+            SizedBox(
+              width: 170,
+              child: Text(
+                lastChat != null ? lastChat.content.toString() : '',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[400],
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
-              overflow: TextOverflow.ellipsis,
             ),
             Text(
               lastChat != null ? outputFormat : '',
