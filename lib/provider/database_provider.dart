@@ -195,13 +195,13 @@ class DataBaseProvider with ChangeNotifier {
 
   //timelineを追加する(create)
   Future<void> insertTimeLine({
-    Chat chat,
+    TimeLine timeLine
   }) async {
     final Database db = await database;
     await db.insert(
       // tableの名前
-      'chat',
-      chat.toMap(),
+      'timeline',
+      timeLine.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }

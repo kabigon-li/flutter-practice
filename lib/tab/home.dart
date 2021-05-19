@@ -7,14 +7,13 @@ import 'package:provider/provider.dart';
 
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
-import 'package:wechat_like_memo/pages/chatPage_notifier.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/home_notifier.dart';
-import 'package:wechat_like_memo/tab/todotoday.dart';
+
 
 class Home extends StatelessWidget {
   const Home();
@@ -50,7 +49,7 @@ class _Home extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Wochat',
+                'Mechat',
                 style: TextStyle(
                   fontSize: 22,
                   fontFamily: 'iconfont',
@@ -339,7 +338,7 @@ class _Home extends StatelessWidget {
 
     final lastChat = chatProvider?.chatList?.lastWhere(
       (chat) => chat.userId == userNew.id,
-      orElse: () => null,  
+      orElse: () => null,
     );
     DateTime chattime = DateTime.parse(lastChat.createdAt);
     String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
@@ -358,7 +357,6 @@ class _Home extends StatelessWidget {
         width: 300,
         height: 30,
         child: Row(
-         
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
@@ -367,13 +365,17 @@ class _Home extends StatelessWidget {
                 lastChat != null ? lastChat.content.toString() : '',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.grey[400],
+                  color: Colors.grey,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             Text(
               lastChat != null ? outputFormat : '',
+              style: TextStyle(
+                fontSize: 13,
+                color: Colors.grey,
+              ),
             )
           ],
         ),

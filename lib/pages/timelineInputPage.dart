@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/Utility/utility.dart';
+import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
+import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 
 class TimelineInputPage extends StatefulWidget {
@@ -14,7 +16,6 @@ class TimelineInputPage extends StatefulWidget {
     this.timelineNew,
   });
 
-   
   final File image;
   final TimeLine timelineNew;
 
@@ -37,61 +38,53 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
     final timelineProvider = Provider.of<TimelineProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: themeColor,
         elevation: 0,
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Center(
-              child: SizedBox(
-                width: 80,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: GestureDetector(
-                    child: Text(
-                      '戻る',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ),
-              ),
-            )),
+        leading:GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(0),
-            child: SizedBox(
-              height: 30,
-              width: 70,
-              child: Center(
-                child: ElevatedButton(
-                  child: Text(
-                    '発表',
-                    
-                  ),
-                  style: ElevatedButton.styleFrom(
-                          primary: Colors.greenAccent,
-                        ),
-                  onPressed: () {
-                    fileName = basename(widget.image.path);
-                    imageString =
-                        Utility.base64String(widget.image.readAsBytesSync());
-
-                    // //クタスの実体化、Todoをtodoに代入
-                    TimeLine timelineNow = TimeLine(
-                      id: timelineProvider.timelineList.length,
-                      content: text,
-                      imagePath: imageString,
-                    );
-
-                    // 新しいtimelineをproviderに追加する
-                    timelineProvider.addTimeline(timelineNow);
-                    Navigator.of(context).pop();
-                  },
+          SizedBox(
+            height: 30,
+            width: 70,
+            child: Center(
+              child: ElevatedButton(
+                child: Text(
+                  'send',
                 ),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromRGBO(130, 176, 104, 1),
+                ),
+                onPressed: () {
+                  fileName = basename(widget.image.path);
+                  imageString =
+                      Utility.base64String(widget.image.readAsBytesSync());
+                  final databaseProvider =
+                      Provider.of<DataBaseProvider>(context, listen: false);
+
+                  // //クタスの実体化、Todoをtodoに代入
+                  TimeLine timelineNow = TimeLine(
+                    id: timelineProvider.timelineList.length,
+                    content: text,
+                    imagePath: imageString,
+                  );
+
+                  // 新しいtimelineをproviderに追加する
+                  timelineProvider.addTimeline(timelineNow);
+
+                  databaseProvider.insertTimeLine(
+                    // datebase and todo渡す
+                    timeLine: timelineNow,
+                  );
+
+                  Navigator.of(context).pop();
+                },
               ),
             ),
           ),
