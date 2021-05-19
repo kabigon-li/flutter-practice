@@ -48,9 +48,10 @@ void main() async {
     version: 1,
   );
 
+  //默认用户
   final defaultUser = User(
     id: 0,
-    userName: 'Wochat',
+    userName: 'mechat',
     isLogined: 0,
    
   );

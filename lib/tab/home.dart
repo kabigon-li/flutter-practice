@@ -396,6 +396,7 @@ class _Home extends StatelessWidget {
   }
 
   Widget _buildUserIconBlank(BuildContext context) {
+    //默认用户
     return Row(
       children: [
         MaterialButton(
@@ -410,11 +411,11 @@ class _Home extends StatelessWidget {
           child: Material(
             elevation: 5.0,
             borderRadius: BorderRadius.circular(10.0),
-            color: Color.fromRGBO(185, 224, 225,1),
+            color: Colors.grey[300],
             child: Icon(
-              Icons.account_circle,
+              Icons.account_box,
               size: 50,
-              color: Color.fromRGBO(140, 140, 140,1),
+              color: Color.fromRGBO(130, 176, 104,05),
             ),
           ),
         ),
@@ -443,7 +444,7 @@ class _Home extends StatelessWidget {
                   //点击用户名，更改新的用户名
                   SizedBox(
                       width: 90,
-                      height: 35,
+                      height: 40,
                       child: Padding(
                         padding: const EdgeInsets.only(top:8.0),
                         child: Text(
@@ -507,20 +508,17 @@ class _Home extends StatelessWidget {
           ),
         );
       },
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8),
-        child: SizedBox(
-          width: 300,
-          height: 30,
-          child: Text(
-            lastChat != null ? lastChat.content.toString() : '',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[400],
-              
-            ),
-            overflow: TextOverflow.ellipsis,
+      child: SizedBox(
+        width: 300,
+        height: 30,
+        child: Text(
+          lastChat != null ? lastChat.content.toString() : '',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey[400],
+            
           ),
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
@@ -536,14 +534,11 @@ class _Home extends StatelessWidget {
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Text(
-              'No userName',
-              style: TextStyle(
-                fontSize: 23,
-                color: fontColor,
-              ),
+          Text(
+            'No userName',
+            style: TextStyle(
+              fontSize: 23,
+              color: fontColor,
             ),
           ),
         ],
