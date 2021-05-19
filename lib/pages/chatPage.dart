@@ -215,20 +215,16 @@ class _ChatPage extends StatelessWidget {
     BuildContext context,
     Chat chatNew,
   ) {
-    final chatProvider = Provider.of<ChatProvider>(context);
-    // final size = MediaQuery.of(context).size;
-    final notifier = Provider.of<ChatPageNotifier>(context);
-
-    String outputFormat = DateFormat('MM-dd-H:mm').format(notifier.now);
+    DateTime chattime = DateTime.parse(chatNew.createdAt);
+    String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
 
     return Scrollbar(
       //对话框文字
       child: Column(
         children: [
           Align(
-            
-            alignment: chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
-           
+            alignment:
+                chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
             child: GestureDetector(
               //删除对话框图标
               onLongPress: () {
@@ -269,9 +265,10 @@ class _ChatPage extends StatelessWidget {
           ),
           //聊天时间
           Padding(
-            padding: const EdgeInsets.only(left:8,right: 8.0, bottom: 8),
+            padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 8),
             child: Align(
-              alignment: chatNew.isLeft == 0 ?Alignment.topLeft : Alignment.topRight,
+              alignment:
+                  chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
               child: Text(
                 outputFormat,
                 style: TextStyle(fontSize: 13),

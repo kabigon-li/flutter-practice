@@ -193,7 +193,10 @@ class _Home extends StatelessWidget {
                       : _buildUserNameBlank(context, userNew),
 
                   //3. 当用户名为空白时新建用户
-                  _buildUserLastChat(context, userNew,)
+                  _buildUserLastChat(
+                    context,
+                    userNew,
+                  )
                 ],
               ),
             ),
@@ -265,7 +268,6 @@ class _Home extends StatelessWidget {
     User userNew,
   ) {
     final notifier = Provider.of<HomeNotifier>(context);
-    
 
     return Row(
       children: [
@@ -332,16 +334,14 @@ class _Home extends StatelessWidget {
   Widget _buildUserLastChat(
     BuildContext context,
     User userNew,
-    
   ) {
     final chatProvider = Provider.of<ChatProvider>(context);
 
     final lastChat = chatProvider?.chatList?.lastWhere(
       (chat) => chat.userId == userNew.id,
       orElse: () => null,
-    
     );
-     DateTime chattime = DateTime.parse(lastChat.createdAt);
+    DateTime chattime = DateTime.parse(lastChat.createdAt);
     String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
 
     //final notifier = Provider.of<HomeNotifier>(context);
@@ -367,7 +367,9 @@ class _Home extends StatelessWidget {
               ),
               overflow: TextOverflow.ellipsis,
             ),
-            Text(lastChat != null ? outputFormat : '',)
+            Text(
+              lastChat != null ? outputFormat : '',
+            )
           ],
         ),
       ),
