@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:wechat_like_memo/constant/constants.dart';
+import 'package:wechat_like_memo/model/chat.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
@@ -195,6 +196,7 @@ class _Home extends StatelessWidget {
                   _buildUserLastChat(
                     context,
                     userNew,
+                    
                   )
                 ],
               ),
@@ -333,6 +335,7 @@ class _Home extends StatelessWidget {
   Widget _buildUserLastChat(
     BuildContext context,
     User userNew,
+    
   ) {
     final chatProvider = Provider.of<ChatProvider>(context);
 
@@ -340,7 +343,10 @@ class _Home extends StatelessWidget {
       (chat) => chat.userId == userNew.id,
       orElse: () => null,
     );
-    DateTime chattime = DateTime.parse(lastChat.createdAt);
+    final now = DateTime.now();
+    final createdAt = now.toIso8601String();
+
+    DateTime chattime = DateTime.parse(createdAt);
     String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
 
     //final notifier = Provider.of<HomeNotifier>(context);
