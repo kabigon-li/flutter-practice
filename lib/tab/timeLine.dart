@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/model/user.dart';
 
@@ -15,8 +14,6 @@ import 'package:wechat_like_memo/provider/user_provider.dart';
 
 import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
-import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
-import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
 
 class TimeLinePage extends StatelessWidget {
   const TimeLinePage(
@@ -41,7 +38,7 @@ class _TimeLine extends StatelessWidget {
   Widget build(context) {
     final notifier = Provider.of<TimeLinePageNotifier>(context, listen: false);
     final timelineProvider = Provider.of<TimelineProvider>(context);
-     final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -78,9 +75,12 @@ class _TimeLine extends StatelessWidget {
                 shrinkWrap: true, // 高さ関連のエラーが出たら、使う
                 itemCount: timelineProvider.timelineList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return timeline(timelineProvider.timelineList[index],
-                      notifier.image, context, userProvider
-                            .userList[index],);
+                  return timeline(
+                    timelineProvider.timelineList[index],
+                    notifier.image,
+                    context,
+                    userProvider.userList[index],
+                  );
                 },
               ),
             ],
@@ -204,26 +204,18 @@ class _TimeLine extends StatelessWidget {
                   // 头像
                   //userProvider.getFirstUser().userImage != null
 
-                  _buildUserIconImage(
-                context,
-                userNew,
-              ),
-                      //  ClipRRect(
-                      //     borderRadius: BorderRadius.circular(10),
-                      //     child: Image.memory(
-                      //       base64Decode(
-                      //         userProvider.getFirstUser().userImage,
-                      //       ),
-                      //       height: 50,
-                      //       width: 50,
-                      //       fit: BoxFit.cover,
-                      //     ),
-                      //   ),
-                      //image为空时显示空
-                      // : Icon(
-                      //     Icons.account_circle,
-                      //     size: 60,
-                      //   ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: _buildUserIconImage(
+                      context,
+                      userNew,
+                    ),
+                  ),
+                  //image为空时显示空
+                  // : Icon(
+                  //     Icons.account_circle,
+                  //     size: 60,
+                  //   ),
 
                   // 用户名
                   Padding(
@@ -278,7 +270,7 @@ class _TimeLine extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(right:20.0),
+                  padding: const EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
                     onTap: () {
                       timelineProvider.deleteTimeline(timelineNew.id);
@@ -326,6 +318,4 @@ class _TimeLine extends StatelessWidget {
       ),
     );
   }
-
- 
 }
