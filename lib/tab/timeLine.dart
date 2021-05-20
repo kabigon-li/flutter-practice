@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-
+import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/model/user.dart';
 
@@ -16,9 +16,11 @@ import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
 
 class TimeLinePage extends StatelessWidget {
-  const TimeLinePage(this.userNew,);
+  const TimeLinePage(
+    this.userNew,
+  );
 
-   final User userNew;
+  final User userNew;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -94,7 +96,7 @@ class _TimeLine extends StatelessWidget {
         return Container(
           color: Colors.white,
           child: SizedBox(
-            height: 200,
+            height: 160,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -175,9 +177,9 @@ class _TimeLine extends StatelessWidget {
     TimeLine timelineNew,
     File image,
     BuildContext context,
-    
   ) {
     final userProvider = Provider.of<UserProvider>(context);
+    final timelineProvider = Provider.of<TimelineProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -192,7 +194,7 @@ class _TimeLine extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  // ID icon
+                  // 头像
                   userProvider.getFirstUser().userImage != null
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(10),
@@ -211,7 +213,7 @@ class _TimeLine extends StatelessWidget {
                           size: 60,
                         ),
 
-                  // ID name
+                  // 用户名
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
@@ -227,14 +229,14 @@ class _TimeLine extends StatelessWidget {
                 ],
               ),
 
-              // CopyInputPageText
+              // 配文
               Align(
                 alignment: Alignment.centerRight,
                 child: SizedBox(
                   //height: 100,
                   width: 300,
                   child: Padding(
-                    padding: const EdgeInsets.only(left:15.0),
+                    padding: const EdgeInsets.only(left: 15.0),
                     child: Text(
                       timelineNew.content,
                       style: TextStyle(fontSize: 18),
@@ -243,6 +245,7 @@ class _TimeLine extends StatelessWidget {
                 ),
               ),
 
+              //朋友圈图片
               Align(
                 alignment: Alignment.center,
                 child: Padding(
@@ -258,6 +261,18 @@ class _TimeLine extends StatelessWidget {
                   ),
                 ),
               ),
+
+              // 删除按钮等
+              GestureDetector(
+                onTap: (){
+                  timelineProvider.deleteTimeline(timelineNew.id);
+                },
+                child: Icon(
+                  Icons.delete,
+                  size: 22,
+                  color: Colors.grey,
+                ),
+              )
             ],
           ),
         ),

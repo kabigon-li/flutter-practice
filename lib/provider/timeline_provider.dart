@@ -34,8 +34,8 @@ class TimelineProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deletechat(int id) {
-    final timelineIndex = timelineList.indexWhere((chat) => chat.id == id);
+  void deleteTimeline(int id) {
+    final timelineIndex = timelineList.indexWhere((timeline) => timeline.id == id);
     timelineList.removeAt(timelineIndex);
     notifyListeners();
   }
