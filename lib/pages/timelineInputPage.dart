@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,9 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
   String text = '';
   String fileName;
   String imageString;
+  final picker = ImagePicker();
+  File _image;
+  Image imageIcon;
 
   void chatbox(String input) {
     text = input;
@@ -40,7 +44,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
       appBar: AppBar(
         backgroundColor: themeColor,
         elevation: 0,
-        leading:GestureDetector(
+        leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
@@ -50,13 +54,13 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
           ),
         ),
         actions: [
-          SizedBox(
-            height: 30,
-            width: 70,
+          Padding(
+            padding: const EdgeInsets.only(right:8.0),
             child: Center(
               child: ElevatedButton(
                 child: Text(
                   'send',
+                  style: TextStyle(fontSize: 18),
                 ),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromRGBO(130, 176, 104, 1),
@@ -94,16 +98,27 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
         child: Column(
           children: [
             //入力枠
-            textfild(context),
+            Row(
+              children: [
+                //头像选择框
+                iconImageField(),
+
+                //输入框
+                textfild(context),
+              ],
+            ),
 
             SizedBox(height: 30),
 
             //写真投稿枠
-            Image.file(
-              widget.image,
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
+            Padding(
+              padding: const EdgeInsets.only(left:50.0),
+              child: Image.file(
+                widget.image,
+                height: 250,
+                width: 250,
+                fit: BoxFit.cover,
+              ),
             ),
           ],
         ),
@@ -116,31 +131,34 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
         Provider.of<TimelineProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(left: 10.0, top: 20),
       child: Align(
         alignment: Alignment.bottomCenter,
         child: SizedBox(
           height: 100,
-          width: size.width,
+          width: size.width * .7,
           child: ColoredBox(
             color: Colors.grey[200],
             child: Column(
               children: [
                 //textfild
-                SizedBox(
-                  height: 100,
-                  width: size.width * .9,
-                  child: ColoredBox(
-                    color: Colors.white,
-                    child: TextField(
-                      maxLines: 20,
-                      onChanged: (String text) {
-                        chatbox(text);
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Say something...',
-                        contentPadding: const EdgeInsets.all(10),
-                        border: InputBorder.none,
+                Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: SizedBox(
+                    height: 93,
+                    width: size.width * .7,
+                    child: ColoredBox(
+                      color: Colors.white,
+                      child: TextField(
+                        maxLines: 20,
+                        onChanged: (String text) {
+                          chatbox(text);
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Say something...',
+                          contentPadding: const EdgeInsets.all(10),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
@@ -148,6 +166,79 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    // 写真取得する（获取照片）
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+    } else {
+      print('No image selected.');
+    }
+    setState(() {});
+  }
+
+  iconImageField() {
+    return InkWell(
+      onTap: () async {
+        // 点按”アルバムから選択”按钮后，获取相册照片
+        await getImage();
+
+        //只有在选择了照片时，向下一个页面移动
+        if (_image != null) {
+          ClipOval(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Image.file(
+                _image,
+              ),
+            ),
+          );
+        }
+      },
+      child: ClipRRect(
+        child: Container(
+          decoration: BoxDecoration(
+              //border: Border.all(color: Colors.grey),
+              ),
+          child: _image == null
+              ? Padding(
+                padding: const EdgeInsets.only(left:10.0),
+                child: SizedBox(
+                    height: 60,
+                    width: 60,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black12),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        Icons.add_a_photo,
+                        color: Color.fromRGBO(124, 166, 221, 1),
+                        size: 50,
+                      ),
+                    ),
+                  ),
+              )
+              : Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.file(
+                      _image,
+                      height: 60,
+                      width: 60,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
         ),
       ),
     );

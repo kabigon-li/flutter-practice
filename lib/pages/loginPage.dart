@@ -114,6 +114,8 @@ class _LoginPageState extends State<LoginPage> {
               //mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(height: 40.0),
+
+                //头像拦
                 iconImageField(),
                 SizedBox(height: 40.0),
 
