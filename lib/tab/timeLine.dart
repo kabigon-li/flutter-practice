@@ -181,7 +181,7 @@ class _TimeLine extends StatelessWidget {
   ) {
     final userProvider = Provider.of<UserProvider>(context);
     final timelineProvider = Provider.of<TimelineProvider>(context);
-     final databaseProvider =
+    final databaseProvider =
         Provider.of<DataBaseProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -265,15 +265,21 @@ class _TimeLine extends StatelessWidget {
               ),
 
               // 删除按钮等
-              GestureDetector(
-                onTap: (){
-                  timelineProvider.deleteTimeline(timelineNew.id);
-                  databaseProvider.deleteTimeLine(timelineNew.id);
-                },
-                child: Icon(
-                  Icons.delete,
-                  size: 22,
-                  color: Colors.grey,
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right:20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      timelineProvider.deleteTimeline(timelineNew.id);
+                      databaseProvider.deleteTimeLine(timelineNew.id);
+                    },
+                    child: Icon(
+                      Icons.delete_outline,
+                      size: 24,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
               )
             ],
