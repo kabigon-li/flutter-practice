@@ -15,6 +15,8 @@ import 'package:wechat_like_memo/provider/user_provider.dart';
 
 import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
+import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
+import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
 
 class TimeLinePage extends StatelessWidget {
   const TimeLinePage(
@@ -39,6 +41,7 @@ class _TimeLine extends StatelessWidget {
   Widget build(context) {
     final notifier = Provider.of<TimeLinePageNotifier>(context, listen: false);
     final timelineProvider = Provider.of<TimelineProvider>(context);
+     final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -76,7 +79,8 @@ class _TimeLine extends StatelessWidget {
                 itemCount: timelineProvider.timelineList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return timeline(timelineProvider.timelineList[index],
-                      notifier.image, context);
+                      notifier.image, context, userProvider
+                            .userList[index],);
                 },
               ),
             ],
@@ -178,6 +182,7 @@ class _TimeLine extends StatelessWidget {
     TimeLine timelineNew,
     File image,
     BuildContext context,
+    User userNew,
   ) {
     final userProvider = Provider.of<UserProvider>(context);
     final timelineProvider = Provider.of<TimelineProvider>(context);
@@ -197,23 +202,28 @@ class _TimeLine extends StatelessWidget {
               Row(
                 children: [
                   // 头像
-                  userProvider.getFirstUser().userImage != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.memory(
-                            base64Decode(
-                              userProvider.getFirstUser().userImage,
-                            ),
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.cover,
-                          ),
-                        )
+                  //userProvider.getFirstUser().userImage != null
+
+                  _buildUserIconImage(
+                context,
+                userNew,
+              ),
+                      //  ClipRRect(
+                      //     borderRadius: BorderRadius.circular(10),
+                      //     child: Image.memory(
+                      //       base64Decode(
+                      //         userProvider.getFirstUser().userImage,
+                      //       ),
+                      //       height: 50,
+                      //       width: 50,
+                      //       fit: BoxFit.cover,
+                      //     ),
+                      //   ),
                       //image为空时显示空
-                      : Icon(
-                          Icons.account_circle,
-                          size: 60,
-                        ),
+                      // : Icon(
+                      //     Icons.account_circle,
+                      //     size: 60,
+                      //   ),
 
                   // 用户名
                   Padding(
@@ -288,4 +298,34 @@ class _TimeLine extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildUserIconImage(
+    BuildContext context,
+    User userNew,
+  ) {
+    final notifier = Provider.of<TimeLinePageNotifier>(context);
+    return Padding(
+      padding: const EdgeInsets.all(3.0),
+      child: MaterialButton(
+        onPressed: () {
+          notifier.updateUserImage(userNew);
+          //点击图片后更新头像
+          //notifier.updateUserImage(userNew);
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          //データベース中の画像使う時だけ書くSQliteだけ
+          child: Image.memory(
+            base64Decode(userNew.userImage),
+            gaplessPlayback: true,
+            fit: BoxFit.cover,
+            height: 50,
+            width: 50,
+          ),
+        ),
+      ),
+    );
+  }
+
+ 
 }

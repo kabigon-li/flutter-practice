@@ -94,33 +94,35 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
           ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            //入力枠
-            Row(
-              children: [
-                //头像选择框
-                iconImageField(),
+      body: SingleChildScrollView(
+              child: Container(
+          child: Column(
+            children: [
+              //入力枠
+              Row(
+                children: [
+                  //头像选择框
+                  iconImageField(),
 
-                //输入框
-                textfild(context),
-              ],
-            ),
-
-            SizedBox(height: 30),
-
-            //写真投稿枠
-            Padding(
-              padding: const EdgeInsets.only(left:50.0),
-              child: Image.file(
-                widget.image,
-                height: 250,
-                width: 250,
-                fit: BoxFit.cover,
+                  //输入框
+                  textfild(context),
+                ],
               ),
-            ),
-          ],
+
+              SizedBox(height: 30),
+
+              //写真投稿枠
+              Padding(
+                padding: const EdgeInsets.only(left:50.0),
+                child: Image.file(
+                  widget.image,
+                  height: 250,
+                  width: 250,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
