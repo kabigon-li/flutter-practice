@@ -225,7 +225,7 @@ class DataBaseProvider with ChangeNotifier {
   }
 
   // delete chat 
-  Future<void> deleteLine(int id) async {
+  Future<void> deleteTimeLine(int id) async {
     // Get a reference to the database.
     final db = await database;
 

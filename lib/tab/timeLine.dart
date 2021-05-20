@@ -9,6 +9,7 @@ import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
 
 import 'package:wechat_like_memo/pages/timelineInputPage.dart';
+import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 
@@ -180,7 +181,8 @@ class _TimeLine extends StatelessWidget {
   ) {
     final userProvider = Provider.of<UserProvider>(context);
     final timelineProvider = Provider.of<TimelineProvider>(context);
-
+     final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Container(
@@ -266,6 +268,7 @@ class _TimeLine extends StatelessWidget {
               GestureDetector(
                 onTap: (){
                   timelineProvider.deleteTimeline(timelineNew.id);
+                  databaseProvider.deleteTimeLine(timelineNew.id);
                 },
                 child: Icon(
                   Icons.delete,
