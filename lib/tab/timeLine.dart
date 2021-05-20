@@ -206,16 +206,16 @@ class _TimeLine extends StatelessWidget {
 
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: _buildUserIconImage(
-                      context,
-                      userNew,
-                    ),
+                    child: userNew.id == 0 || userNew.userImage == null
+                        ? Icon(
+                            Icons.account_circle,
+                            size: 60,
+                          )
+                        : buildUserIconImage(
+                            context,
+                            userNew,
+                          ),
                   ),
-                  //image为空时显示空
-                  // : Icon(
-                  //     Icons.account_circle,
-                  //     size: 60,
-                  //   ),
 
                   // 用户名
                   Padding(
@@ -291,7 +291,7 @@ class _TimeLine extends StatelessWidget {
     );
   }
 
-  Widget _buildUserIconImage(
+  Widget buildUserIconImage(
     BuildContext context,
     User userNew,
   ) {
