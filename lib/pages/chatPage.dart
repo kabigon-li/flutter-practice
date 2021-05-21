@@ -44,7 +44,7 @@ class _ChatPage extends StatelessWidget {
         .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
     final size = MediaQuery.of(context).size;
-    final isLeft = 0;
+   
 
     return Scaffold(
       appBar: AppBar(

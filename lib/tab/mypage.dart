@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
@@ -23,28 +24,25 @@ class _MyPageState extends State<MyPage> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Colors.green[200],
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoginPage(),
+          backgroundColor: themeColor,
+         
+          title: Padding(
+            padding: const EdgeInsets.only(left:8.0),
+            child: Align(
+            alignment: Alignment.topLeft,
+            child: Row(
+              children: [
+                Text(
+                  'Setting',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontFamily: 'iconfont',
+                    color: fontColor,
+                  ),
                 ),
-              );
-              //Navigator.of(context).pushNamed('/chatpage');
-            },
-            child: Icon(
-              Icons.account_circle,
-              color: Colors.black,
-              size: 35,
+              ],
             ),
-          ),
-          title: Center(
-            child: Text(
-              'Setting',
-              style: TextStyle(fontFamily: 'Cursive', fontSize: 30),
-            ),
+        ),
           ),
         ),
         body: Container(

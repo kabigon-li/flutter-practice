@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:wechat_like_memo/constant/constants.dart';
-import 'package:wechat_like_memo/model/chat.dart';
+
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
