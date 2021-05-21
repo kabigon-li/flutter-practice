@@ -219,7 +219,6 @@ class _Home extends StatelessWidget {
       child: MaterialButton(
         onPressed: () {
           notifier.updateUserImage(userNew);
-          
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
@@ -290,7 +289,7 @@ class _Home extends StatelessWidget {
                       child: Text(
                         userNew.userName,
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           color: fontColor,
                         ),
                       ),
@@ -328,6 +327,31 @@ class _Home extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildUserNameBlank(
+    BuildContext context,
+    User userNew,
+  ) {
+    final notifier = Provider.of<HomeNotifier>(context);
+    return GestureDetector(
+      onTap: () {
+        notifier.updateUserName(userNew);
+      },
+      child: Column(
+        //竖列两个组件对其
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'No userName',
+            style: TextStyle(
+              fontSize: 20,
+              color: fontColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -383,28 +407,6 @@ class _Home extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildUserNameBlank(BuildContext context, userNew) {
-    final notifier = Provider.of<HomeNotifier>(context);
-    return GestureDetector(
-      onTap: () {
-        notifier.updateUserName(userNew);
-      },
-      child: Column(
-        //竖列两个组件对其
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'No userName',
-            style: TextStyle(
-              fontSize: 23,
-              color: fontColor,
-            ),
-          ),
-        ],
       ),
     );
   }

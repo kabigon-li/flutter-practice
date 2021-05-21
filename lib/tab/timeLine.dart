@@ -199,18 +199,21 @@ class _TimeLine extends StatelessWidget {
             children: [
               // 头像
 
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: userProvider.getFirstUser().userImage != null
-                    ?  buildUserIconImage(
-                        context,
-                        userNew,
-                      )
-                    
-                    : Icon(
-                        Icons.account_circle,
-                        size: 60,
-                      ),
+              Padding(
+                padding: const EdgeInsets.only(top:8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: userProvider.getFirstUser().userImage != null
+                      ?  buildUserIconImage(
+                          context,
+                          userNew,
+                        )
+                      
+                      : Icon(
+                          Icons.account_circle,
+                          size: 60,
+                        ),
+                ),
               ),
 
               // 用户名
@@ -233,7 +236,7 @@ class _TimeLine extends StatelessWidget {
               //height: 100,
               width: 300,
               child: Padding(
-                padding: const EdgeInsets.only(left: 15.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Text(
                   timelineNew.content,
                   style: TextStyle(fontSize: 18),
@@ -246,7 +249,7 @@ class _TimeLine extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left:13.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: Image.memory(

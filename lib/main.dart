@@ -49,20 +49,19 @@ void main() async {
   );
 
   //默认用户
-  final defaultUser = User(
-    id: 0,
-    userName: 'my user',
-    isLogined: 0,
-   
-  );
-  insertUser(
-    user: defaultUser,
-    database: database,
-  );
-   updateUser(
-     user: defaultUser,
-    database: database,
-    );
+  // final defaultUser = User(
+  //   id: 0,
+  //   userName: 'my user',
+  //   isLogined: 0,
+  // );
+  // insertUser(
+  //   user: defaultUser,
+  //   database: database,
+  // );
+  // updateUser(
+  //   user: defaultUser,
+  //   database: database,
+  // );
 
   //todoListはreturnしたやつを代入(read)
   final todoList = await getTodo(database);
@@ -152,18 +151,18 @@ Future<void> insertUser({
 
 Future<void> updateUser({
   Future<Database> database,
-    User user,
-  }) async {
-    final Database db = await database;
-    await db.update(
-      'users',
-      user.toMap(),
-      // Ensure that the Dog has a matching id.
-      where: "id = ?",
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
-      whereArgs: [user.id],
-    );
-  }
+  User user,
+}) async {
+  final Database db = await database;
+  await db.update(
+    'users',
+    user.toMap(),
+    // Ensure that the Dog has a matching id.
+    where: "id = ?",
+    // Pass the Dog's id as a whereArg to prevent SQL injection.
+    whereArgs: [user.id],
+  );
+}
 
 //User datebase 5/10
 Future<List<User>> getUser(
