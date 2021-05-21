@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
@@ -10,6 +12,7 @@ import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 
 import 'package:intl/intl.dart';
+import 'package:wechat_like_memo/provider/user_provider.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage(
@@ -44,7 +47,7 @@ class _ChatPage extends StatelessWidget {
         .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
     final size = MediaQuery.of(context).size;
-   
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -101,6 +104,7 @@ class _ChatPage extends StatelessWidget {
                     return chat(
                       context,
                       currentUserChatList[index],
+                      userProvider.userList[index],
                     );
                   },
                 ),
@@ -214,6 +218,7 @@ class _ChatPage extends StatelessWidget {
   Widget chat(
     BuildContext context,
     Chat chatNew,
+    User userNew,
   ) {
     DateTime chattime = DateTime.parse(chatNew.createdAt);
     String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
@@ -248,15 +253,23 @@ class _ChatPage extends StatelessWidget {
                     },
 
                     //聊天内容
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        chatNew.content,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
+                    child: Row(
+                      children: [
+                        buildUserIconImage(
+                          context,
+                          userNew,
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            chatNew.content,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -394,6 +407,29 @@ class _ChatPage extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Widget buildUserIconImage(
+    BuildContext context,
+    User userNew,
+  ) {
+    return MaterialButton(
+      onPressed: () {
+        //点击图片后更新头像
+        //notifier.updateUserImage(userNew);
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        //データベース中の画像使う時だけ書くSQliteだけ
+        child: Image.memory(
+          base64Decode(userNew.userImage),
+          gaplessPlayback: true,
+          fit: BoxFit.cover,
+          height: 50,
+          width: 50,
+        ),
+      ),
     );
   }
 }
