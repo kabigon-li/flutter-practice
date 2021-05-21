@@ -198,26 +198,18 @@ class _TimeLine extends StatelessWidget {
           Row(
             children: [
               // 头像
-          
+
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: userNew.id == 0 || userNew.userImage == null
-                    ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Material(
-                          elevation: 5.0,
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.grey[300],
-                          child: Icon(
-                            Icons.account_box,
-                            size: 50,
-                            color: Color.fromRGBO(130, 176, 104, 05),
-                          ),
-                        ),
-                    )
-                    : buildUserIconImage(
+                child: userProvider.getFirstUser().userImage != null
+                    ?  buildUserIconImage(
                         context,
                         userNew,
+                      )
+                    
+                    : Icon(
+                        Icons.account_circle,
+                        size: 60,
                       ),
               ),
 
