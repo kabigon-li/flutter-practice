@@ -188,105 +188,104 @@ class _TimeLine extends StatelessWidget {
     final timelineProvider = Provider.of<TimelineProvider>(context);
     final databaseProvider =
         Provider.of<DataBaseProvider>(context, listen: false);
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[200]),
-          //color: Colors.yellow[50],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey[200]),
+        //color: Colors.yellow[50],
+      ),
+      child: Column(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  // 头像
-                  //userProvider.getFirstUser().userImage != null
-
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: userNew.id == 0 || userNew.userImage == null
-                        ? Icon(
-                            Icons.account_circle,
-                            size: 60,
-                          )
-                        : buildUserIconImage(
-                            context,
-                            userNew,
+              // 头像
+          
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: userNew.id == 0 || userNew.userImage == null
+                    ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+                          elevation: 5.0,
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.grey[300],
+                          child: Icon(
+                            Icons.account_box,
+                            size: 50,
+                            color: Color.fromRGBO(130, 176, 104, 05),
                           ),
-                  ),
-
-                  // 用户名
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      userProvider.getFirstUser().userName,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.blueGrey,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'iconfont',
+                        ),
+                    )
+                    : buildUserIconImage(
+                        context,
+                        userNew,
                       ),
-                    ),
-                  ),
-                ],
               ),
 
-              // 配文
-              Align(
-                alignment: Alignment.centerRight,
-                child: SizedBox(
-                  //height: 100,
-                  width: 300,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Text(
-                      timelineNew.content,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
+              // 用户名
+              Text(
+                userProvider.getFirstUser().userName,
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.blueGrey,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'iconfont',
                 ),
               ),
-
-              //朋友圈图片
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5.0),
-                    child: Image.memory(
-                      base64Decode(timelineNew.imagePath),
-                      height: 250,
-                      width: 250,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-
-              // 删除按钮等
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      timelineProvider.deleteTimeline(timelineNew.id);
-                      databaseProvider.deleteTimeLine(timelineNew.id);
-                    },
-                    child: Icon(
-                      Icons.delete_outline,
-                      size: 24,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
-        ),
+
+          // 配文
+          Align(
+            alignment: Alignment.centerRight,
+            child: SizedBox(
+              //height: 100,
+              width: 300,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15.0),
+                child: Text(
+                  timelineNew.content,
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ),
+          ),
+
+          //朋友圈图片
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5.0),
+                child: Image.memory(
+                  base64Decode(timelineNew.imagePath),
+                  height: 250,
+                  width: 250,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+
+          // 删除按钮等
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  timelineProvider.deleteTimeline(timelineNew.id);
+                  databaseProvider.deleteTimeLine(timelineNew.id);
+                },
+                child: Icon(
+                  Icons.delete_outline,
+                  size: 24,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -296,24 +295,21 @@ class _TimeLine extends StatelessWidget {
     User userNew,
   ) {
     final notifier = Provider.of<TimeLinePageNotifier>(context);
-    return Padding(
-      padding: const EdgeInsets.all(3.0),
-      child: MaterialButton(
-        onPressed: () {
-          notifier.updateUserImage(userNew);
-          //点击图片后更新头像
-          //notifier.updateUserImage(userNew);
-        },
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          //データベース中の画像使う時だけ書くSQliteだけ
-          child: Image.memory(
-            base64Decode(userNew.userImage),
-            gaplessPlayback: true,
-            fit: BoxFit.cover,
-            height: 50,
-            width: 50,
-          ),
+    return MaterialButton(
+      onPressed: () {
+        notifier.updateUserImage(userNew);
+        //点击图片后更新头像
+        //notifier.updateUserImage(userNew);
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        //データベース中の画像使う時だけ書くSQliteだけ
+        child: Image.memory(
+          base64Decode(userNew.userImage),
+          gaplessPlayback: true,
+          fit: BoxFit.cover,
+          height: 50,
+          width: 50,
         ),
       ),
     );

@@ -15,7 +15,6 @@ import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/home_notifier.dart';
 
-
 class Home extends StatelessWidget {
   const Home();
 
@@ -75,7 +74,7 @@ class _Home extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Icon(
-                Icons.add_circle,
+                Icons.person_add_rounded,
                 color: Color.fromRGBO(107, 173, 206, 1),
                 size: 30,
               ),
@@ -160,7 +159,10 @@ class _Home extends StatelessWidget {
                 userNew,
               )
             //image为空时显示默认头像icon
-            : _buildUserIconBlank(context),
+            : _buildUserIconBlank(
+                context,
+                userNew,
+              ),
 
         //2. 用户名称
         GestureDetector(
@@ -196,7 +198,6 @@ class _Home extends StatelessWidget {
                   _buildUserLastChat(
                     context,
                     userNew,
-                    
                   )
                 ],
               ),
@@ -218,8 +219,7 @@ class _Home extends StatelessWidget {
       child: MaterialButton(
         onPressed: () {
           notifier.updateUserImage(userNew);
-          //点击图片后更新头像
-          //notifier.updateUserImage(userNew);
+          
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
@@ -236,18 +236,17 @@ class _Home extends StatelessWidget {
     );
   }
 
-  Widget _buildUserIconBlank(BuildContext context) {
+  Widget _buildUserIconBlank(
+    BuildContext context,
+    User userNew,
+  ) {
     //默认用户
+    final notifier = Provider.of<HomeNotifier>(context);
     return Row(
       children: [
         MaterialButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LoginPage(),
-              ),
-            );
+            notifier.updateUserImage(userNew);
           },
           child: Material(
             elevation: 5.0,
@@ -291,7 +290,7 @@ class _Home extends StatelessWidget {
                       child: Text(
                         userNew.userName,
                         style: TextStyle(
-                          fontSize: 26,
+                          fontSize: 24,
                           color: fontColor,
                         ),
                       ),
@@ -335,7 +334,6 @@ class _Home extends StatelessWidget {
   Widget _buildUserLastChat(
     BuildContext context,
     User userNew,
-    
   ) {
     final chatProvider = Provider.of<ChatProvider>(context);
 

@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
           child: _image == null
               ? Icon(
-                  Icons.add_a_photo,
+                  Icons.add_photo_alternate,
                   color: Color.fromRGBO(124, 166, 221, 1),
                   size: 70,
                 )
