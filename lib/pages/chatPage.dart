@@ -104,7 +104,7 @@ class _ChatPage extends StatelessWidget {
                     return chat(
                       context,
                       currentUserChatList[index],
-                      userProvider.userList[index],
+                      userProvider.userList[0],
                     );
                   },
                 ),
@@ -220,76 +220,91 @@ class _ChatPage extends StatelessWidget {
     Chat chatNew,
     User userNew,
   ) {
-    DateTime chattime = DateTime.parse(chatNew.createdAt);
-    String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+    DateTime chattime;
+    String outputFormat;
+    try {
+      chattime = DateTime.parse(chatNew.createdAt);
+      outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
 
-    return Scrollbar(
-      //对话框文字
-      child: Column(
-        children: [
-          Align(
-            alignment:
-                chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
-            child: GestureDetector(
-              //删除对话框图标
-              onLongPress: () {
-                showSimpleDialog(context, chatNew);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.green[200],
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      updateChatBottomSheet(
-                        context,
-                        chatNew.id,
-                        chatNew.content,
-                        chatNew,
-                      );
-                    },
+    return Row(
+      mainAxisAlignment:
+          chatNew.isLeft == 0 ? MainAxisAlignment.start : MainAxisAlignment.end,
+      children: [
+        //聊天头像
+        // buildUserIconImage(
+        //   context,
+        //   userNew,
+        // ),
 
-                    //聊天内容
-                    child: Row(
-                      children: [
-                        buildUserIconImage(
-                          context,
-                          userNew,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
+        //聊天内容
+        Column(
+          children: [
+            Align(
+              child: GestureDetector(
+                //删除对话框图标
+                onLongPress: () {
+                  showSimpleDialog(context, chatNew);
+                },
+                child: SizedBox(
+                  //width: size.width * .5,
+                  //height: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.green[200],
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          updateChatBottomSheet(
+                            context,
+                            chatNew.id,
                             chatNew.content,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
+                            chatNew,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            //聊天内容
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                chatNew.content,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                                overflow: TextOverflow.clip,
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          //聊天时间
-          Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 8),
-            child: Align(
-              alignment:
-                  chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
-              child: Text(
-                outputFormat,
-                style: TextStyle(fontSize: 13),
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 8),
+              child: Align(
+                alignment: chatNew.isLeft == 0
+                    ? Alignment.topLeft
+                    : Alignment.topRight,
+                child: Text(
+                  outputFormat ?? '',
+                  style: TextStyle(fontSize: 13),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+        //聊天时间
+      ],
     );
   }
 
