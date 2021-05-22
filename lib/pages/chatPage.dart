@@ -94,20 +94,17 @@ class _ChatPage extends StatelessWidget {
               ),
             ),
             SingleChildScrollView(
-              child: SizedBox(
-                height: size.height * .64,
-                child: ListView.builder(
-                  //physics: const AlwaysScrollableScrollPhysics(),
-                  shrinkWrap: true, // 高さ関連のエラーが出たら、使う
-                  itemCount: currentUserChatList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return chat(
-                      context,
-                      currentUserChatList[index],
-                      userProvider.userList[0],
-                    );
-                  },
-                ),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+                itemCount: currentUserChatList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return chat(
+                    context,
+                    currentUserChatList[index],
+                    userProvider.userList[0],
+                  );
+                },
               ),
             ),
             SizedBox(child: textfild(context)),
@@ -229,59 +226,44 @@ class _ChatPage extends StatelessWidget {
       debugPrint(e.toString());
     }
 
-    return Row(
-      mainAxisAlignment:
-          chatNew.isLeft == 0 ? MainAxisAlignment.start : MainAxisAlignment.end,
-      children: [
-        //聊天头像
-        // buildUserIconImage(
-        //   context,
-        //   userNew,
-        // ),
-
-        //聊天内容
-        Column(
-          children: [
-            Align(
-              child: GestureDetector(
-                //删除对话框图标
-                onLongPress: () {
-                  showSimpleDialog(context, chatNew);
-                },
-                child: SizedBox(
-                  //width: size.width * .5,
-                  //height: 50,
-                  child: Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.green[200],
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          updateChatBottomSheet(
-                            context,
-                            chatNew.id,
-                            chatNew.content,
-                            chatNew,
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            //聊天内容
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                chatNew.content,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                ),
-                                overflow: TextOverflow.clip,
-                              ),
-                            ),
-                          ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Align(
+            alignment:
+                chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
+            child: GestureDetector(
+              //删除对话框图标
+              onLongPress: () {
+                showSimpleDialog(context, chatNew);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.green[200],
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      updateChatBottomSheet(
+                        context,
+                        chatNew.id,
+                        chatNew.content,
+                        chatNew,
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Flexible(
+                        child: Text(
+                          chatNew.content,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 10,
                         ),
                       ),
                     ),
@@ -289,22 +271,20 @@ class _ChatPage extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 8),
-              child: Align(
-                alignment: chatNew.isLeft == 0
-                    ? Alignment.topLeft
-                    : Alignment.topRight,
-                child: Text(
-                  outputFormat ?? '',
-                  style: TextStyle(fontSize: 13),
-                ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 8),
+            child: Align(
+              alignment:
+                  chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
+              child: Text(
+                outputFormat ?? '',
+                style: TextStyle(fontSize: 13),
               ),
             ),
-          ],
-        ),
-        //聊天时间
-      ],
+          ),
+        ],
+      ),
     );
   }
 
