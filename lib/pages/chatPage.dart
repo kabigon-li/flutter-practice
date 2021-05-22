@@ -217,28 +217,12 @@ class _ChatPage extends StatelessWidget {
     Chat chatNew,
     User userNew,
   ) {
-    DateTime chattime;
-    String outputFormat;
-    try {
-      chattime = DateTime.parse(chatNew.createdAt);
-      outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
-    return chatNew.isLeft == 0
-        ? leftChat(
-            context,
-            chatNew,
-            userNew,
-            0,
-          )
-        : rightChat(
-            context,
-            chatNew,
-            userNew,
-            1,
-          );
+    return rightChat(
+      context,
+      chatNew,
+      userNew,
+      1,
+    );
   }
 
   Widget leftChat(
@@ -249,8 +233,12 @@ class _ChatPage extends StatelessWidget {
   ) {
     DateTime chattime;
     String outputFormat;
-    chattime = DateTime.parse(chatNew.createdAt);
-    outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+    try {
+      chattime = DateTime.parse(chatNew.createdAt);
+      outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
 
     return SingleChildScrollView(
       child: Column(
@@ -332,7 +320,7 @@ class _ChatPage extends StatelessWidget {
     BuildContext context,
     Chat chatNew,
     User userNew,
-    isLeft,
+    int isLeft,
   ) {
     DateTime chattime;
     String outputFormat;
@@ -342,54 +330,46 @@ class _ChatPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Align(
-            alignment:
-                // chatNew.isLeft == 0 ? Alignment.topLeft :
-                Alignment.topRight,
-            child: GestureDetector(
-              //删除对话框图标
-              onLongPress: () {
-                showSimpleDialog(context, chatNew);
-              },
-              child: Row(
-                children: [
-                  Align(
-                    //alignment: chatNew.isLeft == 0
-
-                    alignment: Alignment.topRight,
-                    child: buildUserIconImage(context, userNew),
-                  ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.green[200],
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            updateChatBottomSheet(
-                              context,
-                              chatNew.id,
-                              chatNew.content,
-                              chatNew,
-                            );
-                          },
-                          child: SizedBox(
-                            // width: 280,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Flexible(
-                                child: Text(
-                                  chatNew.content,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 10,
+          GestureDetector(
+            //删除对话框图标
+            onLongPress: () {
+              showSimpleDialog(context, chatNew);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                //头像
+                buildUserIconImage(context, userNew),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.green[200],
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          updateChatBottomSheet(
+                            context,
+                            chatNew.id,
+                            chatNew.content,
+                            chatNew,
+                          );
+                        },
+                        child: SizedBox(
+                          // width: 280,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Flexible(
+                              child: Text(
+                                chatNew.content,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
                                 ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 10,
                               ),
                             ),
                           ),
@@ -397,14 +377,14 @@ class _ChatPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 8),
             child: Align(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.topRight,
               child: Text(
                 outputFormat,
                 style: TextStyle(fontSize: 13),
