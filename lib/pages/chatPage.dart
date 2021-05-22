@@ -226,6 +226,23 @@ class _ChatPage extends StatelessWidget {
       debugPrint(e.toString());
     }
 
+    return leftChat(
+      context,
+      chatNew,
+      userNew,
+    );
+  }
+
+  Widget leftChat(
+    BuildContext context,
+    Chat chatNew,
+    User userNew,
+  ) {
+    DateTime chattime;
+    String outputFormat;
+    chattime = DateTime.parse(chatNew.createdAt);
+    outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -237,48 +254,62 @@ class _ChatPage extends StatelessWidget {
               onLongPress: () {
                 showSimpleDialog(context, chatNew);
               },
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.green[200],
-                    borderRadius: BorderRadius.circular(10.0),
+              child: Row(
+                children: [
+                  Align(
+                    alignment: chatNew.isLeft == 0
+                        ? Alignment.topLeft
+                        : Alignment.topRight,
+                    child: buildUserIconImage(context, userNew),
                   ),
-                  child: GestureDetector(
-                    onTap: () {
-                      updateChatBottomSheet(
-                        context,
-                        chatNew.id,
-                        chatNew.content,
-                        chatNew,
-                      );
-                    },
+                  Flexible(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Flexible(
-                        child: Text(
-                          chatNew.content,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
+                      padding: const EdgeInsets.all(6.0),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.green[200],
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            updateChatBottomSheet(
+                              context,
+                              chatNew.id,
+                              chatNew.content,
+                              chatNew,
+                            );
+                          },
+                          child: SizedBox(
+                            // width: 280,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Flexible(
+                                child: Text(
+                                  chatNew.content,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 10,
+                                ),
+                              ),
+                            ),
                           ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 10,
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 8),
             child: Align(
-              alignment:
-                  chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
+              alignment: Alignment.topLeft,
               child: Text(
-                outputFormat ?? '',
+                outputFormat,
                 style: TextStyle(fontSize: 13),
               ),
             ),
