@@ -102,7 +102,7 @@ class _ChatPage extends StatelessWidget {
                   return chat(
                     context,
                     currentUserChatList[index],
-                    userProvider.userList[0],
+                    userProvider.userList[index],
                   );
                 },
               ),
@@ -217,12 +217,19 @@ class _ChatPage extends StatelessWidget {
     Chat chatNew,
     User userNew,
   ) {
-    return rightChat(
-      context,
-      chatNew,
-      userNew,
-      1,
-    );
+    return chatNew.isLeft == 0
+        ? leftChat(
+            context,
+            chatNew,
+            userNew,
+            0,
+          )
+        : rightChat(
+            context,
+            chatNew,
+            userNew,
+            1,
+          );
   }
 
   Widget leftChat(
@@ -244,8 +251,7 @@ class _ChatPage extends StatelessWidget {
       child: Column(
         children: [
           Align(
-            alignment:
-                chatNew.isLeft == 0 ? Alignment.topLeft : Alignment.topRight,
+            alignment: Alignment.topLeft,
             child: GestureDetector(
               //删除对话框图标
               onLongPress: () {
@@ -254,9 +260,7 @@ class _ChatPage extends StatelessWidget {
               child: Row(
                 children: [
                   Align(
-                    alignment: chatNew.isLeft == 0
-                        ? Alignment.topLeft
-                        : Alignment.topRight,
+                    alignment: Alignment.topLeft,
                     child: buildUserIconImage(context, userNew),
                   ),
                   Flexible(
@@ -338,8 +342,7 @@ class _ChatPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                //头像
-                buildUserIconImage(context, userNew),
+
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.all(6.0),
@@ -378,7 +381,10 @@ class _ChatPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],
+             
+                //头像
+                buildFirstUserIconImage(context, userNew),
+                 ],
             ),
           ),
           Padding(
@@ -517,22 +523,38 @@ class _ChatPage extends StatelessWidget {
     BuildContext context,
     User userNew,
   ) {
-    return MaterialButton(
-      onPressed: () {
-        //点击图片后更新头像
-        //notifier.updateUserImage(userNew);
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        //データベース中の画像使う時だけ書くSQliteだけ
-        child: Image.memory(
-          base64Decode(userNew.userImage),
-          gaplessPlayback: true,
-          fit: BoxFit.cover,
-          height: 50,
-          width: 50,
-        ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      //データベース中の画像使う時だけ書くSQliteだけ
+      child: Image.memory(
+        base64Decode(userNew.userImage),
+        gaplessPlayback: true,
+        fit: BoxFit.cover,
+        height: 50,
+        width: 50,
       ),
     );
+  }
+
+
+  Widget buildFirstUserIconImage(
+    BuildContext context,
+    User userNew,
+  ) {
+     final userProvider = Provider.of<UserProvider>(context);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      //データベース中の画像使う時だけ書くSQliteだけ
+      child: Image.memory(
+        base64Decode(userProvider.getFirstUser().userImage),
+        gaplessPlayback: true,
+        fit: BoxFit.cover,
+        height: 50,
+        width: 50,
+      ),
+    );
+     
+      
+  
   }
 }
