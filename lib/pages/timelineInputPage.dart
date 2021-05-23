@@ -55,7 +55,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right:8.0),
+            padding: const EdgeInsets.only(right: 8.0),
             child: Center(
               child: ElevatedButton(
                 child: Text(
@@ -95,7 +95,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
         ],
       ),
       body: SingleChildScrollView(
-              child: Container(
+        child: Container(
           child: Column(
             children: [
               //入力枠
@@ -122,7 +122,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
         Provider.of<TimelineProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0, top: 20,right:10),
+      padding: const EdgeInsets.only(left: 10.0, top: 20, right: 10),
       child: Align(
         alignment: Alignment.bottomCenter,
         child: SizedBox(
@@ -172,66 +172,5 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
       print('No image selected.');
     }
     setState(() {});
-  }
-
-  iconImageField() {
-    return InkWell(
-      onTap: () async {
-        // 点按”アルバムから選択”按钮后，获取相册照片
-        await getImage();
-
-        //只有在选择了照片时，向下一个页面移动
-        if (_image != null) {
-          ClipOval(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-              ),
-              child: Image.file(
-                _image,
-              ),
-            ),
-          );
-        }
-      },
-      child: ClipRRect(
-        child: Container(
-          decoration: BoxDecoration(
-              //border: Border.all(color: Colors.grey),
-              ),
-          child: _image == null
-              ? Padding(
-                padding: const EdgeInsets.only(left:10.0),
-                child: SizedBox(
-                    height: 60,
-                    width: 60,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black12),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(
-                        Icons.add_a_photo,
-                        color: Color.fromRGBO(124, 166, 221, 1),
-                        size: 50,
-                      ),
-                    ),
-                  ),
-              )
-              : Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.file(
-                      _image,
-                      height: 60,
-                      width: 60,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-        ),
-      ),
-    );
   }
 }

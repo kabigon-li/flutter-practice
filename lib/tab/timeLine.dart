@@ -212,6 +212,7 @@ class _TimeLine extends StatelessWidget {
                       : Icon(
                           Icons.account_circle,
                           size: 60,
+                          color: Colors.black12,
                         ),
                 ),
               ),
@@ -290,6 +291,7 @@ class _TimeLine extends StatelessWidget {
     User userNew,
   ) {
     final notifier = Provider.of<TimeLinePageNotifier>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     return MaterialButton(
       onPressed: () {
         notifier.updateUserImage(userNew);
@@ -300,7 +302,7 @@ class _TimeLine extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         //データベース中の画像使う時だけ書くSQliteだけ
         child: Image.memory(
-          base64Decode(userNew.userImage),
+          base64Decode(userProvider.getFirstUser().userImage),
           gaplessPlayback: true,
           fit: BoxFit.cover,
           height: 50,
