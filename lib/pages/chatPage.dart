@@ -262,31 +262,33 @@ class _ChatPage extends StatelessWidget {
                 showSimpleDialog(context, chatNew);
               },
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-
-                  //左边对方聊天头像
-                    child: buildUserIconImage(
-                      context: context,
-                      currentUser: currentUser,
-                    ),
+                  buildUserIconImage(
+                    context: context,
+                    currentUser: currentUser,
                   ),
                   //左边聊天气泡
-                  ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: size.width * .7),
-                      child: buildChatBubble(context, chatNew)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //气泡
+                      ConstrainedBox(
+                          constraints:
+                              BoxConstraints(maxWidth: size.width * .7),
+                          child: buildChatBubble(context, chatNew),),
+                      //聊天时间
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8, right: 8.0, bottom: 12),
+                        child: Text(
+                          outputFormat ?? '',
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 8),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                outputFormat ?? '',
-                style: TextStyle(fontSize: 13),
               ),
             ),
           ),
@@ -321,24 +323,33 @@ class _ChatPage extends StatelessWidget {
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //右边聊天气泡
-                ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: size.width * .7),
-                    child: buildChatBubble(context, chatNew)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    //气泡
+                    ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: size.width * .7),
+                        child: buildChatBubble(context, chatNew)),
+                    //聊天时间
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 8, right: 8.0, bottom: 12),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          outputFormat ?? '',
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 //自己头像
                 buildFirstUserIconImage(context: context),
               ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 8),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Text(
-                outputFormat ?? '',
-                style: TextStyle(fontSize: 13),
-              ),
             ),
           ),
         ],
