@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 
@@ -46,7 +47,7 @@ class _ChatPage extends StatelessWidget {
     final currentUserChatList = chatProvider.chatList
         .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
-    final size = MediaQuery.of(context).size;
+
     final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
@@ -97,12 +98,14 @@ class _ChatPage extends StatelessWidget {
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true, // 高さ関連のエラーが出たら、使う
+
+                //重复已有聊天个数的次数
                 itemCount: currentUserChatList.length,
                 itemBuilder: (BuildContext context, int index) {
+                  //重复已有聊天个数的次数，例如有五个聊天重复五次
                   return chat(
                     context,
                     currentUserChatList[index],
-                    userProvider.userList[index],
                   );
                 },
               ),
@@ -215,19 +218,16 @@ class _ChatPage extends StatelessWidget {
   Widget chat(
     BuildContext context,
     Chat chatNew,
-    User userNew,
   ) {
     return chatNew.isLeft == 0
         ? leftChat(
             context,
             chatNew,
-            userNew,
             0,
           )
         : rightChat(
             context,
             chatNew,
-            userNew,
             1,
           );
   }
@@ -235,7 +235,6 @@ class _ChatPage extends StatelessWidget {
   Widget leftChat(
     BuildContext context,
     Chat chatNew,
-    User userNew,
     isLeft,
   ) {
     DateTime chattime;
@@ -246,6 +245,10 @@ class _ChatPage extends StatelessWidget {
     } catch (e) {
       debugPrint(e.toString());
     }
+    //userid寻找与userid相同的chatid，返回此时的userid
+    final currentUser = Provider.of<UserProvider>(context)
+        .userList
+        .firstWhere((user) => user.id == chatNew.userId);
 
     return SingleChildScrollView(
       child: Column(
@@ -261,7 +264,10 @@ class _ChatPage extends StatelessWidget {
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
-                    child: buildUserIconImage(context, userNew),
+                    child: buildUserIconImage(
+                      context: context,
+                      currentUser: currentUser,
+                    ),
                   ),
                   Flexible(
                     child: Padding(
@@ -284,7 +290,7 @@ class _ChatPage extends StatelessWidget {
                             // width: 280,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Flexible(
+                              child: Expanded(
                                 child: Text(
                                   chatNew.content,
                                   style: TextStyle(
@@ -310,7 +316,7 @@ class _ChatPage extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                outputFormat,
+                outputFormat ?? '',
                 style: TextStyle(fontSize: 13),
               ),
             ),
@@ -323,14 +329,18 @@ class _ChatPage extends StatelessWidget {
   Widget rightChat(
     BuildContext context,
     Chat chatNew,
-    User userNew,
     int isLeft,
   ) {
     DateTime chattime;
     String outputFormat;
-    chattime = DateTime.parse(chatNew.createdAt);
-    outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
-
+    //chattime = DateTime.parse(chatNew.createdAt);
+    try {
+      chattime = DateTime.parse(chatNew.createdAt);
+      outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    //outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -342,7 +352,6 @@ class _ChatPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.all(6.0),
@@ -364,7 +373,7 @@ class _ChatPage extends StatelessWidget {
                           // width: 280,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Flexible(
+                            child: Expanded(
                               child: Text(
                                 chatNew.content,
                                 style: TextStyle(
@@ -381,10 +390,10 @@ class _ChatPage extends StatelessWidget {
                     ),
                   ),
                 ),
-             
+
                 //头像
-                buildFirstUserIconImage(context, userNew),
-                 ],
+                buildFirstUserIconImage(context: context),
+              ],
             ),
           ),
           Padding(
@@ -392,7 +401,7 @@ class _ChatPage extends StatelessWidget {
             child: Align(
               alignment: Alignment.topRight,
               child: Text(
-                outputFormat,
+                outputFormat ?? '',
                 style: TextStyle(fontSize: 13),
               ),
             ),
@@ -519,15 +528,15 @@ class _ChatPage extends StatelessWidget {
     );
   }
 
-  Widget buildUserIconImage(
+  Widget buildUserIconImage({
     BuildContext context,
-    User userNew,
-  ) {
+    User currentUser,
+  }) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       //データベース中の画像使う時だけ書くSQliteだけ
       child: Image.memory(
-        base64Decode(userNew.userImage),
+        base64Decode(currentUser.userImage),
         gaplessPlayback: true,
         fit: BoxFit.cover,
         height: 50,
@@ -536,12 +545,10 @@ class _ChatPage extends StatelessWidget {
     );
   }
 
-
-  Widget buildFirstUserIconImage(
+  Widget buildFirstUserIconImage({
     BuildContext context,
-    User userNew,
-  ) {
-     final userProvider = Provider.of<UserProvider>(context);
+  }) {
+    final userProvider = Provider.of<UserProvider>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       //データベース中の画像使う時だけ書くSQliteだけ
@@ -553,8 +560,5 @@ class _ChatPage extends StatelessWidget {
         width: 50,
       ),
     );
-     
-      
-  
   }
 }

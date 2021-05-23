@@ -31,6 +31,10 @@ class Chat {
       id: id ?? this.id,
       content: content ?? this.content,
       userId: userId ?? this.userId,
+      isLeft: isLeft ?? this.isLeft,
+      createdAt: createdAt ?? this.createdAt,
+      isImage: isImage ?? this.isImage,
+      imagePath: imagePath ?? this.imagePath,
     );
   }
 
