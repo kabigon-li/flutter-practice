@@ -99,27 +99,16 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
           child: Column(
             children: [
               //入力枠
-              Row(
-                children: [
-                  //头像选择框
-                  iconImageField(),
-
-                  //输入框
-                  textfild(context),
-                ],
-              ),
+              textfild(context),
 
               SizedBox(height: 30),
 
               //写真投稿枠
-              Padding(
-                padding: const EdgeInsets.only(left:50.0),
-                child: Image.file(
-                  widget.image,
-                  height: 250,
-                  width: 250,
-                  fit: BoxFit.cover,
-                ),
+              Image.file(
+                widget.image,
+                height: 200,
+                width: 200,
+                fit: BoxFit.cover,
               ),
             ],
           ),
@@ -133,12 +122,12 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
         Provider.of<TimelineProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0, top: 20),
+      padding: const EdgeInsets.only(left: 10.0, top: 20,right:10),
       child: Align(
         alignment: Alignment.bottomCenter,
         child: SizedBox(
           height: 100,
-          width: size.width * .7,
+          width: size.width * .8,
           child: ColoredBox(
             color: Colors.grey[200],
             child: Column(
@@ -148,7 +137,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                   padding: const EdgeInsets.all(3.0),
                   child: SizedBox(
                     height: 93,
-                    width: size.width * .7,
+                    width: size.width * .78,
                     child: ColoredBox(
                       color: Colors.white,
                       child: TextField(
