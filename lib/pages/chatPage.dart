@@ -249,6 +249,7 @@ class _ChatPage extends StatelessWidget {
     final currentUser = Provider.of<UserProvider>(context)
         .userList
         .firstWhere((user) => user.id == chatNew.userId);
+    final size = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
       child: Column(
@@ -264,49 +265,17 @@ class _ChatPage extends StatelessWidget {
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
+
+                  //左边对方聊天头像
                     child: buildUserIconImage(
                       context: context,
                       currentUser: currentUser,
                     ),
                   ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.green[200],
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            updateChatBottomSheet(
-                              context,
-                              chatNew.id,
-                              chatNew.content,
-                              chatNew,
-                            );
-                          },
-                          child: SizedBox(
-                            // width: 280,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Expanded(
-                                child: Text(
-                                  chatNew.content,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 10,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  //左边聊天气泡
+                  ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: size.width * .7),
+                      child: buildChatBubble(context, chatNew)),
                 ],
               ),
             ),
@@ -340,7 +309,8 @@ class _ChatPage extends StatelessWidget {
     } catch (e) {
       debugPrint(e.toString());
     }
-    //outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+
+    final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -352,46 +322,11 @@ class _ChatPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.green[200],
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          updateChatBottomSheet(
-                            context,
-                            chatNew.id,
-                            chatNew.content,
-                            chatNew,
-                          );
-                        },
-                        child: SizedBox(
-                          // width: 280,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Expanded(
-                              child: Text(
-                                chatNew.content,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 10,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                //头像
+                //右边聊天气泡
+                ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: size.width * .7),
+                    child: buildChatBubble(context, chatNew)),
+                //自己头像
                 buildFirstUserIconImage(context: context),
               ],
             ),
@@ -407,6 +342,48 @@ class _ChatPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildChatBubble(context, chatNew) {
+    //final size = MediaQuery.of(context).size;
+    return Flexible(
+      child: Padding(
+        padding: const EdgeInsets.all(6.0),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.green[200],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: GestureDetector(
+            onTap: () {
+              updateChatBottomSheet(
+                context,
+                chatNew.id,
+                chatNew.content,
+                chatNew,
+              );
+            },
+            child: SizedBox(
+              // width: 280,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Expanded(
+                  child: Text(
+                    chatNew.content,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 10,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -532,15 +509,18 @@ class _ChatPage extends StatelessWidget {
     BuildContext context,
     User currentUser,
   }) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      //データベース中の画像使う時だけ書くSQliteだけ
-      child: Image.memory(
-        base64Decode(currentUser.userImage),
-        gaplessPlayback: true,
-        fit: BoxFit.cover,
-        height: 50,
-        width: 50,
+    return Padding(
+      padding: const EdgeInsets.only(top: 5, left: 5.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        //データベース中の画像使う時だけ書くSQliteだけ
+        child: Image.memory(
+          base64Decode(currentUser.userImage),
+          gaplessPlayback: true,
+          fit: BoxFit.cover,
+          height: 50,
+          width: 50,
+        ),
       ),
     );
   }
@@ -549,15 +529,18 @@ class _ChatPage extends StatelessWidget {
     BuildContext context,
   }) {
     final userProvider = Provider.of<UserProvider>(context);
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      //データベース中の画像使う時だけ書くSQliteだけ
-      child: Image.memory(
-        base64Decode(userProvider.getFirstUser().userImage),
-        gaplessPlayback: true,
-        fit: BoxFit.cover,
-        height: 50,
-        width: 50,
+    return Padding(
+      padding: const EdgeInsets.only(top: 5, right: 5.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        //データベース中の画像使う時だけ書くSQliteだけ
+        child: Image.memory(
+          base64Decode(userProvider.getFirstUser().userImage),
+          gaplessPlayback: true,
+          fit: BoxFit.cover,
+          height: 50,
+          width: 50,
+        ),
       ),
     );
   }
