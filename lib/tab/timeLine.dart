@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/components/common_simple_dialog.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/model/user.dart';
@@ -47,7 +48,6 @@ class _TimeLine extends StatelessWidget {
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
         backgroundColor: Color.fromRGBO(201, 218, 228, 1),
-        
         actions: [
           // 发朋友圈按钮
           Align(
@@ -188,15 +188,13 @@ class _TimeLine extends StatelessWidget {
     User userNew,
   ) {
     final userProvider = Provider.of<UserProvider>(context);
-    final timelineProvider = Provider.of<TimelineProvider>(context);
-    final databaseProvider =
-        Provider.of<DataBaseProvider>(context, listen: false);
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey[200]),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(bottom:8.0),
+        padding: const EdgeInsets.only(bottom: 8.0),
         child: Column(
           children: [
             Row(
@@ -242,47 +240,11 @@ class _TimeLine extends StatelessWidget {
                       timelineNew.content,
                       style: TextStyle(fontSize: 18),
                     ),
-                    
+
                     //删除按钮
                     trailing: GestureDetector(
                       onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              // title: Text("タイトル")
-                              content: Text(
-                                "Are you sure to delete this timeline ?",
-                                style: TextStyle(fontSize: 14),
-                              ),
-                              actions: <Widget>[
-                                // ボタン領域
-                                ElevatedButton(
-                                  child: Text("Cancel"),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.black12,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop(false);
-                                  },
-                                ),
-                                ElevatedButton(
-                                  child: Text("Delete"),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: buttonColor,
-                                  ),
-                                  onPressed: () {
-                                    timelineProvider
-                                        .deleteTimeline(timelineNew.id);
-                                    databaseProvider
-                                        .deleteTimeLine(timelineNew.id);
-                                    Navigator.of(context).pop(false);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                        showSimpleDialog(context,timelineNew);
                       },
                       child: Icon(
                         Icons.more_vert,
@@ -294,8 +256,6 @@ class _TimeLine extends StatelessWidget {
                 ),
               ],
             ),
-
-            
 
             //朋友圈图片
             Align(
@@ -313,8 +273,6 @@ class _TimeLine extends StatelessWidget {
                 ),
               ),
             ),
-
-            
           ],
         ),
       ),
@@ -344,6 +302,27 @@ class _TimeLine extends StatelessWidget {
           width: 50,
         ),
       ),
+    );
+  }
+
+  void showSimpleDialog(BuildContext context,timelineNew) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final timelineProvider = Provider.of<TimelineProvider>(context);
+        final databaseProvider =
+            Provider.of<DataBaseProvider>(context, listen: false);
+        return CommonSimpleDialog(
+          title: "Are you sure to delete this timeline?",
+          onPressed: () {
+            
+            timelineProvider.deleteTimeline(timelineNew.id);
+                databaseProvider.deleteTimeLine(timelineNew.id);
+                Navigator.of(context).pop(false);
+          },
+        );
+        
+      },
     );
   }
 }
