@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/pages/calender.dart';
 import 'package:wechat_like_memo/route/route.dart';
 import 'package:wechat_like_memo/tab/todotoday.dart';
@@ -56,22 +57,22 @@ class _TabScreenState extends State<TabScreen> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: const Icon(
-              Icons.home,
+              Icons.chat_bubble ,
               color: Colors.grey,
             ),
             activeIcon: Icon(
-              Icons.home,
-              color: Colors.blue,
+              Icons.chat_bubble,
+              color: buttonColor,
             ),
           ),
           BottomNavigationBarItem(
             icon: const Icon(
-              Icons.today_outlined,
+            Icons.check_box,
               color: Colors.grey,
             ),
             activeIcon: Icon(
-              Icons.today_outlined,
-              color: Colors.blue,
+              Icons.check_box,
+              color: buttonColor,
             ),
           ),
           BottomNavigationBarItem(
@@ -81,7 +82,7 @@ class _TabScreenState extends State<TabScreen> {
             ),
             activeIcon: Icon(
               Icons.people,
-              color: Colors.blue,
+              color: buttonColor,
             ),
           ),
           BottomNavigationBarItem(
@@ -91,7 +92,7 @@ class _TabScreenState extends State<TabScreen> {
             ),
             activeIcon: Icon(
               Icons.calendar_today,
-              color: Colors.blue,
+              color: buttonColor,
             ),
           ),
           BottomNavigationBarItem(
@@ -101,7 +102,7 @@ class _TabScreenState extends State<TabScreen> {
             ),
             activeIcon: Icon(
               Icons.settings_applications,
-              color: Colors.blue,
+              color: buttonColor,
             ),
           ),
           
