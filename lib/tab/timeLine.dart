@@ -255,15 +255,24 @@ class _TimeLine extends StatelessWidget {
                               ElevatedButton(
                                 child: Text("Cancel"),
                                 style: ElevatedButton.styleFrom(
-                                  primary: buttonColor,
+                                  primary: Colors.black12,
                                 ),
                                 onPressed: () {
                                   Navigator.of(context).pop(false);
                                 },
                               ),
                               ElevatedButton(
-                                child: Text("OK"),
-                                onPressed: () => Navigator.pop(context),
+                                child: Text("Delete"),
+                                style: ElevatedButton.styleFrom(
+                                  primary: buttonColor,
+                                ),
+                                onPressed: () {
+                                  timelineProvider
+                                      .deleteTimeline(timelineNew.id);
+                                  databaseProvider
+                                      .deleteTimeLine(timelineNew.id);
+                                  Navigator.of(context).pop(false);
+                                },
                               ),
                             ],
                           );
@@ -285,13 +294,13 @@ class _TimeLine extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.only(left: 13.0),
+              padding: const EdgeInsets.only(left: 30.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: Image.memory(
                   base64Decode(timelineNew.imagePath),
-                  height: 250,
-                  width: 250,
+                  height: 200,
+                  width: 200,
                   fit: BoxFit.cover,
                 ),
               ),
