@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/components/common_simple_dialog.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/model/chat.dart';
@@ -274,9 +275,9 @@ class _ChatPage extends StatelessWidget {
                     children: [
                       //气泡
                       ConstrainedBox(
-                          constraints:
-                              BoxConstraints(maxWidth: size.width * .7),
-                          child: buildChatBubble(context, chatNew),),
+                        constraints: BoxConstraints(maxWidth: size.width * .7),
+                        child: buildChatBubble(context, chatNew),
+                      ),
                       //聊天时间
                       Padding(
                         padding: const EdgeInsets.only(
@@ -335,8 +336,8 @@ class _ChatPage extends StatelessWidget {
                         child: buildChatBubble(context, chatNew)),
                     //聊天时间
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 8, right: 8.0, bottom: 12),
+                      padding: const EdgeInsets.only(
+                          left: 8, right: 8.0, bottom: 12),
                       child: Align(
                         alignment: Alignment.topRight,
                         child: Text(
@@ -477,40 +478,16 @@ class _ChatPage extends StatelessWidget {
   }
 
   void showSimpleDialog(BuildContext context, chatNew) async {
-    final notifier = Provider.of<ChatPageNotifier>(context, listen: false);
-    String result = "";
-    result = await showDialog(
+    await showDialog(
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text('Are you sure to delete this chat ?'),
-          ),
-          children: <Widget>[
-            SimpleDialogOption(
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.orange.shade200,
-                  child: Icon(Icons.delete_outline),
-                ),
-                title: Text(
-                  'delete',
-                  style: TextStyle(
-                    color: fontColor,
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-              onPressed: () {
-                deleteChat(context, chatNew.id);
-                Navigator.pop(
-                  context,
-                );
-              },
-            ),
-          ],
+        return CommonSimpleDialog(
+          title: "Are you sure to delete this chat?",
+          onPressed: () {
+            deleteChat(context, chatNew.id);
+            Navigator.pop(context);
+          },
         );
       },
     );

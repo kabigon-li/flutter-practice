@@ -15,6 +15,7 @@ import 'package:wechat_like_memo/provider/user_provider.dart';
 
 import 'package:wechat_like_memo/tab/timeLine_notifier.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
+import 'package:wechat_like_memo/tab/todotoday.dart';
 
 class TimeLinePage extends StatelessWidget {
   const TimeLinePage(
@@ -46,21 +47,7 @@ class _TimeLine extends StatelessWidget {
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
         backgroundColor: Color.fromRGBO(201, 218, 228, 1),
-        leading: Align(
-          alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-          ),
-                  ),
-        ),
+        
         actions: [
           // 发朋友圈按钮
           Align(
@@ -208,139 +195,128 @@ class _TimeLine extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey[200]),
       ),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 20,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom:8.0),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: userProvider.getFirstUser().userImage != null
+                        ? buildUserIconImage(
+                            context,
+                            userNew,
+                          )
+                        : Icon(
+                            Icons.account_circle,
+                            size: 60,
+                            color: Colors.black12,
+                          ),
+                  ),
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: userProvider.getFirstUser().userImage != null
-                      ? buildUserIconImage(
-                          context,
-                          userNew,
-                        )
-                      : Icon(
-                          Icons.account_circle,
-                          size: 60,
-                          color: Colors.black12,
+                SizedBox(
+                  width: 270,
+                  child: ListTile(
+                    // 用户名
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        userProvider.getFirstUser().userName,
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'iconfont',
                         ),
-                ),
-              ),
-              SizedBox(
-                width: 270,
-                child: ListTile(
-                  // 用户名
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      userProvider.getFirstUser().userName,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.blueGrey,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'iconfont',
+                      ),
+                    ),
+
+                    // 配文
+                    subtitle: Text(
+                      timelineNew.content,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    
+                    //删除按钮
+                    trailing: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              // title: Text("タイトル")
+                              content: Text(
+                                "Are you sure to delete this timeline ?",
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              actions: <Widget>[
+                                // ボタン領域
+                                ElevatedButton(
+                                  child: Text("Cancel"),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.black12,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false);
+                                  },
+                                ),
+                                ElevatedButton(
+                                  child: Text("Delete"),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: buttonColor,
+                                  ),
+                                  onPressed: () {
+                                    timelineProvider
+                                        .deleteTimeline(timelineNew.id);
+                                    databaseProvider
+                                        .deleteTimeLine(timelineNew.id);
+                                    Navigator.of(context).pop(false);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Icon(
+                        Icons.more_vert,
+                        size: 24,
+                        color: Colors.grey,
                       ),
                     ),
                   ),
+                ),
+              ],
+            ),
 
-                  // 配文
-                  subtitle: Text(
-                    timelineNew.content,
-                    style: TextStyle(fontSize: 18),
-                  ),
+            
 
-                  trailing: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            // title: Text("タイトル")
-                            content: Text(
-                              "Are you sure to delete this timeline ?",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            actions: <Widget>[
-                              // ボタン領域
-                              ElevatedButton(
-                                child: Text("Cancel"),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.black12,
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop(false);
-                                },
-                              ),
-                              ElevatedButton(
-                                child: Text("Delete"),
-                                style: ElevatedButton.styleFrom(
-                                  primary: buttonColor,
-                                ),
-                                onPressed: () {
-                                  timelineProvider
-                                      .deleteTimeline(timelineNew.id);
-                                  databaseProvider
-                                      .deleteTimeLine(timelineNew.id);
-                                  Navigator.of(context).pop(false);
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: Icon(
-                      Icons.delete,
-                      size: 24,
-                      color: Colors.grey,
-                    ),
+            //朋友圈图片
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 30.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: Image.memory(
+                    base64Decode(timelineNew.imagePath),
+                    height: 200,
+                    width: 200,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-            ],
-          ),
-
-          //朋友圈图片
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5.0),
-                child: Image.memory(
-                  base64Decode(timelineNew.imagePath),
-                  height: 200,
-                  width: 200,
-                  fit: BoxFit.cover,
-                ),
-              ),
             ),
-          ),
 
-          // 删除按钮等
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  timelineProvider.deleteTimeline(timelineNew.id);
-                  databaseProvider.deleteTimeLine(timelineNew.id);
-                },
-                child: Icon(
-                  Icons.delete_outline,
-                  size: 24,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-          )
-        ],
+            
+          ],
+        ),
       ),
     );
   }
