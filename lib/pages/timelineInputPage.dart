@@ -44,13 +44,21 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
       appBar: AppBar(
         backgroundColor: themeColor,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
+        leading: Padding(
+          padding: const EdgeInsets.only(left:30.0,top:20),
+          child: OverflowBox(
+            maxWidth: 100,
+            maxHeight: 100,
+            child: GestureDetector(
+              child: Text(
+                'Cancel',
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
+              
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ),
         ),
         actions: [

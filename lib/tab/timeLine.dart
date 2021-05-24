@@ -46,6 +46,21 @@ class _TimeLine extends StatelessWidget {
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
         backgroundColor: Color.fromRGBO(201, 218, 228, 1),
+        leading: Align(
+          alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+          ),
+                  ),
+        ),
         actions: [
           // 发朋友圈按钮
           Align(
@@ -54,9 +69,9 @@ class _TimeLine extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Icon(
-                  Icons.add_a_photo,
-                  color: Colors.grey,
-                  size: 45,
+                  Icons.camera_alt,
+                  color: Colors.white,
+                  size: 25,
                 ),
               ),
               onTap: () {
