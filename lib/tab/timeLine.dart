@@ -191,34 +191,15 @@ class _TimeLine extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey[200]),
-        //color: Colors.yellow[50],
+   
       ),
       child: Column(
         children: [
-          Row(
-            children: [
-              // 头像
-
-              Padding(
-                padding: const EdgeInsets.only(top:8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: userProvider.getFirstUser().userImage != null
-                      ?  buildUserIconImage(
-                          context,
-                          userNew,
-                        )
-                      
-                      : Icon(
-                          Icons.account_circle,
-                          size: 60,
-                          color: Colors.black12,
-                        ),
-                ),
-              ),
-
-              // 用户名
-              Text(
+          ListTile(
+            // 用户名
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
                 userProvider.getFirstUser().userName,
                 style: TextStyle(
                   fontSize: 22,
@@ -227,22 +208,54 @@ class _TimeLine extends StatelessWidget {
                   fontFamily: 'iconfont',
                 ),
               ),
-            ],
-          ),
+            ),
 
-          // 配文
-          Align(
-            alignment: Alignment.centerRight,
-            child: SizedBox(
-              //height: 100,
-              width: 300,
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Text(
-                  timelineNew.content,
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
+            // 配文
+            subtitle: Text(
+              timelineNew.content,
+              style: TextStyle(fontSize: 18),
+            ),
+
+            // 头像
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: userProvider.getFirstUser().userImage != null
+                  ? buildUserIconImage(
+                      context,
+                      userNew,
+                    )
+                  : Icon(
+                      Icons.account_circle,
+                      size: 60,
+                      color: Colors.black12,
+                    ),
+            ),
+            onTap: () => {},
+            onLongPress: () => {},
+            trailing: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      // title: Text("タイトル"),
+                      content: Text("Are you sure to delete this timeline ?"),
+                      actions: <Widget>[
+                        // ボタン領域
+                        ElevatedButton(
+                          child: Text("Cancel"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                         ElevatedButton(
+                          child: Text("OK"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Icon(Icons.more_vert),
             ),
           ),
 
@@ -250,7 +263,7 @@ class _TimeLine extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.only(left:13.0),
+              padding: const EdgeInsets.only(left: 13.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: Image.memory(
