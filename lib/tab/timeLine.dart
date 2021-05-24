@@ -191,72 +191,98 @@ class _TimeLine extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey[200]),
-   
       ),
       child: Column(
         children: [
-          ListTile(
-            // 用户名
-            title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                userProvider.getFirstUser().userName,
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.blueGrey,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'iconfont',
-                ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top:20,),
+                child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: userProvider.getFirstUser().userImage != null
+                    ? buildUserIconImage(
+                        context,
+                        userNew,
+                      )
+                    : Icon(
+                        Icons.account_circle,
+                        size: 60,
+                        color: Colors.black12,
+                      ),
+            ),
               ),
-            ),
+              SizedBox(
+                  width: 270,
+                  child: ListTile(
+                    // 用户名
+                    title: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          userProvider.getFirstUser().userName,
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'iconfont',
+                          ),
+                        ),
+                      ),
 
-            // 配文
-            subtitle: Text(
-              timelineNew.content,
-              style: TextStyle(fontSize: 18),
-            ),
-
-            // 头像
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: userProvider.getFirstUser().userImage != null
-                  ? buildUserIconImage(
-                      context,
-                      userNew,
-                    )
-                  : Icon(
-                      Icons.account_circle,
-                      size: 60,
-                      color: Colors.black12,
+                    // 配文
+                    subtitle: SizedBox(
+                      width: 300,
+                      child: Text(
+                        timelineNew.content,
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
-            ),
-            onTap: () => {},
-            onLongPress: () => {},
-            trailing: GestureDetector(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (_) {
-                    return AlertDialog(
-                      // title: Text("タイトル"),
-                      content: Text("Are you sure to delete this timeline ?"),
-                      actions: <Widget>[
-                        // ボタン領域
-                        ElevatedButton(
-                          child: Text("Cancel"),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                         ElevatedButton(
-                          child: Text("OK"),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: Icon(Icons.more_vert),
-            ),
+
+                    // // 头像
+                    // leading: ClipRRect(
+                    //   borderRadius: BorderRadius.circular(10),
+                    //   child: userProvider.getFirstUser().userImage != null
+                    //       ? buildUserIconImage(
+                    //           context,
+                    //           userNew,
+                    //         )
+                    //       : Icon(
+                    //           Icons.account_circle,
+                    //           size: 60,
+                    //           color: Colors.black12,
+                    //         ),
+                    // ),
+                    onTap: () => {},
+                    onLongPress: () => {},
+                    trailing: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+              // title: Text("タイトル"),
+              content: Text("Are you sure to delete this timeline ?"),
+              actions: <Widget>[
+                // ボタン領域
+                ElevatedButton(
+                  child: Text("Cancel"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                ElevatedButton(
+                  child: Text("OK"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Icon(Icons.more_vert),
+                    ),
+                  ),
+                ),
+            ],
           ),
 
           //朋友圈图片
