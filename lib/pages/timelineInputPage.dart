@@ -63,7 +63,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                   style: TextStyle(fontSize: 18),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(130, 176, 104, 1),
+                  primary: buttonColor,
                 ),
                 onPressed: () {
                   fileName = basename(widget.image.path);

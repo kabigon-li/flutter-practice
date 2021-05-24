@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/model/user.dart';
 
@@ -245,12 +246,17 @@ class _TimeLine extends StatelessWidget {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             // title: Text("タイトル")
-                            content:
-                                Text("Are you sure to delete this timeline ?"),
+                            content: Text(
+                              "Are you sure to delete this timeline ?",
+                              style: TextStyle(fontSize: 14),
+                            ),
                             actions: <Widget>[
                               // ボタン領域
                               ElevatedButton(
                                 child: Text("Cancel"),
+                                style: ElevatedButton.styleFrom(
+                                  primary: buttonColor,
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pop(false);
                                 },
@@ -264,7 +270,11 @@ class _TimeLine extends StatelessWidget {
                         },
                       );
                     },
-                    child: Icon(Icons.more_vert),
+                    child: Icon(
+                      Icons.delete,
+                      size: 24,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
               ),

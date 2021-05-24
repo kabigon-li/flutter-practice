@@ -10,3 +10,4 @@ List<String> imageList =[
 const themeColor = Color.fromRGBO(241, 241, 241, 1);
 const fontColor = Color.fromRGBO(77, 77, 77, 1);
 const backgroundWhite = Color(0xfff8f9fd);
+const buttonColor = Color.fromRGBO(130, 176, 104, 1);
