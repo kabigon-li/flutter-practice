@@ -64,7 +64,7 @@ class _TodoTaday extends StatelessWidget {
         Positioned.fill(
           child: Container(
             decoration: BoxDecoration(
-              color: Color.fromRGBO(212, 241, 248, 1),
+              //color: Color.fromRGBO(212, 241, 248, 1),
               // image: season.isImageSelected
               //     ? DecorationImage(
               //         image: AssetImage(

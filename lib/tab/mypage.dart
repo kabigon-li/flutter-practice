@@ -5,6 +5,7 @@ import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:wechat_like_memo/provider/user_provider.dart';
 
 class MyPage extends StatefulWidget {
   MyPage({Key key}) : super(key: key);
@@ -21,6 +22,7 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     final theme = Provider.of<AppTheme>(context);
     final season = Provider.of<SeasonsMode>(context);
+
     return Container(
       child: Scaffold(
         appBar: AppBar(
@@ -45,47 +47,86 @@ class _MyPageState extends State<MyPage> {
             ),
           ),
         ),
-        body: 
+        body:
             // dark mode
-            SizedBox(
-              height: 1000,
-              width: 500,
-              child: SettingsList(
-                sections: [
-                  SettingsSection(
-                    title: 'Section',
-                    tiles: [
-                      SettingsTile(
-                        title: 'Language',
-                        subtitle: 'English',
-                        leading: Icon(Icons.language),
-                        onPressed: (BuildContext context) {},
-                      ),
-                      SettingsTile.switchTile(
-                        title: 'Use fingerprint',
-                        leading: Icon(Icons.fingerprint),
-                        switchValue: theme.isDark,
-                        onToggle: (bool value) {},
-                      ),
-                    ],
-                  ),
-                ],
+            SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 170,
+                width: 500,
+                child: SettingsList(
+                  sections: [
+                    SettingsSection(
+                      title: 'Account settings',
+                      tiles: [
+                        SettingsTile(
+                          title: 'Language',
+                          subtitle: 'English',
+                          leading: Icon(Icons.language),
+                          onPressed: (BuildContext context) {},
+                        ),
+                        SettingsTile.switchTile(
+                          title: 'Dark mode',
+                          leading: Icon(Icons.nights_stay),
+                          switchValue: theme.isDark,
+                          onToggle: (newTheme) {
+                            theme.changeMode();
+                          },
+                          switchActiveColor: buttonColor,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
+              SizedBox(
+                height: 300,
+                width: 500,
+                child: SettingsList(
+                  sections: [
+                    SettingsSection(
+                      title: 'Design Settings',
+                      tiles: [
+                        SettingsTile(
+                          title: 'Change design color',
+                          subtitle: 'Change design theme',
+                          leading: Icon(Icons.theater_comedy),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onPressed: (BuildContext context) {},
+                        ),
+                        SettingsTile(
+                          title: 'Background design',
+                          //subtitle: 'English',
+                          leading: Icon(Icons.color_lens),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onPressed: (BuildContext context) {},
+                        ),
+                        SettingsTile(
+                          title: 'Font size',
+                          subtitle: 'Choose font size',
+                          leading: Icon(Icons.format_size),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onPressed: (BuildContext context) {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
 
-            // // spring背景設定
-            // springMode(),
+        // // spring背景設定
+        // springMode(),
 
-            // //summer 背景設定
-            // summerMode(),
+        // //summer 背景設定
+        // summerMode(),
 
-            // autumnMode(),
+        // autumnMode(),
 
-            // winterMode(),
-
-          
-          
-        
+        // winterMode(),
       ),
     );
   }
@@ -267,4 +308,6 @@ class _MyPageState extends State<MyPage> {
       ),
     ]);
   }
+
+  color(MaterialColor brown) {}
 }
