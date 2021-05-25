@@ -14,6 +14,7 @@ import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 
 import 'package:intl/intl.dart';
+import 'package:wechat_like_memo/provider/font_size_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 
 class ChatPage extends StatelessWidget {
@@ -303,6 +304,7 @@ class _ChatPage extends StatelessWidget {
     Chat chatNew,
     int isLeft,
   ) {
+    final fontSizeProvider = Provider.of<FontSizeProvider>(context);
     DateTime chattime;
     String outputFormat;
     //chattime = DateTime.parse(chatNew.createdAt);
@@ -312,7 +314,6 @@ class _ChatPage extends StatelessWidget {
     } catch (e) {
       debugPrint(e.toString());
     }
-
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
@@ -342,7 +343,7 @@ class _ChatPage extends StatelessWidget {
                         alignment: Alignment.topRight,
                         child: Text(
                           outputFormat ?? '',
-                          style: TextStyle(fontSize: 13),
+                          style: TextStyle(fontSize: fontSizeProvider.fontSize,),
                         ),
                       ),
                     ),

@@ -7,6 +7,7 @@ import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
+import 'package:wechat_like_memo/provider/font_size_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
@@ -58,7 +59,6 @@ void main() async {
   //   user: defaultUser,
   //   database: database,
   // );
-  
 
   //todoListはreturnしたやつを代入(read)
   final todoList = await getTodo(database);
@@ -88,6 +88,11 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => AppTheme(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FontSizeProvider(
+            fontSize: 15.0,
+          ),
         ),
         ChangeNotifierProvider(
           create: (_) => SeasonsMode(
@@ -145,8 +150,6 @@ Future<void> insertUser({
     conflictAlgorithm: ConflictAlgorithm.replace,
   );
 }
-
-
 
 //User datebase 5/10
 Future<List<User>> getUser(
