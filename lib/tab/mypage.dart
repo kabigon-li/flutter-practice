@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
-import 'package:wechat_like_memo/pages/loginPage.dart';
+
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 class MyPage extends StatefulWidget {
   MyPage({Key key}) : super(key: key);
@@ -25,60 +26,66 @@ class _MyPageState extends State<MyPage> {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: themeColor,
-         
           title: Padding(
-            padding: const EdgeInsets.only(left:8.0),
+            padding: const EdgeInsets.only(left: 8.0),
             child: Align(
-            alignment: Alignment.topLeft,
-            child: Row(
-              children: [
-                Text(
-                  'Setting',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontFamily: 'iconfont',
-                    color: fontColor,
+              alignment: Alignment.topLeft,
+              child: Row(
+                children: [
+                  Text(
+                    'Setting',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontFamily: 'iconfont',
+                      color: fontColor,
+                    ),
                   ),
-                ),
-              ],
-            ),
-        ),
-          ),
-        ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              // dark mode
-              SwitchListTile(
-                // 右：valueはture,左：valueはfalse
-                value: theme.isDark,
-                onChanged: (_) {
-                  theme.changeMode();
-                },
-                activeColor: Colors.blue,
-                activeTrackColor: Colors.blue,
-                inactiveThumbColor: Colors.grey,
-                inactiveTrackColor: Colors.grey,
-                secondary: new Icon(
-                  Icons.nightlight_round,
-                  color: _active ? Colors.orange[700] : Colors.grey[500],
-                  size: 30.0,
-                ),
-                title: Text('dark mode'),
+                ],
               ),
-
-              // spring背景設定
-              springMode(),
-
-              //summer 背景設定
-              summerMode(),
-
-              autumnMode(),
-
-              winterMode(),
-            ],
+            ),
           ),
         ),
+        body: 
+            // dark mode
+            SizedBox(
+              height: 1000,
+              width: 500,
+              child: SettingsList(
+                sections: [
+                  SettingsSection(
+                    title: 'Section',
+                    tiles: [
+                      SettingsTile(
+                        title: 'Language',
+                        subtitle: 'English',
+                        leading: Icon(Icons.language),
+                        onPressed: (BuildContext context) {},
+                      ),
+                      SettingsTile.switchTile(
+                        title: 'Use fingerprint',
+                        leading: Icon(Icons.fingerprint),
+                        switchValue: theme.isDark,
+                        onToggle: (bool value) {},
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // // spring背景設定
+            // springMode(),
+
+            // //summer 背景設定
+            // summerMode(),
+
+            // autumnMode(),
+
+            // winterMode(),
+
+          
+          
+        
       ),
     );
   }
@@ -174,7 +181,6 @@ class _MyPageState extends State<MyPage> {
   }
 
   autumnMode() {
-
     final season = Provider.of<SeasonsMode>(context);
     return Stack(children: [
       Container(
@@ -217,7 +223,7 @@ class _MyPageState extends State<MyPage> {
       ),
     ]);
   }
-  
+
   winterMode() {
     final season = Provider.of<SeasonsMode>(context);
     return Stack(children: [
@@ -261,6 +267,4 @@ class _MyPageState extends State<MyPage> {
       ),
     ]);
   }
-
 }
-
