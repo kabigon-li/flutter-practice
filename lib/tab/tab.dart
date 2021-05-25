@@ -17,8 +17,8 @@ class NavigationHolder {
       GlobalKey<NavigatorState>();
   static GlobalKey<NavigatorState> settingsNavigatorKey =
       GlobalKey<NavigatorState>();
- static GlobalKey<NavigatorState> calenderNavigatorKey =
-      GlobalKey<NavigatorState>();
+//  static GlobalKey<NavigatorState> calenderNavigatorKey =
+//       GlobalKey<NavigatorState>();
 }
 
 class TabScreen extends StatefulWidget {
@@ -57,7 +57,7 @@ class _TabScreenState extends State<TabScreen> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: const Icon(
-              Icons.chat_bubble ,
+              Icons.chat_bubble,
               color: Colors.grey,
             ),
             activeIcon: Icon(
@@ -77,24 +77,15 @@ class _TabScreenState extends State<TabScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.people,
+              Icons.camera,
               color: Colors.grey,
             ),
             activeIcon: Icon(
-              Icons.people,
+              Icons.camera,
               color: buttonColor,
             ),
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(
-              Icons.calendar_today,
-              color: Colors.grey,
-            ),
-            activeIcon: Icon(
-              Icons.calendar_today,
-              color: buttonColor,
-            ),
-          ),
+         
           BottomNavigationBarItem(
             icon: const Icon(
               Icons.settings_applications,
@@ -133,20 +124,22 @@ class _TabScreenState extends State<TabScreen> {
                 return TimeLinePage(userNew);
               },
             );
+          
           case 3:
-            return 
-            CupertinoTabView(
-              builder: (context) {
-                return Calender();
-              },
-              
-            );
-          case 4:
             return CupertinoTabView(
               builder: (context) {
                 return MyPage();
               },
             );
+
+            // case 4:
+            // return 
+            // CupertinoTabView(
+            //   builder: (context) {
+            //     return Calender();
+            //   },
+              
+            // );
           default:
             {
               return CupertinoTabView(
