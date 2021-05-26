@@ -11,6 +11,7 @@ import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
+import 'package:wechat_like_memo/provider/font_size_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/home_notifier.dart';
@@ -267,7 +268,7 @@ class _Home extends StatelessWidget {
     User userNew,
   ) {
     final notifier = Provider.of<HomeNotifier>(context);
-
+    final fontSizeProvider = Provider.of<FontSizeProvider>(context);
     return Row(
       children: [
         GestureDetector(
@@ -289,8 +290,9 @@ class _Home extends StatelessWidget {
                       child: Text(
                         userNew.userName,
                         style: TextStyle(
-                          fontSize: 20,
-                          color: fontColor,
+                          // fontSize: fontSizeProvider.isFontSizeSelected == true
+                          fontSize: fontSizeProvider.fontSize,
+                          //:20,
                         ),
                       ),
                     ),
@@ -335,6 +337,7 @@ class _Home extends StatelessWidget {
     User userNew,
   ) {
     final notifier = Provider.of<HomeNotifier>(context);
+    final fontSizeProvider = Provider.of<FontSizeProvider>(context);
     return GestureDetector(
       onTap: () {
         notifier.updateUserName(userNew);
@@ -346,7 +349,7 @@ class _Home extends StatelessWidget {
           Text(
             'No userName',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: fontSizeProvider.fontSize,
               color: fontColor,
             ),
           ),
@@ -367,6 +370,7 @@ class _Home extends StatelessWidget {
     );
     final now = DateTime.now();
     final createdAt = now.toIso8601String();
+    
 
     DateTime chattime = DateTime.parse(createdAt);
     String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);

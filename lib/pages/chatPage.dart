@@ -392,9 +392,8 @@ class _ChatPage extends StatelessWidget {
                       color: Colors.black,
                       
                       
-                      fontSize: fontSizeProvider.isFontSizeSelected
-                      ?fontSizeList[fontSizeProvider.fontSize.toInt()]
-                      :18,
+                      fontSize: fontSizeProvider.fontSize,
+                     
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 10,

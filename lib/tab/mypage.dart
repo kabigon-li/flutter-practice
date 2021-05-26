@@ -62,13 +62,13 @@ class _MyPageState extends State<MyPage> {
                     SettingsSection(
                       title: 'Theme settings',
                       titleTextStyle:
-                          TextStyle(fontSize: fontSizeProvider.fontSize,color: Colors.brown),
+                          TextStyle(fontSize: 20,color: Colors.brown),
                       tiles: [
                         
                         SettingsTile.switchTile(
                           title: 'Dark mode',
                           titleTextStyle:
-                              TextStyle(fontSize: fontSizeProvider.fontSize),
+                              TextStyle(fontSize: 18),
                           leading: Icon(Icons.nights_stay),
                           switchValue: theme.isDark,
                           onToggle: (newTheme) {
@@ -78,9 +78,9 @@ class _MyPageState extends State<MyPage> {
                         ),
 
                          SettingsTile(
-                          title: 'Change design theme',
+                          title: 'Change theme color',
                           titleTextStyle:
-                              TextStyle(fontSize: fontSizeProvider.fontSize),
+                              TextStyle(fontSize: 18),
                          
                           leading: Icon(Icons.color_lens),
                           trailing: Icon(Icons.arrow_forward_ios),
@@ -101,13 +101,13 @@ class _MyPageState extends State<MyPage> {
                     SettingsSection(
                       title: 'ChatPage Settings',
                       titleTextStyle:
-                          TextStyle(fontSize: fontSizeProvider.fontSize,color: Colors.brown),
+                          TextStyle(fontSize: 20,color: Colors.brown),
                       tiles: [
                        
                          SettingsTile(
                           title: 'ChatPage background design',
                           titleTextStyle:
-                              TextStyle(fontSize: fontSizeProvider.fontSize),
+                              TextStyle(fontSize: 18),
                           //subtitle: 'English',
                           leading: Icon(Icons.photo),
                           trailing: Icon(Icons.arrow_forward_ios),
@@ -117,7 +117,7 @@ class _MyPageState extends State<MyPage> {
                         SettingsTile(
                           title: 'chat fontSize',
                           titleTextStyle:
-                              TextStyle(fontSize: fontSizeProvider.fontSize),
+                              TextStyle(fontSize: 18),
                           subtitle: 'Choose font size',
                           leading: Icon(Icons.format_size),
                           trailing: Icon(Icons.arrow_forward_ios),
