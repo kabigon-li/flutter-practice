@@ -18,7 +18,7 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   bool _active = false;
   int num;
-  double fontSize;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +112,6 @@ class _MyPageState extends State<MyPage> {
                           trailing: Icon(Icons.arrow_forward_ios),
                           onPressed: (BuildContext context) {
                             showSimpleDialog(context);
-                            fontSizeProvider.updateFontSize(fontSize);
                           },
                         ),
                       ],
@@ -142,6 +141,7 @@ class _MyPageState extends State<MyPage> {
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
+        final fontSizeProvider = Provider.of<FontSizeProvider>(context);
         return SimpleDialog(
           // title: Text("Font size"),
           children: <Widget>[
@@ -154,8 +154,8 @@ class _MyPageState extends State<MyPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        
+                      onTap: () {
+                        fontSizeProvider.updateFontSize(fontSizeProvider.fontSize);
                       },
                       child: Text(
                         "Large",
@@ -164,11 +164,11 @@ class _MyPageState extends State<MyPage> {
                     ),
                     Text(
                       "Medium",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 20),
                     ),
                     Text(
                       "Small",
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 16),
                     ),
                   ],
                 ),

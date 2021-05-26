@@ -304,7 +304,7 @@ class _ChatPage extends StatelessWidget {
     Chat chatNew,
     int isLeft,
   ) {
-    final fontSizeProvider = Provider.of<FontSizeProvider>(context);
+   
     DateTime chattime;
     String outputFormat;
     //chattime = DateTime.parse(chatNew.createdAt);
@@ -334,7 +334,7 @@ class _ChatPage extends StatelessWidget {
                     //气泡
                     ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: size.width * .7),
-                        child: buildChatBubble(context, chatNew)),
+                        child: buildChatBubble(context, chatNew),),
                     //聊天时间
                     Padding(
                       padding: const EdgeInsets.only(
@@ -343,7 +343,7 @@ class _ChatPage extends StatelessWidget {
                         alignment: Alignment.topRight,
                         child: Text(
                           outputFormat ?? '',
-                          style: TextStyle(fontSize: fontSizeProvider.fontSize,),
+                          style: TextStyle(fontSize: 14,),
                         ),
                       ),
                     ),
@@ -360,7 +360,8 @@ class _ChatPage extends StatelessWidget {
   }
 
   Widget buildChatBubble(context, chatNew) {
-    //final size = MediaQuery.of(context).size;
+   
+     final fontSizeProvider = Provider.of<FontSizeProvider>(context);
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.all(6.0),
@@ -387,7 +388,7 @@ class _ChatPage extends StatelessWidget {
                     chatNew.content,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: fontSizeProvider.fontSize,
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 10,
@@ -412,6 +413,7 @@ class _ChatPage extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
+        
         return Container(
           color: Colors.white,
           padding: const EdgeInsets.all(16.0),

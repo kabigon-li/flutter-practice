@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 List<String> imageList =[
@@ -5,6 +7,13 @@ List<String> imageList =[
  'image/summer.jpg', // 1
  'image/autumn.jpg', // 2
  'image/winter.jpg', // 3
+];
+
+List<double> fontList =[
+ 16.0, // 0
+ 20.0,// 1
+ 24.0, // 2
+ 
 ];
 
 const themeColor = Color.fromRGBO(241, 241, 241, 1);
