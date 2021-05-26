@@ -11,6 +11,7 @@ import 'package:wechat_like_memo/model/user.dart';
 
 import 'package:wechat_like_memo/pages/timelineInputPage.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
+import 'package:wechat_like_memo/provider/font_size_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 
@@ -188,6 +189,7 @@ class _TimeLine extends StatelessWidget {
     User userNew,
   ) {
     final userProvider = Provider.of<UserProvider>(context);
+    final fontSizeProvider = Provider.of<FontSizeProvider>(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -227,7 +229,7 @@ class _TimeLine extends StatelessWidget {
                       child: Text(
                         userProvider.getFirstUser().userName,
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: fontSizeProvider.fontSize,
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'iconfont',
@@ -238,7 +240,7 @@ class _TimeLine extends StatelessWidget {
                     // 配文
                     subtitle: Text(
                       timelineNew.content,
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: fontSizeProvider.fontSize),
                     ),
 
                     //删除按钮

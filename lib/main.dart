@@ -91,7 +91,7 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => FontSizeProvider(
-            fontSize: 22.0,
+            fontSize: 20.0,
           ),
         ),
         ChangeNotifierProvider(

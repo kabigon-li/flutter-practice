@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/todo.dart';
+import 'package:wechat_like_memo/provider/font_size_provider.dart';
 
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:wechat_like_memo/provider/todo_provider.dart';
@@ -39,6 +40,7 @@ class _TodoTaday extends StatelessWidget {
     final season = Provider.of<SeasonsMode>(context);
     // 当todoprovider中的todolist中内容的改变，要呈现画面上的改变时，listen为true
     final todoProvider = Provider.of<TodoProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -127,6 +129,7 @@ class _TodoTaday extends StatelessWidget {
     Todo todoNew, //这接收新一个Todo
   ) {
     final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
+    final fontSizeProvider = Provider.of<FontSizeProvider>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -159,7 +162,7 @@ class _TodoTaday extends StatelessWidget {
                   todoNew.content,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 20,
+                    fontSize: fontSizeProvider.fontSize,
                     decoration: todoNew.isChecked == 0
                         ? null
                         : TextDecoration.lineThrough,
