@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
+import 'package:wechat_like_memo/provider/font_size_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
@@ -17,11 +18,13 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   bool _active = false;
   int num;
+  double fontSize;
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<AppTheme>(context);
     final season = Provider.of<SeasonsMode>(context);
+    final fontSizeProvider = Provider.of<FontSizeProvider>(context);
 
     return Container(
       child: Scaffold(
@@ -107,7 +110,10 @@ class _MyPageState extends State<MyPage> {
                           subtitle: 'Choose font size',
                           leading: Icon(Icons.format_size),
                           trailing: Icon(Icons.arrow_forward_ios),
-                          onPressed: (BuildContext context) {},
+                          onPressed: (BuildContext context) {
+                            showSimpleDialog(context);
+                            fontSizeProvider.updateFontSize(fontSize);
+                          },
                         ),
                       ],
                     ),
@@ -128,6 +134,49 @@ class _MyPageState extends State<MyPage> {
 
         // winterMode(),
       ),
+    );
+  }
+
+  void showSimpleDialog(BuildContext context) async {
+    await showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          // title: Text("Font size"),
+          children: <Widget>[
+            // コンテンツ領域
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(context),
+              child: SizedBox(
+                height: 100,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        
+                      },
+                      child: Text(
+                        "Large",
+                        style: TextStyle(fontSize: 24),
+                      ),
+                    ),
+                    Text(
+                      "Medium",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Text(
+                      "Small",
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
