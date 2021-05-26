@@ -18,6 +18,8 @@ class FontSizeProvider extends ChangeNotifier {
   void updateFontSize(
     double newFontSize,
   ) {
+
+    //updateFontSize(24.0)中fontSize被赋予24;
     fontSize = newFontSize;
   }
 }

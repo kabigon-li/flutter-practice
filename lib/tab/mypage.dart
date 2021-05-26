@@ -60,16 +60,15 @@ class _MyPageState extends State<MyPage> {
                 child: SettingsList(
                   sections: [
                     SettingsSection(
-                      title: 'Account settings',
+                      title: 'Theme settings',
+                      titleTextStyle:
+                          TextStyle(fontSize: fontSizeProvider.fontSize,color: Colors.brown),
                       tiles: [
-                        SettingsTile(
-                          title: 'Language',
-                          subtitle: 'English',
-                          leading: Icon(Icons.language),
-                          onPressed: (BuildContext context) {},
-                        ),
+                        
                         SettingsTile.switchTile(
                           title: 'Dark mode',
+                          titleTextStyle:
+                              TextStyle(fontSize: fontSizeProvider.fontSize),
                           leading: Icon(Icons.nights_stay),
                           switchValue: theme.isDark,
                           onToggle: (newTheme) {
@@ -77,6 +76,18 @@ class _MyPageState extends State<MyPage> {
                           },
                           switchActiveColor: buttonColor,
                         ),
+
+                         SettingsTile(
+                          title: 'Change design theme',
+                          titleTextStyle:
+                              TextStyle(fontSize: fontSizeProvider.fontSize),
+                         
+                          leading: Icon(Icons.color_lens),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onPressed: (BuildContext context) {},
+                        ),
+
+                       
                       ],
                     ),
                   ],
@@ -88,24 +99,25 @@ class _MyPageState extends State<MyPage> {
                 child: SettingsList(
                   sections: [
                     SettingsSection(
-                      title: 'Design Settings',
+                      title: 'ChatPage Settings',
+                      titleTextStyle:
+                          TextStyle(fontSize: fontSizeProvider.fontSize,color: Colors.brown),
                       tiles: [
-                        SettingsTile(
-                          title: 'Change design color',
-                          subtitle: 'Change design theme',
-                          leading: Icon(Icons.theater_comedy),
-                          trailing: Icon(Icons.arrow_forward_ios),
-                          onPressed: (BuildContext context) {},
-                        ),
-                        SettingsTile(
-                          title: 'Background design',
+                       
+                         SettingsTile(
+                          title: 'ChatPage background design',
+                          titleTextStyle:
+                              TextStyle(fontSize: fontSizeProvider.fontSize),
                           //subtitle: 'English',
-                          leading: Icon(Icons.color_lens),
+                          leading: Icon(Icons.photo),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onPressed: (BuildContext context) {},
                         ),
+
                         SettingsTile(
-                          title: 'Font size',
+                          title: 'chat fontSize',
+                          titleTextStyle:
+                              TextStyle(fontSize: fontSizeProvider.fontSize),
                           subtitle: 'Choose font size',
                           leading: Icon(Icons.format_size),
                           trailing: Icon(Icons.arrow_forward_ios),
@@ -152,18 +164,9 @@ class _MyPageState extends State<MyPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                   
                     GestureDetector(
-                      
                       onTap: () {
-                         
-                        if (fontSizeProvider.fontSize == 0) {
-                          fontSizeProvider.updateFontSize(100);
-                          fontSizeProvider.updateIsImageSelected(false);
-                        } else {
-                          fontSizeProvider.updateFontSize(0);
-                          fontSizeProvider.updateIsImageSelected(true);
-                        }
+                        fontSizeProvider.updateFontSize(24.0);
                         Navigator.of(context).pop();
                       },
                       child: Text(
@@ -171,13 +174,25 @@ class _MyPageState extends State<MyPage> {
                         style: TextStyle(fontSize: 24),
                       ),
                     ),
-                    Text(
-                      "Medium",
-                      style: TextStyle(fontSize: 20),
+                    GestureDetector(
+                      onTap: () {
+                        fontSizeProvider.updateFontSize(20.0);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "Medium",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                    Text(
-                      "Small",
-                      style: TextStyle(fontSize: 16),
+                    GestureDetector(
+                      onTap: () {
+                        fontSizeProvider.updateFontSize(16.0);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "Small",
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ],
                 ),
