@@ -9,7 +9,7 @@ List<String> imageList =[
  'image/winter.jpg', // 3
 ];
 
-List<double> fontList =[
+List<double> fontSizeList =[
  16.0, // 0
  20.0,// 1
  24.0, // 2

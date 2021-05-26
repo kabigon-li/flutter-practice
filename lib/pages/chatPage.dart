@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/components/common_simple_dialog.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
@@ -384,11 +384,17 @@ class _ChatPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Expanded(
+                  
                   child: Text(
                     chatNew.content,
+                    
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: fontSizeProvider.fontSize,
+                      
+                      
+                      fontSize: fontSizeProvider.isFontSizeSelected
+                      ?fontSizeList[fontSizeProvider.fontSize.toInt()]
+                      :18,
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 10,

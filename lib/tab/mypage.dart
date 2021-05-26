@@ -18,7 +18,6 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   bool _active = false;
   int num;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +110,7 @@ class _MyPageState extends State<MyPage> {
                           leading: Icon(Icons.format_size),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onPressed: (BuildContext context) {
-                            showSimpleDialog(context);
+                            showOFontSizeDialog(context);
                           },
                         ),
                       ],
@@ -136,7 +135,7 @@ class _MyPageState extends State<MyPage> {
     );
   }
 
-  void showSimpleDialog(BuildContext context) async {
+  void showOFontSizeDialog(BuildContext context) async {
     await showDialog(
       barrierDismissible: true,
       context: context,
@@ -153,9 +152,19 @@ class _MyPageState extends State<MyPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                   
                     GestureDetector(
+                      
                       onTap: () {
-                        fontSizeProvider.updateFontSize(fontSizeProvider.fontSize);
+                         
+                        if (fontSizeProvider.fontSize == 0) {
+                          fontSizeProvider.updateFontSize(100);
+                          fontSizeProvider.updateIsImageSelected(false);
+                        } else {
+                          fontSizeProvider.updateFontSize(0);
+                          fontSizeProvider.updateIsImageSelected(true);
+                        }
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         "Large",
