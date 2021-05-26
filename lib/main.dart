@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wechat_like_memo/model/chat.dart';
+import 'package:wechat_like_memo/model/fontSize.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
@@ -43,6 +44,10 @@ void main() async {
         //tableの中身、timelineはテーブルの名前
         "CREATE TABLE timeline(id INTEGER PRIMARY KEY, content TEXT, imagePath INTEGER, color INTEGER)",
       );
+      db.execute(
+        //fontSizeの中身、fontSizeはテーブルの名前
+        "CREATE TABLE fontSize(fontSize INTEGER)",
+      );
     },
 
     // 更新する時、２になる、次の更新３になる、毎回増える
@@ -65,6 +70,7 @@ void main() async {
   final userList = await getUser(database);
   final chatList = await getChat(database);
   final timelineList = await getTimeLine(database);
+  final fontSizeList = await getFontSize(database);
   // 使いたいProviderをここに書く
   runApp(
     (MultiProvider(
@@ -91,7 +97,7 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => FontSizeProvider(
-            fontSize: 20.0,
+            fontSizeList:fontSizeList,
           ),
         ),
         ChangeNotifierProvider(
@@ -213,6 +219,24 @@ Future<List<TimeLine>> getTimeLine(
       content: maps[i]['content'],
       imagePath: maps[i]['imagePath'],
       color: maps[i]['color'],
+    );
+  });
+}
+
+Future<List<FontSize>> getFontSize(
+  Future<Database> database,
+) async {
+  //　database 本体をdbに代入
+  final Database db = await database;
+
+  // databaseからtodoの全部アプリに持ってくる
+  final List<Map<String, dynamic>> maps = await db.query('fontSize');
+
+  //Map<String, dynamic>からTodo型に変換
+  return List.generate(maps.length, (i) {
+    return FontSize(
+      fontSize: maps[i]['fontSize'],
+     
     );
   });
 }

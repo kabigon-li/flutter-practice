@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wechat_like_memo/model/chat.dart';
+import 'package:wechat_like_memo/model/fontSize.dart';
 import 'package:wechat_like_memo/model/todo.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
-
 
 class DataBaseProvider with ChangeNotifier {
   DataBaseProvider({
@@ -164,7 +164,7 @@ class DataBaseProvider with ChangeNotifier {
     });
   }
 
-  // delete chat 
+  // delete chat
   Future<void> deleteChat(int id) async {
     // Get a reference to the database.
     final db = await database;
@@ -194,9 +194,7 @@ class DataBaseProvider with ChangeNotifier {
   }
 
   //timelineを追加する(create)
-  Future<void> insertTimeLine({
-    TimeLine timeLine
-  }) async {
+  Future<void> insertTimeLine({TimeLine timeLine}) async {
     final Database db = await database;
     await db.insert(
       // tableの名前
@@ -206,7 +204,7 @@ class DataBaseProvider with ChangeNotifier {
     );
   }
 
-   //timelineを取得する(read)
+  //timelineを取得する(read)
 // getChatのreturnしたデータ型はlist<Chat>
   Future<List<TimeLine>> getTimeLine() async {
     final Database db = await database;
@@ -214,17 +212,15 @@ class DataBaseProvider with ChangeNotifier {
     final List<Map<String, dynamic>> maps = await db.query('timeline');
     return List.generate(maps.length, (i) {
       return TimeLine(
-       id: maps[i]['id'],
-      content: maps[i]['content'],
-      
-      imagePath: maps[i]['imagePath'],
-      color: maps[i]['color'],
-
+        id: maps[i]['id'],
+        content: maps[i]['content'],
+        imagePath: maps[i]['imagePath'],
+        color: maps[i]['color'],
       );
     });
   }
 
-  // delete chat 
+  // delete chat
   Future<void> deleteTimeLine(int id) async {
     // Get a reference to the database.
     final db = await database;
@@ -253,4 +249,25 @@ class DataBaseProvider with ChangeNotifier {
     );
   }
 
+  Future<List<FontSize>> getFontSize() async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query('fontSize');
+    return List.generate(maps.length, (i) {
+      return FontSize(
+        fontSize: maps[i]['fontSize'],
+      );
+    });
+  }
+
+  //timelineを追加する(create)
+  Future<void> insertFontSize({FontSize fontSize}) async {
+    final Database db = await database;
+    await db.insert(
+      // tableの名前
+      'fontSize',
+      fontSize.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
 }
