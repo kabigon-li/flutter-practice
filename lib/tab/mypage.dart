@@ -20,20 +20,20 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   bool _active = false;
   int num;
+  String fontSizeText;
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<AppTheme>(context);
-    final season = Provider.of<SeasonsMode>(context);
-   
+
     final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
-    String fontSizeText;
 
     return Container(
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: colorList[colorThemeProvider.selectedColorNumber],
+          backgroundColor:
+              colorList[colorThemeProvider.selectedColorNumber ?? 0],
           title: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Align(
@@ -117,7 +117,7 @@ class _MyPageState extends State<MyPage> {
                           leading: Icon(Icons.format_size),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onPressed: (BuildContext context) {
-                            showFontSizeDialog(context, fontSizeText);
+                            showFontSizeDialog(context);
                           },
                         ),
                       ],
@@ -142,7 +142,7 @@ class _MyPageState extends State<MyPage> {
     );
   }
 
-  void showFontSizeDialog(BuildContext context, fontSizeText) async {
+  void showFontSizeDialog(BuildContext context) async {
     await showDialog(
       barrierDismissible: true,
       context: context,
@@ -177,9 +177,11 @@ class _MyPageState extends State<MyPage> {
                     ),
                     GestureDetector(
                       onTap: () {
+                         fontSizeText = 'Medium';
                         fontSizeProvider.updateFontSize(20.0);
                         databaseProvider.getFontSize(fontSizeProvider.fontSize);
                         Navigator.of(context).pop();
+                         setState(() {}); 
                       },
                       child: Text(
                         "Medium",
@@ -188,9 +190,11 @@ class _MyPageState extends State<MyPage> {
                     ),
                     GestureDetector(
                       onTap: () {
+                         fontSizeText = 'Small';
                         fontSizeProvider.updateFontSize(16.0);
                         databaseProvider.getFontSize(fontSizeProvider.fontSize);
                         Navigator.of(context).pop();
+                         setState(() {});
                       },
                       child: Text(
                         "Small",
@@ -229,7 +233,7 @@ class _MyPageState extends State<MyPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        colorThemeProvider.updateSelectedImageNumber(0); 
+                        colorThemeProvider.updateSelectedImageNumber(0);
                         // databaseProvider.getFontSize(fontSizeProvider.fontSize);
 
                         Navigator.of(context).pop();
@@ -242,7 +246,6 @@ class _MyPageState extends State<MyPage> {
                         ),
                       ),
                     ),
-
                     GestureDetector(
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(1);
