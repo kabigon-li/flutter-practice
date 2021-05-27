@@ -25,6 +25,7 @@ class _MyPageState extends State<MyPage> {
     final theme = Provider.of<AppTheme>(context);
     final season = Provider.of<SeasonsMode>(context);
     final fontSizeProvider = Provider.of<FontSizeProvider>(context);
+    String fontSizeText;
 
     return Container(
       child: Scaffold(
@@ -63,13 +64,11 @@ class _MyPageState extends State<MyPage> {
                     SettingsSection(
                       title: 'Theme settings',
                       titleTextStyle:
-                          TextStyle(fontSize: 20,color: Colors.brown),
+                          TextStyle(fontSize: 20, color: Colors.brown),
                       tiles: [
-                        
                         SettingsTile.switchTile(
                           title: 'Dark mode',
-                          titleTextStyle:
-                              TextStyle(fontSize: 18),
+                          titleTextStyle: TextStyle(fontSize: 18),
                           leading: Icon(Icons.nights_stay),
                           switchValue: theme.isDark,
                           onToggle: (newTheme) {
@@ -77,18 +76,15 @@ class _MyPageState extends State<MyPage> {
                           },
                           switchActiveColor: buttonColor,
                         ),
-
-                         SettingsTile(
+                        SettingsTile(
                           title: 'Change theme color',
-                          titleTextStyle:
-                              TextStyle(fontSize: 18),
-                         
+                          titleTextStyle: TextStyle(fontSize: 18),
                           leading: Icon(Icons.color_lens),
                           trailing: Icon(Icons.arrow_forward_ios),
-                          onPressed: (BuildContext context) {},
+                          onPressed: (BuildContext context) {
+                            showChangeColorDialog(context);
+                          },
                         ),
-
-                       
                       ],
                     ),
                   ],
@@ -100,30 +96,26 @@ class _MyPageState extends State<MyPage> {
                 child: SettingsList(
                   sections: [
                     SettingsSection(
-                      title: 'ChatPage Settings',
+                      title: 'Personal Settings',
                       titleTextStyle:
-                          TextStyle(fontSize: 20,color: Colors.brown),
+                          TextStyle(fontSize: 20, color: Colors.brown),
                       tiles: [
-                       
-                         SettingsTile(
-                          title: 'ChatPage background design',
-                          titleTextStyle:
-                              TextStyle(fontSize: 18),
+                        SettingsTile(
+                          title: 'ChatPage background ',
+                          titleTextStyle: TextStyle(fontSize: 18),
                           //subtitle: 'English',
                           leading: Icon(Icons.photo),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onPressed: (BuildContext context) {},
                         ),
-
                         SettingsTile(
-                          title: 'chat fontSize',
-                          titleTextStyle:
-                              TextStyle(fontSize: 18),
-                          subtitle: 'Choose font size',
+                          title: 'fontSize',
+                          titleTextStyle: TextStyle(fontSize: 18),
+                          subtitle: fontSizeText,
                           leading: Icon(Icons.format_size),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onPressed: (BuildContext context) {
-                            showOFontSizeDialog(context);
+                            showFontSizeDialog(context, fontSizeText);
                           },
                         ),
                       ],
@@ -148,7 +140,7 @@ class _MyPageState extends State<MyPage> {
     );
   }
 
-  void showOFontSizeDialog(BuildContext context) async {
+  void showFontSizeDialog(BuildContext context, fontSizeText) async {
     await showDialog(
       barrierDismissible: true,
       context: context,
@@ -169,10 +161,12 @@ class _MyPageState extends State<MyPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
+                        fontSizeText = 'Large';
                         fontSizeProvider.updateFontSize(24.0);
                         databaseProvider.getFontSize(fontSizeProvider.fontSize);
-                        //databaseProvider.insertFontSize();
+
                         Navigator.of(context).pop();
+                        setState(() {});
                       },
                       child: Text(
                         "Large",
@@ -199,6 +193,93 @@ class _MyPageState extends State<MyPage> {
                       child: Text(
                         "Small",
                         style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showChangeColorDialog(BuildContext context) async {
+    await showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        final databaseProvider =
+            Provider.of<DataBaseProvider>(context, listen: false);
+        return SimpleDialog(
+          // title: Text("Font size"),
+          children: <Widget>[
+            // コンテンツ領域
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(context),
+              child: SizedBox(
+                height: 150,
+                width: 60,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // fontSizeProvider.updateFontSize(24.0);
+                        // databaseProvider.getFontSize(fontSizeProvider.fontSize);
+
+                        // Navigator.of(context).pop();
+                        // setState(() {});
+                      },
+                      child: Text(
+                        "Metallic Pink",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromRGBO(241, 177, 186, 1),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // fontSizeProvider.updateFontSize(18.0);
+                        // databaseProvider.getFontSize(fontSizeProvider.fontSize);
+                        // Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "Cool Grey",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromRGBO(148, 137, 176, 1),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // fontSizeProvider.updateFontSize(16.0);
+                        // databaseProvider.getFontSize(fontSizeProvider.fontSize);
+                        // Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "Fresh Air",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromRGBO(168, 222, 250, 1),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // fontSizeProvider.updateFontSize(16.0);
+                        // databaseProvider.getFontSize(fontSizeProvider.fontSize);
+                        // Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "Olivine",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromRGBO(161, 183, 122, 1),
+                        ),
                       ),
                     ),
                   ],
