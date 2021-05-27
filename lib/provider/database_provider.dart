@@ -272,6 +272,20 @@ class DataBaseProvider with ChangeNotifier {
     );
   }
 
+   Future<void> updateFontSize(
+    FontSize fontSize,
+  ) async {
+    final Database db = await database;
+    await db.update(
+      'fontSize',
+      fontSize.toMap(),
+      // Ensure that the Dog has a matching id.
+      where: "id = ?",
+      // Pass the Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [fontSize.id],
+    );
+  }
+
   Future<List<ColorTheme>> getColorTheme(ColorTheme colorTheme) async {
     final Database db = await database;
 

@@ -50,11 +50,11 @@ void main() async {
       );
       db.execute(
         //fontSizeの中身、fontSizeはテーブルの名前
-        "CREATE TABLE fontSize(fontSize INTEGER)",
+        "CREATE TABLE fontSize(id INTEGER PRIMARY KEY,fontSize INTEGER)",
       );
       db.execute(
         
-        "CREATE TABLE colorTheme(colorTheme INTEGER)",
+        "CREATE TABLE colorTheme(id INTEGER PRIMARY KEY,colorTheme INTEGER)",
       );
     },
 
@@ -249,6 +249,7 @@ Future<List<FontSize>> getFontSize(
   //Map<String, dynamic>からTodo型に変換
   return List.generate(maps.length, (i) {
     return FontSize(
+      id: maps[i]['id'],
       fontSize: maps[i]['fontSize'],
      
     );
@@ -267,6 +268,7 @@ Future<List<ColorTheme>> getColorTheme(
   //Map<String, dynamic>からTodo型に変換
   return List.generate(maps.length, (i) {
     return ColorTheme( 
+      id: maps[i]['id'],
       colorTheme: maps[i]['colorTheme'],
      
     );
