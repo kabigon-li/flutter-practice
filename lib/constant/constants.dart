@@ -16,6 +16,13 @@ List<double> fontSizeList =[
  
 ];
 
+List<Color> colorList =[
+ Color.fromRGBO(241, 177, 186, 1), // 0 Metallic Pink
+ Color.fromRGBO(148, 137, 176, 1), // 1 Cool Grey
+ Color.fromRGBO(168, 222, 250, 1), // 2 Fresh Air
+ Color.fromRGBO( 161, 183, 122,1), // 3 Olivine,
+];
+
 const themeColor = Color.fromRGBO(241, 241, 241, 1);
 const fontColor = Color.fromRGBO(77, 77, 77, 1);
 const backgroundWhite = Color(0xfff8f9fd);
