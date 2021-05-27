@@ -262,9 +262,9 @@ class _MyPageState extends State<MyPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // fontSizeProvider.updateFontSize(16.0);
+                        colorThemeProvider.updateSelectedImageNumber(2);
                         // databaseProvider.getFontSize(fontSizeProvider.fontSize);
-                        // Navigator.of(context).pop();
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         "Fresh Air",
@@ -276,9 +276,9 @@ class _MyPageState extends State<MyPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // fontSizeProvider.updateFontSize(16.0);
+                         colorThemeProvider.updateSelectedImageNumber(3);
                         // databaseProvider.getFontSize(fontSizeProvider.fontSize);
-                        // Navigator.of(context).pop();
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         "Olivine",

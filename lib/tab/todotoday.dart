@@ -115,8 +115,8 @@ class _TodoTaday extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
-            backgroundColor: Colors.grey[400],
-            child: Icon(Icons.add_box,color: Colors.grey[600],),
+            backgroundColor: Colors.grey[300].withOpacity(0.4),
+            child: Icon(Icons.add_box,color: Colors.green),
             onPressed: () {
               return addTodo(context);
             },

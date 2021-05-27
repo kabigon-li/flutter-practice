@@ -61,7 +61,7 @@ class _TimeLine extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Icon(
                   Icons.camera_alt,
-                  color: Colors.white,
+                  color: Colors.grey,
                   size: 25,
                 ),
               ),
