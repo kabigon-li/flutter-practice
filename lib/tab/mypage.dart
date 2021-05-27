@@ -216,8 +216,8 @@ class _MyPageState extends State<MyPage> {
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
-        // final databaseProvider =
-        //     Provider.of<DataBaseProvider>(context, listen: false);
+        final databaseProvider =
+            Provider.of<DataBaseProvider>(context, listen: false);
         final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
         return SimpleDialog(
           // title: Text("Font size"),
@@ -234,9 +234,10 @@ class _MyPageState extends State<MyPage> {
                     GestureDetector(
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(0);
-                        // databaseProvider.getFontSize(fontSizeProvider.fontSize);
-
                         Navigator.of(context).pop();
+                        databaseProvider.getColorTheme(colorThemeProvider.colorList[0]);
+
+                        
                       },
                       child: Text(
                         "Metallic Pink",
@@ -249,8 +250,9 @@ class _MyPageState extends State<MyPage> {
                     GestureDetector(
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(1);
-                        // databaseProvider.getFontSize(fontSizeProvider.fontSize);
                         Navigator.of(context).pop();
+                        databaseProvider.getColorTheme(colorThemeProvider.colorList[1]);
+                        
                       },
                       child: Text(
                         "Cool Grey",
@@ -263,8 +265,9 @@ class _MyPageState extends State<MyPage> {
                     GestureDetector(
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(2);
-                        // databaseProvider.getFontSize(fontSizeProvider.fontSize);
                         Navigator.of(context).pop();
+                        databaseProvider.getColorTheme(colorThemeProvider.colorList[2]);
+                        
                       },
                       child: Text(
                         "Fresh Air",
@@ -277,8 +280,9 @@ class _MyPageState extends State<MyPage> {
                     GestureDetector(
                       onTap: () {
                          colorThemeProvider.updateSelectedImageNumber(3);
-                        // databaseProvider.getFontSize(fontSizeProvider.fontSize);
-                        Navigator.of(context).pop();
+                         Navigator.of(context).pop();
+                         databaseProvider.getColorTheme(colorThemeProvider.colorList[3]);
+                        
                       },
                       child: Text(
                         "Olivine",

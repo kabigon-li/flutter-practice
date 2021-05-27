@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:wechat_like_memo/model/chat.dart';
+import 'package:wechat_like_memo/model/colorTheme.dart';
 import 'package:wechat_like_memo/model/fontSize.dart';
 import 'package:wechat_like_memo/model/todo.dart';
 import 'package:wechat_like_memo/model/user.dart';
@@ -270,4 +271,18 @@ class DataBaseProvider with ChangeNotifier {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
+  Future<List<ColorTheme>> getColorTheme(ColorTheme colorTheme) async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query('database');
+    return List.generate(maps.length, (i) {
+      return ColorTheme(
+        colorTheme: maps[i]['colorTheme'],
+      );
+    });
+  }
 }
+
+
+  
