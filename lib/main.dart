@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/chat.dart';
+import 'package:wechat_like_memo/model/colorTheme.dart';
+
 import 'package:wechat_like_memo/model/fontSize.dart';
 import 'package:wechat_like_memo/model/user.dart';
+import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
@@ -48,6 +52,10 @@ void main() async {
         //fontSizeの中身、fontSizeはテーブルの名前
         "CREATE TABLE fontSize(fontSize INTEGER)",
       );
+      db.execute(
+        
+        "CREATE TABLE colorTheme(colorTheme INTEGER)",
+      );
     },
 
     // 更新する時、２になる、次の更新３になる、毎回増える
@@ -71,6 +79,7 @@ void main() async {
   final chatList = await getChat(database);
   final timelineList = await getTimeLine(database);
   final fontSizeList = await getFontSize(database);
+  final colorList = await getColorTheme(database);
   // 使いたいProviderをここに書く
   runApp(
     (MultiProvider(
@@ -98,6 +107,11 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => FontSizeProvider(
             fontSize:20.0,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ColorThemeProvider(
+          colorList: colorList,
           ),
         ),
         ChangeNotifierProvider(
@@ -236,6 +250,24 @@ Future<List<FontSize>> getFontSize(
   return List.generate(maps.length, (i) {
     return FontSize(
       fontSize: maps[i]['fontSize'],
+     
+    );
+  });
+}
+
+Future<List<ColorTheme>> getColorTheme(
+  Future<Database> database,
+) async {
+  //　database 本体をdbに代入
+  final Database db = await database;
+
+  // databaseからtodoの全部アプリに持ってくる
+  final List<Map<String, dynamic>> maps = await db.query('colorTheme');
+
+  //Map<String, dynamic>からTodo型に変換
+  return List.generate(maps.length, (i) {
+    return ColorTheme( 
+      colorTheme: maps[i]['colorTheme'],
      
     );
   });

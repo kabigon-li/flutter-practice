@@ -1,21 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wechat_like_memo/model/colorTheme.dart';
 
-class ChangeThemeColor extends ChangeNotifier {
+class ColorThemeProvider extends ChangeNotifier {
   // 初期化
-  ChangeThemeColor({
-    this.isColorSelected = false,
-    this.selectedColorNumber = 0,
+  ColorThemeProvider({
+   
+    this.colorList,
   });
 
-  // 画像選択されているかどうか判定
-  bool isColorSelected;
+  List<ColorTheme> colorList;
+ 
 
   // 選択されている画像の番号
   int selectedColorNumber;
 
   void updateIsImageSelected(bool value) {
-    isColorSelected = value;
+   
     notifyListeners();
   }
 

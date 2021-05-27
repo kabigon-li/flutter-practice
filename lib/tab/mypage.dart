@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
+import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
@@ -24,14 +25,15 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     final theme = Provider.of<AppTheme>(context);
     final season = Provider.of<SeasonsMode>(context);
-    final fontSizeProvider = Provider.of<FontSizeProvider>(context);
+   
+    final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     String fontSizeText;
 
     return Container(
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: themeColor,
+          backgroundColor: colorList[colorThemeProvider.selectedColorNumber],
           title: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Align(
@@ -210,8 +212,9 @@ class _MyPageState extends State<MyPage> {
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
-        final databaseProvider =
-            Provider.of<DataBaseProvider>(context, listen: false);
+        // final databaseProvider =
+        //     Provider.of<DataBaseProvider>(context, listen: false);
+        final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
         return SimpleDialog(
           // title: Text("Font size"),
           children: <Widget>[
@@ -226,11 +229,10 @@ class _MyPageState extends State<MyPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // fontSizeProvider.updateFontSize(24.0);
+                        colorThemeProvider.updateSelectedImageNumber(0); 
                         // databaseProvider.getFontSize(fontSizeProvider.fontSize);
 
-                        // Navigator.of(context).pop();
-                        // setState(() {});
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         "Metallic Pink",
@@ -240,11 +242,12 @@ class _MyPageState extends State<MyPage> {
                         ),
                       ),
                     ),
+
                     GestureDetector(
                       onTap: () {
-                        // fontSizeProvider.updateFontSize(18.0);
+                        colorThemeProvider.updateSelectedImageNumber(1);
                         // databaseProvider.getFontSize(fontSizeProvider.fontSize);
-                        // Navigator.of(context).pop();
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         "Cool Grey",
