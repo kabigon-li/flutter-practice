@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/pages/calender.dart';
+import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 import 'package:wechat_like_memo/route/route.dart';
 import 'package:wechat_like_memo/tab/todotoday.dart';
 import 'package:wechat_like_memo/tab/home.dart';
@@ -52,6 +54,7 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
+     final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         items: <BottomNavigationBarItem>[
@@ -100,7 +103,7 @@ class _TabScreenState extends State<TabScreen> {
         ],
         onTap: _onTapHandler,
         currentIndex: _selectedIndex,
-        backgroundColor: Colors.white,
+        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
         iconSize: 30,
       ),
       tabBuilder: (context, index) {

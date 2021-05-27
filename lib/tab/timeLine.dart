@@ -10,6 +10,7 @@ import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
 
 import 'package:wechat_like_memo/pages/timelineInputPage.dart';
+import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/font_size_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
@@ -27,6 +28,7 @@ class TimeLinePage extends StatelessWidget {
   final User userNew;
   @override
   Widget build(BuildContext context) {
+    
     return ChangeNotifierProvider(
       // Notifier作成
       create: (_) => TimeLinePageNotifier(
@@ -43,12 +45,13 @@ class _TimeLine extends StatelessWidget {
     final notifier = Provider.of<TimeLinePageNotifier>(context, listen: false);
     final timelineProvider = Provider.of<TimelineProvider>(context);
     final userProvider = Provider.of<UserProvider>(context);
+     final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
-        backgroundColor: Color.fromRGBO(201, 218, 228, 1),
+        backgroundColor:  colorList[colorThemeProvider.selectedColorNumber ?? 4],
         actions: [
           // 发朋友圈按钮
           Align(

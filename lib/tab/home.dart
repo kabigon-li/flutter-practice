@@ -10,6 +10,7 @@ import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/pages/loginPage.dart';
 import 'package:wechat_like_memo/pages/chatPage.dart';
+import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/font_size_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
@@ -38,12 +39,14 @@ class _Home extends StatelessWidget {
 
     final userProvider = Provider.of<UserProvider>(context);
 
+    final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
+
     // print(season.selectedImageNumber);
     return Scaffold(
       // 左ドロアー
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: themeColor,
+        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
 
         title: Align(
           alignment: Alignment.topLeft,
@@ -76,7 +79,7 @@ class _Home extends StatelessWidget {
               padding: const EdgeInsets.all(15.0),
               child: Icon(
                 Icons.person_add_rounded,
-                color: Color.fromRGBO(107, 173, 206, 1),
+                color: buttonColor,
                 size: 30,
               ),
             ),

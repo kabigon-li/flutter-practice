@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/todo.dart';
+import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 import 'package:wechat_like_memo/provider/font_size_provider.dart';
 
 import 'package:wechat_like_memo/provider/settings_provider.dart';
@@ -38,13 +39,15 @@ class _TodoTaday extends StatelessWidget {
   Widget build(BuildContext context) {
     final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
     final season = Provider.of<SeasonsMode>(context);
+
     // 当todoprovider中的todolist中内容的改变，要呈现画面上的改变时，listen为true
     final todoProvider = Provider.of<TodoProvider>(context);
+    final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: themeColor,
+        backgroundColor:  colorList[colorThemeProvider.selectedColorNumber ?? 4],
         // leading: Icon(
         //   Icons.arrow_back,
         //   color: fontColor,
@@ -112,7 +115,7 @@ class _TodoTaday extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
-            backgroundColor: Color.fromRGBO(166, 205, 240,1),
+            backgroundColor: Colors.grey[400],
             child: Icon(Icons.add_box,color: Colors.grey[600],),
             onPressed: () {
               return addTodo(context);
