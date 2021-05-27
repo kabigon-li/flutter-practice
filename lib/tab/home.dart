@@ -283,7 +283,7 @@ class _Home extends StatelessWidget {
                 children: [
                   //点击用户名，更改新的用户名
                   SizedBox(
-                    width: 90,
+                    width: 100,
                     height: 40,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
@@ -316,7 +316,7 @@ class _Home extends StatelessWidget {
           child: Align(
             alignment: Alignment.centerRight,
             child: SizedBox(
-              width: 160,
+              width: 150,
               height: 40,
               child: Text(
                 '',

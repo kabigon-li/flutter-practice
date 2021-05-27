@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wechat_like_memo/model/fontSize.dart';
+import 'package:wechat_like_memo/model/fontSize.dart'; 
 
 class FontSizeProvider extends ChangeNotifier {
   FontSizeProvider({
-    this.fontSizeList,
+    this.fontSize,
   });
- List<FontSize> fontSizeList;
+
   double fontSize;
 
   void updateFontSize(

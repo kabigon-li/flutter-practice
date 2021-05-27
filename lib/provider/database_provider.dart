@@ -249,7 +249,7 @@ class DataBaseProvider with ChangeNotifier {
     );
   }
 
-  Future<List<FontSize>> getFontSize() async {
+  Future<List<FontSize>> getFontSize(double fontSize) async {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query('fontSize');

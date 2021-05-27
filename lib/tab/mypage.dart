@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
+import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/font_size_provider.dart';
 import 'package:wechat_like_memo/provider/settings_provider.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -153,6 +154,8 @@ class _MyPageState extends State<MyPage> {
       context: context,
       builder: (BuildContext context) {
         final fontSizeProvider = Provider.of<FontSizeProvider>(context);
+        final databaseProvider =
+            Provider.of<DataBaseProvider>(context, listen: false);
         return SimpleDialog(
           // title: Text("Font size"),
           children: <Widget>[
@@ -167,6 +170,8 @@ class _MyPageState extends State<MyPage> {
                     GestureDetector(
                       onTap: () {
                         fontSizeProvider.updateFontSize(24.0);
+                        databaseProvider.getFontSize(fontSizeProvider.fontSize);
+                        //databaseProvider.insertFontSize();
                         Navigator.of(context).pop();
                       },
                       child: Text(
@@ -177,6 +182,7 @@ class _MyPageState extends State<MyPage> {
                     GestureDetector(
                       onTap: () {
                         fontSizeProvider.updateFontSize(20.0);
+                        databaseProvider.getFontSize(fontSizeProvider.fontSize);
                         Navigator.of(context).pop();
                       },
                       child: Text(
@@ -187,6 +193,7 @@ class _MyPageState extends State<MyPage> {
                     GestureDetector(
                       onTap: () {
                         fontSizeProvider.updateFontSize(16.0);
+                        databaseProvider.getFontSize(fontSizeProvider.fontSize);
                         Navigator.of(context).pop();
                       },
                       child: Text(
