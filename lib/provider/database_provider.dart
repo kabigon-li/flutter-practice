@@ -272,7 +272,7 @@ class DataBaseProvider with ChangeNotifier {
     );
   }
 
-   Future<void> updateFontSize(
+   Future<void> updateDataFontSize(
     FontSize fontSize,
   ) async {
     final Database db = await database;
@@ -295,6 +295,20 @@ class DataBaseProvider with ChangeNotifier {
         colorTheme: maps[i]['colorTheme'],
       );
     });
+  }
+
+  Future<void> updateDataColorTheme(
+    ColorTheme colorTheme,
+  ) async {
+    final Database db = await database;
+    await db.update(
+      'colorTheme',
+      colorTheme.toMap(),
+      // Ensure that the Dog has a matching id.
+      where: "id = ?",
+      // Pass the Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [colorTheme.id],
+    );
   }
 }
 

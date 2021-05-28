@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/chat.dart';
 import 'package:wechat_like_memo/model/colorTheme.dart';
 
@@ -48,13 +47,12 @@ void main() async {
         //tableの中身、timelineはテーブルの名前
         "CREATE TABLE timeline(id INTEGER PRIMARY KEY, content TEXT, imagePath INTEGER, color INTEGER)",
       );
+      // db.execute(
+      //   //fontSizeの中身、fontSizeはテーブルの名前
+      //   "CREATE TABLE fontSize(id INTEGER PRIMARY KEY,fontSize INTEGER)",
+      // );
       db.execute(
-        //fontSizeの中身、fontSizeはテーブルの名前
-        "CREATE TABLE fontSize(id INTEGER PRIMARY KEY,fontSize INTEGER)",
-      );
-      db.execute(
-        
-        "CREATE TABLE colorTheme(id INTEGER PRIMARY KEY,colorTheme INTEGER)",
+        "CREATE TABLE colorTheme(id INTEGER PRIMARY KEY, colorTheme INTEGER)",
       );
     },
 
@@ -78,7 +76,7 @@ void main() async {
   final userList = await getUser(database);
   final chatList = await getChat(database);
   final timelineList = await getTimeLine(database);
-  final fontSizeList = await getFontSize(database);
+  // final fontSizeList = await getFontSize(database);
   final colorList = await getColorTheme(database);
   // 使いたいProviderをここに書く
   runApp(
@@ -106,12 +104,12 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => FontSizeProvider(
-            fontSize:20.0,
+            fontSize: 20.0,
           ),
         ),
         ChangeNotifierProvider(
           create: (_) => ColorThemeProvider(
-          colorList: colorList,
+            colorList: colorList,
           ),
         ),
         ChangeNotifierProvider(
@@ -251,7 +249,6 @@ Future<List<FontSize>> getFontSize(
     return FontSize(
       id: maps[i]['id'],
       fontSize: maps[i]['fontSize'],
-     
     );
   });
 }
@@ -267,10 +264,9 @@ Future<List<ColorTheme>> getColorTheme(
 
   //Map<String, dynamic>からTodo型に変換
   return List.generate(maps.length, (i) {
-    return ColorTheme( 
+    return ColorTheme(
       id: maps[i]['id'],
       colorTheme: maps[i]['colorTheme'],
-     
     );
   });
 }

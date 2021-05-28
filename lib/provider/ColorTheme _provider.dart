@@ -5,20 +5,13 @@ import 'package:wechat_like_memo/model/colorTheme.dart';
 class ColorThemeProvider extends ChangeNotifier {
   // 初期化
   ColorThemeProvider({
-   
     this.colorList,
   });
 
   List<ColorTheme> colorList;
- 
 
   // 選択されている画像の番号
   int selectedColorNumber;
-
-  void updateIsImageSelected(bool value) {
-   
-    notifyListeners();
-  }
 
   void updateSelectedImageNumber(int number) {
     selectedColorNumber = number;

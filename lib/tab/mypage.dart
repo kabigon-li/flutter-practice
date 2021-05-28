@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
+import 'package:wechat_like_memo/model/fontSize.dart';
 import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
@@ -92,39 +93,39 @@ class _MyPageState extends State<MyPage> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 300,
-                width: 500,
-                child: SettingsList(
-                  sections: [
-                    SettingsSection(
-                      title: 'Personal Settings',
-                      titleTextStyle:
-                          TextStyle(fontSize: 20, color: Colors.brown),
-                      tiles: [
-                        SettingsTile(
-                          title: 'ChatPage background ',
-                          titleTextStyle: TextStyle(fontSize: 18),
-                          //subtitle: 'English',
-                          leading: Icon(Icons.photo),
-                          trailing: Icon(Icons.arrow_forward_ios),
-                          onPressed: (BuildContext context) {},
-                        ),
-                        SettingsTile(
-                          title: 'fontSize',
-                          titleTextStyle: TextStyle(fontSize: 18),
-                          subtitle: fontSizeText,
-                          leading: Icon(Icons.format_size),
-                          trailing: Icon(Icons.arrow_forward_ios),
-                          onPressed: (BuildContext context) {
-                            showFontSizeDialog(context);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              // SizedBox(
+              //   height: 300,
+              //   width: 500,
+              //   child: SettingsList(
+              //     sections: [
+              //       SettingsSection(
+              //         title: 'Personal Settings',
+              //         titleTextStyle:
+              //             TextStyle(fontSize: 20, color: Colors.brown),
+              //         tiles: [
+              //           SettingsTile(
+              //             title: 'ChatPage background ',
+              //             titleTextStyle: TextStyle(fontSize: 18),
+              //             //subtitle: 'English',
+              //             leading: Icon(Icons.photo),
+              //             trailing: Icon(Icons.arrow_forward_ios),
+              //             onPressed: (BuildContext context) {},
+              //           ),
+              //           SettingsTile(
+              //             title: 'fontSize',
+              //             titleTextStyle: TextStyle(fontSize: 18),
+              //             subtitle: fontSizeText,
+              //             leading: Icon(Icons.format_size),
+              //             trailing: Icon(Icons.arrow_forward_ios),
+              //             onPressed: (BuildContext context) {
+              //               showFontSizeDialog(context);
+              //             },
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -150,6 +151,8 @@ class _MyPageState extends State<MyPage> {
         final fontSizeProvider = Provider.of<FontSizeProvider>(context);
         final databaseProvider =
             Provider.of<DataBaseProvider>(context, listen: false);
+        FontSize fontSize = FontSize();
+
         return SimpleDialog(
           // title: Text("Font size"),
           children: <Widget>[
@@ -163,9 +166,12 @@ class _MyPageState extends State<MyPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
+                        FontSize newFontSize = fontSize.copyWith(
+                          fontSize: 24,
+                        );
                         fontSizeText = 'Large';
                         fontSizeProvider.updateFontSize(24.0);
-                        databaseProvider.getFontSize(fontSizeProvider.fontSize);
+                        databaseProvider.updateDataFontSize(newFontSize);
 
                         Navigator.of(context).pop();
                         setState(() {});
@@ -177,11 +183,14 @@ class _MyPageState extends State<MyPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                         fontSizeText = 'Medium';
+                        FontSize newFontSize = fontSize.copyWith(
+                          fontSize: 20,
+                        );
+                        fontSizeText = 'Medium';
                         fontSizeProvider.updateFontSize(20.0);
-                        databaseProvider.getFontSize(fontSizeProvider.fontSize);
+                        databaseProvider.updateDataFontSize(newFontSize);
                         Navigator.of(context).pop();
-                         setState(() {}); 
+                        setState(() {});
                       },
                       child: Text(
                         "Medium",
@@ -190,11 +199,14 @@ class _MyPageState extends State<MyPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                         fontSizeText = 'Small';
+                        FontSize newFontSize = fontSize.copyWith(
+                          fontSize: 16,
+                        );
+                        fontSizeText = 'Small';
                         fontSizeProvider.updateFontSize(16.0);
-                        databaseProvider.getFontSize(fontSizeProvider.fontSize);
+                        databaseProvider.updateDataFontSize(newFontSize);
                         Navigator.of(context).pop();
-                         setState(() {});
+                        setState(() {});
                       },
                       child: Text(
                         "Small",
@@ -235,9 +247,8 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(0);
                         Navigator.of(context).pop();
-                        databaseProvider.getColorTheme(colorThemeProvider.colorList[0]);
-
-                        
+                        databaseProvider.updateDataColorTheme(
+                            colorThemeProvider.colorList[0]);
                       },
                       child: Text(
                         "Metallic Pink",
@@ -251,8 +262,8 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(1);
                         Navigator.of(context).pop();
-                        databaseProvider.getColorTheme(colorThemeProvider.colorList[1]);
-                        
+                        databaseProvider.updateDataColorTheme(
+                            colorThemeProvider.colorList[1]);
                       },
                       child: Text(
                         "Cool Grey",
@@ -266,8 +277,8 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(2);
                         Navigator.of(context).pop();
-                        databaseProvider.getColorTheme(colorThemeProvider.colorList[2]);
-                        
+                        databaseProvider.updateDataColorTheme(
+                            colorThemeProvider.colorList[2]);
                       },
                       child: Text(
                         "Fresh Air",
@@ -279,10 +290,10 @@ class _MyPageState extends State<MyPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                         colorThemeProvider.updateSelectedImageNumber(3);
-                         Navigator.of(context).pop();
-                         databaseProvider.getColorTheme(colorThemeProvider.colorList[3]);
-                        
+                        colorThemeProvider.updateSelectedImageNumber(3);
+                        Navigator.of(context).pop();
+                        databaseProvider.updateDataColorTheme(
+                            colorThemeProvider.colorList[3]);
                       },
                       child: Text(
                         "Olivine",
