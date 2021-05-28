@@ -225,38 +225,41 @@ class _TimeLine extends StatelessWidget {
                         ),
                   ),
                 ),
-                SizedBox(
-                  width: 270,
-                  child: ListTile(
-                    // 用户名
-                    title: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        userProvider.getFirstUser().userName,
-                        style: TextStyle(
-                          fontSize: fontSizeProvider.fontSize,
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'iconfont',
+                Padding(
+                  padding: const EdgeInsets.only(left:12.0),
+                  child: SizedBox(
+                    width: 270,
+                    child: ListTile(
+                      // 用户名
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          userProvider.getFirstUser().userName,
+                          style: TextStyle(
+                            fontSize: fontSizeProvider.fontSize,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'iconfont',
+                          ),
                         ),
                       ),
-                    ),
 
-                    // 配文
-                    subtitle: Text(
-                      timelineNew.content,
-                      style: TextStyle(fontSize: fontSizeProvider.fontSize),
-                    ),
+                      // 配文
+                      subtitle: Text(
+                        timelineNew.content,
+                        style: TextStyle(fontSize: fontSizeProvider.fontSize),
+                      ),
 
-                    //删除按钮
-                    trailing: GestureDetector(
-                      onTap: () {
-                        showSimpleDialog(context, timelineNew);
-                      },
-                      child: Icon(
-                        Icons.more_vert,
-                        size: 24,
-                        color: Colors.grey,
+                      //删除按钮
+                      trailing: GestureDetector(
+                        onTap: () {
+                          showSimpleDialog(context, timelineNew);
+                        },
+                        child: Icon(
+                          Icons.more_vert,
+                          size: 24,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ),

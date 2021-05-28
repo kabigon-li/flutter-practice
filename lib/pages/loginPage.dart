@@ -102,6 +102,23 @@ class _LoginPageState extends State<LoginPage> {
     final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(left:30.0,top:20),
+          child: OverflowBox(
+            maxWidth: 100,
+            maxHeight: 100,
+            child: GestureDetector(
+              child: Text(
+                'Cancel',
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
+              
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ),
         centerTitle: true,
         backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
        
