@@ -28,7 +28,6 @@ class TimeLinePage extends StatelessWidget {
   final User userNew;
   @override
   Widget build(BuildContext context) {
-    
     return ChangeNotifierProvider(
       // Notifier作成
       create: (_) => TimeLinePageNotifier(
@@ -45,13 +44,13 @@ class _TimeLine extends StatelessWidget {
     final notifier = Provider.of<TimeLinePageNotifier>(context, listen: false);
     final timelineProvider = Provider.of<TimelineProvider>(context);
     final userProvider = Provider.of<UserProvider>(context);
-     final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
+    final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
-        backgroundColor:  colorList[colorThemeProvider.selectedColorNumber ?? 4],
+        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
         actions: [
           // 发朋友圈按钮
           Align(
@@ -207,7 +206,7 @@ class _TimeLine extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(
-                    top: 20,
+                    top: 10,
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
@@ -216,11 +215,14 @@ class _TimeLine extends StatelessWidget {
                             context,
                             userNew,
                           )
-                        : Icon(
-                            Icons.account_circle,
-                            size: 60,
-                            color: Colors.black12,
-                          ),
+                        : Padding(
+                          padding: const EdgeInsets.only(left:10.0,),
+                          child: Icon(
+                              Icons.account_box,
+                              size: 50,
+                              color: Color.fromRGBO(130, 176, 104, 05),
+                            ),
+                        ),
                   ),
                 ),
                 SizedBox(
@@ -249,7 +251,7 @@ class _TimeLine extends StatelessWidget {
                     //删除按钮
                     trailing: GestureDetector(
                       onTap: () {
-                        showSimpleDialog(context,timelineNew);
+                        showSimpleDialog(context, timelineNew);
                       },
                       child: Icon(
                         Icons.more_vert,
@@ -310,7 +312,7 @@ class _TimeLine extends StatelessWidget {
     );
   }
 
-  void showSimpleDialog(BuildContext context,timelineNew) {
+  void showSimpleDialog(BuildContext context, timelineNew) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -320,13 +322,11 @@ class _TimeLine extends StatelessWidget {
         return CommonSimpleDialog(
           title: "Are you sure to delete this timeline?",
           onPressed: () {
-            
             timelineProvider.deleteTimeline(timelineNew.id);
-                databaseProvider.deleteTimeLine(timelineNew.id);
-                Navigator.of(context).pop(false);
+            databaseProvider.deleteTimeLine(timelineNew.id);
+            Navigator.of(context).pop(false);
           },
         );
-        
       },
     );
   }

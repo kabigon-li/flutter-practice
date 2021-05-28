@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/Utility/utility.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/user.dart';
+import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/user_provider.dart';
 import 'package:wechat_like_memo/tab/home.dart';
@@ -98,10 +99,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: themeColor,
+        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
        
       ),
       body: SingleChildScrollView(
@@ -140,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                 Material(
                   elevation: 10.0,
                   borderRadius: BorderRadius.circular(30.0),
-                  color: Color.fromRGBO(201, 218, 228, 1),
+                  color: colorList[colorThemeProvider.selectedColorNumber ?? 4],
                   child: SizedBox(
                     width: 500,
                     height: 60,

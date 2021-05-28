@@ -9,6 +9,7 @@ import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/chat.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/pages/chatPage_notifier.dart';
+import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 
 import 'package:wechat_like_memo/provider/chat_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
@@ -50,11 +51,11 @@ class _ChatPage extends StatelessWidget {
         .where((chat) => chat.userId == notifier.userNew.id)
         .toList();
 
-    final userProvider = Provider.of<UserProvider>(context);
+    final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: themeColor,
+        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
         title: Align(
           alignment: Alignment.topLeft,
           child: Row(
@@ -122,6 +123,7 @@ class _ChatPage extends StatelessWidget {
   Widget textfild(BuildContext context) {
     final notifier = Provider.of<ChatPageNotifier>(context);
     final size = MediaQuery.of(context).size;
+    final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
 
     return Align(
       alignment: Alignment.bottomCenter,
@@ -174,7 +176,7 @@ class _ChatPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.green[300],
+                          primary: colorList[colorThemeProvider.selectedColorNumber ?? 4],
                         ),
 
                         //チャット追加
@@ -197,7 +199,7 @@ class _ChatPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.green[300],
+                          primary: colorList[colorThemeProvider.selectedColorNumber ?? 4],
                         ),
 
                         //チャット追加
@@ -304,7 +306,6 @@ class _ChatPage extends StatelessWidget {
     Chat chatNew,
     int isLeft,
   ) {
-   
     DateTime chattime;
     String outputFormat;
     //chattime = DateTime.parse(chatNew.createdAt);
@@ -333,8 +334,9 @@ class _ChatPage extends StatelessWidget {
                   children: [
                     //气泡
                     ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: size.width * .7),
-                        child: buildChatBubble(context, chatNew),),
+                      constraints: BoxConstraints(maxWidth: size.width * .7),
+                      child: buildChatBubble(context, chatNew),
+                    ),
                     //聊天时间
                     Padding(
                       padding: const EdgeInsets.only(
@@ -343,7 +345,9 @@ class _ChatPage extends StatelessWidget {
                         alignment: Alignment.topRight,
                         child: Text(
                           outputFormat ?? '',
-                          style: TextStyle(fontSize: 14,),
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                     ),
@@ -360,8 +364,8 @@ class _ChatPage extends StatelessWidget {
   }
 
   Widget buildChatBubble(context, chatNew) {
-   
-     final fontSizeProvider = Provider.of<FontSizeProvider>(context);
+    final fontSizeProvider = Provider.of<FontSizeProvider>(context);
+    
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.all(6.0),
@@ -384,16 +388,11 @@ class _ChatPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Expanded(
-                  
                   child: Text(
                     chatNew.content,
-                    
                     style: TextStyle(
                       color: Colors.black,
-                      
-                      
                       fontSize: fontSizeProvider.fontSize,
-                     
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 10,
@@ -418,7 +417,6 @@ class _ChatPage extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        
         return Container(
           color: Colors.white,
           padding: const EdgeInsets.all(16.0),
@@ -510,13 +508,15 @@ class _ChatPage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         //データベース中の画像使う時だけ書くSQliteだけ
-        child: Image.memory(
-          base64Decode(currentUser.userImage),
-          gaplessPlayback: true,
-          fit: BoxFit.cover,
-          height: 50,
-          width: 50,
-        ),
+        child: currentUser.id != 0
+            ? Image.memory(
+                base64Decode(currentUser.userImage),
+                gaplessPlayback: true,
+                fit: BoxFit.cover,
+                height: 50,
+                width: 50,
+              )
+            : Icon(Icons.account_box, color: buttonColor, size: 40),
       ),
     );
   }
@@ -530,13 +530,15 @@ class _ChatPage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         //データベース中の画像使う時だけ書くSQliteだけ
-        child: Image.memory(
-          base64Decode(userProvider.getFirstUser().userImage),
-          gaplessPlayback: true,
-          fit: BoxFit.cover,
-          height: 50,
-          width: 50,
-        ),
+        child: userProvider.getFirstUser().id != 0
+            ? Image.memory(
+                base64Decode(userProvider.getFirstUser().userImage),
+                gaplessPlayback: true,
+                fit: BoxFit.cover,
+                height: 50,
+                width: 50,
+              )
+            : Icon(Icons.account_box, color: buttonColor, size: 40),
       ),
     );
   }

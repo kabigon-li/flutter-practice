@@ -61,15 +61,15 @@ void main() async {
   );
 
   //默认用户
-  // final defaultUser = User(
-  //   id: 0,
-  //   userName: 'my user',
-  //   isLogined: 0,
-  // );
-  // insertUser(
-  //   user: defaultUser,
-  //   database: database,
-  // );
+  final defaultUser = User(
+    id: 0,
+    userName: 'my user',
+    isLogined: 0,
+  );
+  insertUser(
+    user: defaultUser,
+    database: database,
+  );
 
   //todoListはreturnしたやつを代入(read)
   final todoList = await getTodo(database);

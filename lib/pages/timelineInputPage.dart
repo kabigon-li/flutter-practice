@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/Utility/utility.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/timeline.dart';
+import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/timeline_provider.dart';
 
@@ -40,9 +41,11 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
   @override
   Widget build(BuildContext context) {
     final timelineProvider = Provider.of<TimelineProvider>(context);
+    final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: themeColor,
+        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(left:30.0,top:20),
