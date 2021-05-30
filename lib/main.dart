@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/chat.dart';
 import 'package:wechat_like_memo/model/colorTheme.dart';
-
-import 'package:wechat_like_memo/model/fontSize.dart';
 import 'package:wechat_like_memo/model/user.dart';
 import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 import 'package:wechat_like_memo/provider/appTheme_provider.dart';
@@ -52,7 +51,7 @@ void main() async {
       //   "CREATE TABLE fontSize(id INTEGER PRIMARY KEY,fontSize INTEGER)",
       // );
       db.execute(
-        "CREATE TABLE colorTheme(id INTEGER PRIMARY KEY, colorTheme INTEGER)",
+        "CREATE TABLE colorTheme(id INTEGER PRIMARY KEY, colorTheme INTEGER, themeNumber INTEGER)",
       );
     },
 
@@ -76,9 +75,27 @@ void main() async {
   final userList = await getUser(database);
   final chatList = await getChat(database);
   final timelineList = await getTimeLine(database);
-  // final fontSizeList = await getFontSize(database);
-  final colorList = await getColorTheme(database);
-  // 使いたいProviderをここに書く
+
+  final theme = await getColorTheme(database);
+  Color colorTheme;
+  // null handling for theme
+  if (theme.isNotEmpty) {
+    // 2回目以降
+    colorTheme = colorList[theme.first.themeNumber ?? 0];
+  } else {
+    // 初回起動時
+    colorTheme = colorList[4];
+
+    final defaultColorTheme = ColorTheme(
+      id: 0,
+      themeNumber: 4,
+    );
+    insertColorTheme(
+      database: database,
+      colorTheme: defaultColorTheme,
+    );
+  }
+
   runApp(
     (MultiProvider(
       providers: [
@@ -109,7 +126,8 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => ColorThemeProvider(
-            colorList: colorList,
+            colorTheme: colorTheme,
+            selectedColorNumber: theme.first.themeNumber ?? 0,
           ),
         ),
         ChangeNotifierProvider(
@@ -235,22 +253,36 @@ Future<List<TimeLine>> getTimeLine(
   });
 }
 
-Future<List<FontSize>> getFontSize(
+// Future<List<FontSize>> getFontSize(
+//   Future<Database> database,
+// ) async {
+//   //　database 本体をdbに代入
+//   final Database db = await database;
+
+//   // databaseからtodoの全部アプリに持ってくる
+//   final List<Map<String, dynamic>> maps = await db.query('fontSize');
+
+//   //Map<String, dynamic>からTodo型に変換
+//   return List.generate(maps.length, (i) {
+//     return FontSize(
+//       id: maps[i]['id'],
+//       fontSize: maps[i]['fontSize'],
+//     );
+//   });
+// }
+
+//timelineを追加する(create)
+Future<void> insertColorTheme({
   Future<Database> database,
-) async {
-  //　database 本体をdbに代入
+  ColorTheme colorTheme,
+}) async {
   final Database db = await database;
-
-  // databaseからtodoの全部アプリに持ってくる
-  final List<Map<String, dynamic>> maps = await db.query('fontSize');
-
-  //Map<String, dynamic>からTodo型に変換
-  return List.generate(maps.length, (i) {
-    return FontSize(
-      id: maps[i]['id'],
-      fontSize: maps[i]['fontSize'],
-    );
-  });
+  await db.insert(
+    // tableの名前
+    'colorTheme',
+    colorTheme.toMap(),
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
 }
 
 Future<List<ColorTheme>> getColorTheme(
@@ -266,7 +298,7 @@ Future<List<ColorTheme>> getColorTheme(
   return List.generate(maps.length, (i) {
     return ColorTheme(
       id: maps[i]['id'],
-      colorTheme: maps[i]['colorTheme'],
+      themeNumber: maps[i]['themeNumber'],
     );
   });
 }

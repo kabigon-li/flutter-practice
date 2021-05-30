@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
+import 'package:wechat_like_memo/model/colorTheme.dart';
 import 'package:wechat_like_memo/model/fontSize.dart';
 import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
 
@@ -60,7 +61,7 @@ class _MyPageState extends State<MyPage> {
           child: Column(
             children: [
               SizedBox(
-                height: 170,
+                height: 600,
                 width: 500,
                 child: SettingsList(
                   sections: [
@@ -247,8 +248,13 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(0);
                         Navigator.of(context).pop();
-                        databaseProvider.updateDataColorTheme(
-                            colorThemeProvider.colorList[0]);
+                      
+                        final currentTheme = ColorTheme(
+                          id: 0,
+                          themeNumber: 0, // 色に応じて、0, 1, 2などの番号
+                        );
+                          databaseProvider.updateDataColorTheme(
+                            currentTheme);
                       },
                       child: Text(
                         "Metallic Pink",
@@ -262,8 +268,12 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(1);
                         Navigator.of(context).pop();
-                        databaseProvider.updateDataColorTheme(
-                            colorThemeProvider.colorList[1]);
+                          final currentTheme = ColorTheme(
+                          id: 1,
+                          themeNumber: 1, // 色に応じて、0, 1, 2などの番号
+                        );
+                          databaseProvider.updateDataColorTheme(
+                            currentTheme);
                       },
                       child: Text(
                         "Cool Grey",
@@ -277,8 +287,12 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(2);
                         Navigator.of(context).pop();
-                        databaseProvider.updateDataColorTheme(
-                            colorThemeProvider.colorList[2]);
+                         final currentTheme = ColorTheme(
+                          id: 2,
+                          themeNumber: 2, // 色に応じて、0, 1, 2などの番号
+                        );
+                          databaseProvider.updateDataColorTheme(
+                            currentTheme);
                       },
                       child: Text(
                         "Fresh Air",
@@ -292,8 +306,12 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(3);
                         Navigator.of(context).pop();
-                        databaseProvider.updateDataColorTheme(
-                            colorThemeProvider.colorList[3]);
+                         final currentTheme = ColorTheme(
+                          id: 3,
+                          themeNumber: 3, // 色に応じて、0, 1, 2などの番号
+                        );
+                          databaseProvider.updateDataColorTheme(
+                            currentTheme);
                       },
                       child: Text(
                         "Olivine",

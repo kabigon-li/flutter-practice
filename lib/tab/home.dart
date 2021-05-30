@@ -36,18 +36,14 @@ class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final season = Provider.of<SeasonsMode>(context);
-
     final userProvider = Provider.of<UserProvider>(context);
-
     final colorThemeProvider = Provider.of<ColorThemeProvider>(context);
-
     // print(season.selectedImageNumber);
     return Scaffold(
       // 左ドロアー
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
-
         title: Align(
           alignment: Alignment.topLeft,
           child: Row(
@@ -373,7 +369,6 @@ class _Home extends StatelessWidget {
     );
     final now = DateTime.now();
     final createdAt = now.toIso8601String();
-    
 
     DateTime chattime = DateTime.parse(createdAt);
     String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
