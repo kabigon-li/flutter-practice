@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
+        backgroundColor: colorList[colorThemeProvider.themeNumber ?? 4],
        
       ),
       body: SingleChildScrollView(
@@ -159,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                 Material(
                   elevation: 10.0,
                   borderRadius: BorderRadius.circular(30.0),
-                  color: colorList[colorThemeProvider.selectedColorNumber ?? 4],
+                  color: colorList[colorThemeProvider.themeNumber ?? 4],
                   child: SizedBox(
                     width: 500,
                     height: 60,

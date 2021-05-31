@@ -35,7 +35,7 @@ class _MyPageState extends State<MyPage> {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor:
-              colorList[colorThemeProvider.selectedColorNumber ?? 4],
+              colorList[colorThemeProvider.themeNumber ?? 4],
           title: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Align(

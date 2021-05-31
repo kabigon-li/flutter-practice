@@ -47,7 +47,7 @@ class _TodoTaday extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor:  colorList[colorThemeProvider.selectedColorNumber ?? 4],
+        backgroundColor:  colorList[colorThemeProvider.themeNumber ?? 4],
         // leading: Icon(
         //   Icons.arrow_back,
         //   color: fontColor,

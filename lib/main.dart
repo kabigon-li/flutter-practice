@@ -81,13 +81,13 @@ void main() async {
   // null handling for theme
   if (theme.isNotEmpty) {
     // 2回目以降
-    colorTheme = colorList[theme.first.themeNumber ?? 0];
+    colorTheme = colorList[theme.first.themeNumber ?? 4];
   } else {
     // 初回起動時
     colorTheme = colorList[4];
 
     final defaultColorTheme = ColorTheme(
-      id: 0,
+      id: 4,
       themeNumber: 4,
     );
     insertColorTheme(
@@ -127,7 +127,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => ColorThemeProvider(
             colorTheme: colorTheme,
-            selectedColorNumber: theme.first.themeNumber ?? 0,
+            themeNumber: theme.first.themeNumber ?? 0,
           ),
         ),
         ChangeNotifierProvider(

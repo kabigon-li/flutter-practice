@@ -43,7 +43,7 @@ class _Home extends StatelessWidget {
       // 左ドロアー
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
+        backgroundColor: colorList[colorThemeProvider.themeNumber ?? 4],
         title: Align(
           alignment: Alignment.topLeft,
           child: Row(

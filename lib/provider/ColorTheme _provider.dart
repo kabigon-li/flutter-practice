@@ -5,16 +5,16 @@ class ColorThemeProvider extends ChangeNotifier {
   // 初期化
   ColorThemeProvider({
     this.colorTheme,
-    this.selectedColorNumber,
+    this.themeNumber,
   });
 
   Color colorTheme;
 
   // 選択されている画像の番号
-  int selectedColorNumber;
+  int themeNumber;
 
   void updateSelectedImageNumber(int number) {
-    selectedColorNumber = number;
+    themeNumber = number;
     notifyListeners();
   }
 }

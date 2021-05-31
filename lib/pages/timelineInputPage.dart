@@ -45,7 +45,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
     
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
+        backgroundColor: colorList[colorThemeProvider.themeNumber ?? 4],
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(left:30.0,top:20),

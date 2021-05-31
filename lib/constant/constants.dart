@@ -21,7 +21,7 @@ List<Color> colorList =[
  Color.fromRGBO(148, 137, 176, 1), // 1 Cool Grey
  Color.fromRGBO(168, 222, 250, 1), // 2 Fresh Air
  Color.fromRGBO( 161, 183, 122,1), // 3 Olivine,
- themeColor,// 4
+ Color.fromRGBO( 202, 228, 219,1),// 4
 ];
 
 const themeColor = Color.fromRGBO(241, 241, 241, 1);

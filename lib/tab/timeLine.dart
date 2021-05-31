@@ -50,7 +50,7 @@ class _TimeLine extends StatelessWidget {
         toolbarHeight: 100,
         leadingWidth: MediaQuery.of(context).size.width,
         centerTitle: true,
-        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
+        backgroundColor: colorList[colorThemeProvider.themeNumber ?? 4],
         actions: [
           // 发朋友圈按钮
           Align(

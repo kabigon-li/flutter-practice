@@ -55,7 +55,7 @@ class _ChatPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
+        backgroundColor: colorList[colorThemeProvider.themeNumber ?? 4],
         title: Align(
           alignment: Alignment.topLeft,
           child: Row(
@@ -176,7 +176,7 @@ class _ChatPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: colorList[colorThemeProvider.selectedColorNumber ?? 4],
+                          primary: colorList[colorThemeProvider.themeNumber ?? 4],
                         ),
 
                         //チャット追加
@@ -199,7 +199,7 @@ class _ChatPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: colorList[colorThemeProvider.selectedColorNumber ?? 4],
+                          primary: colorList[colorThemeProvider.themeNumber ?? 4],
                         ),
 
                         //チャット追加

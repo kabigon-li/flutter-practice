@@ -103,7 +103,7 @@ class _TabScreenState extends State<TabScreen> {
         ],
         onTap: _onTapHandler,
         currentIndex: _selectedIndex,
-        backgroundColor: colorList[colorThemeProvider.selectedColorNumber ?? 4],
+        backgroundColor: colorList[colorThemeProvider.themeNumber ?? 4],
         iconSize: 30,
       ),
       tabBuilder: (context, index) {
