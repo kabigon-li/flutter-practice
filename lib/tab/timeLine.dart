@@ -228,7 +228,7 @@ class _TimeLine extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left:12.0),
                   child: SizedBox(
-                    width: 270,
+                    width: 250,
                     child: ListTile(
                       // 用户名
                       title: Padding(
