@@ -51,7 +51,7 @@ void main() async {
       //   "CREATE TABLE fontSize(id INTEGER PRIMARY KEY,fontSize INTEGER)",
       // );
       db.execute(
-        "CREATE TABLE colorTheme(id INTEGER PRIMARY KEY, colorTheme INTEGER, themeNumber INTEGER)",
+        "CREATE TABLE colorTheme(id INTEGER PRIMARY KEY, themeNumber INTEGER)",
       );
     },
 
@@ -81,11 +81,13 @@ void main() async {
   // null handling for theme
   if (theme.isNotEmpty) {
     // 2回目以降
-    colorTheme = colorList[theme.first.themeNumber ?? 4];
+    print('here');
+    print(theme.first.themeNumber);
+    colorTheme = colorList[theme.first.themeNumber];
   } else {
     // 初回起動時
     colorTheme = colorList[4];
-
+    print('not here');
     final defaultColorTheme = ColorTheme(
       id: 4,
       themeNumber: 4,
@@ -127,7 +129,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => ColorThemeProvider(
             colorTheme: colorTheme,
-            themeNumber: theme.first.themeNumber ?? 0,
+            themeNumber: theme != null ? theme?.first?.themeNumber : 4,
           ),
         ),
         ChangeNotifierProvider(

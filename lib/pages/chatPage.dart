@@ -88,7 +88,7 @@ class _ChatPage extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Color.fromRGBO(209, 246, 255, 1),
+                //color: Color.fromRGBO(209, 246, 255, 1),
                 // ? DecorationImage(
                 //     image: AssetImage(
                 //       imageList[season.selectedImageNumber],

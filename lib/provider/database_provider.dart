@@ -272,7 +272,7 @@ class DataBaseProvider with ChangeNotifier {
     );
   }
 
-   Future<void> updateDataFontSize(
+  Future<void> updateDataFontSize(
     FontSize fontSize,
   ) async {
     final Database db = await database;
@@ -292,7 +292,8 @@ class DataBaseProvider with ChangeNotifier {
     final List<Map<String, dynamic>> maps = await db.query('database');
     return List.generate(maps.length, (i) {
       return ColorTheme(
-        colorTheme: maps[i]['colorTheme'],
+        id: maps[i]['id'],
+        themeNumber: maps[i]['themeNumber'],
       );
     });
   }
@@ -311,6 +312,3 @@ class DataBaseProvider with ChangeNotifier {
     );
   }
 }
-
-
-  

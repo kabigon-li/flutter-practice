@@ -34,8 +34,7 @@ class _MyPageState extends State<MyPage> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor:
-              colorList[colorThemeProvider.themeNumber ?? 4],
+          backgroundColor: colorList[colorThemeProvider.themeNumber ?? 4],
           title: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Align(
@@ -248,13 +247,12 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(0);
                         Navigator.of(context).pop();
-                      
+
                         final currentTheme = ColorTheme(
                           id: 0,
                           themeNumber: 0, // 色に応じて、0, 1, 2などの番号
                         );
-                          databaseProvider.updateDataColorTheme(
-                            currentTheme);
+                        databaseProvider.updateDataColorTheme(currentTheme);
                       },
                       child: Text(
                         "Metallic Pink",
@@ -268,12 +266,11 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(1);
                         Navigator.of(context).pop();
-                          final currentTheme = ColorTheme(
-                          id: 1,
+                        final currentTheme = ColorTheme(
+                          id: 0,
                           themeNumber: 1, // 色に応じて、0, 1, 2などの番号
                         );
-                          databaseProvider.updateDataColorTheme(
-                            currentTheme);
+                        databaseProvider.updateDataColorTheme(currentTheme);
                       },
                       child: Text(
                         "Cool Grey",
@@ -287,12 +284,11 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(2);
                         Navigator.of(context).pop();
-                         final currentTheme = ColorTheme(
-                          id: 2,
+                        final currentTheme = ColorTheme(
+                          id: 0,
                           themeNumber: 2, // 色に応じて、0, 1, 2などの番号
                         );
-                          databaseProvider.updateDataColorTheme(
-                            currentTheme);
+                        databaseProvider.updateDataColorTheme(currentTheme);
                       },
                       child: Text(
                         "Fresh Air",
@@ -306,12 +302,11 @@ class _MyPageState extends State<MyPage> {
                       onTap: () {
                         colorThemeProvider.updateSelectedImageNumber(3);
                         Navigator.of(context).pop();
-                         final currentTheme = ColorTheme(
-                          id: 3,
+                        final currentTheme = ColorTheme(
+                          id: 0,
                           themeNumber: 3, // 色に応じて、0, 1, 2などの番号
                         );
-                          databaseProvider.updateDataColorTheme(
-                            currentTheme);
+                        databaseProvider.updateDataColorTheme(currentTheme);
                       },
                       child: Text(
                         "Olivine",
