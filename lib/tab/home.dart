@@ -54,7 +54,7 @@ class _Home extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Mechat',
+                'ChatNote',
                 style: TextStyle(
                   fontSize: 22,
                   fontFamily: 'iconfont',
