@@ -1,4 +1,4 @@
-package com.example.wechat_like_memo
+package chat.style.note
 
 import io.flutter.embedding.android.FlutterActivity
 

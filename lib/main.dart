@@ -129,7 +129,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => ColorThemeProvider(
             colorTheme: colorTheme,
-            themeNumber: theme != null ? theme?.first?.themeNumber : 4,
+            themeNumber: 4,
           ),
         ),
         ChangeNotifierProvider(
