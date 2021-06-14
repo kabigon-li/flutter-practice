@@ -85,7 +85,7 @@ class _TimeLine extends StatelessWidget {
                     timelineProvider.timelineList[index],
                     notifier.image,
                     context,
-                    userProvider.userList[index],
+                    userProvider.userList[0],
                   );
                 },
               ),
@@ -216,42 +216,50 @@ class _TimeLine extends StatelessWidget {
                             userNew,
                           )
                         : Padding(
-                          padding: const EdgeInsets.only(left:10.0,),
-                          child: Icon(
+                            padding: const EdgeInsets.only(
+                              left: 10.0,
+                            ),
+                            child: Icon(
                               Icons.account_box,
                               size: 50,
                               color: Color.fromRGBO(130, 176, 104, 05),
                             ),
-                        ),
+                          ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left:12.0),
-                  child: SizedBox(
-                    width: 250,
-                    child: ListTile(
-                      // 用户名
-                      title: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          userProvider.getFirstUser().userName,
-                          style: TextStyle(
-                            fontSize: fontSizeProvider.fontSize,
-                            color: Colors.blueGrey,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'iconfont',
-                          ),
+                SizedBox(
+                  width: 270,
+                  child: ListTile(
+                    // 用户名
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        userProvider.getFirstUser().userName,
+                        style: TextStyle(
+                          fontSize: fontSizeProvider.fontSize,
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'iconfont',
                         ),
                       ),
+                    ),
 
-                      // 配文
-                      subtitle: Text(
-                        timelineNew.content,
-                        style: TextStyle(fontSize: fontSizeProvider.fontSize),
-                      ),
+                    // 配文
+                    subtitle: Text(
+                      timelineNew.content,
+                      style: TextStyle(fontSize: fontSizeProvider.fontSize),
+                    ),
 
-                      //删除按钮
-                      trailing: GestureDetector(
+                    
+                    
+                  ),
+
+                  
+                ),
+                //删除按钮
+                Padding(
+                  padding: const EdgeInsets.only(top:18.0),
+                  child: GestureDetector(
                         onTap: () {
                           showSimpleDialog(context, timelineNew);
                         },
@@ -261,8 +269,6 @@ class _TimeLine extends StatelessWidget {
                           color: Colors.grey,
                         ),
                       ),
-                    ),
-                  ),
                 ),
               ],
             ),
