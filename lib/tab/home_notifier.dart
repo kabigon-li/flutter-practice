@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_like_memo/Utility/utility.dart';
+import 'package:wechat_like_memo/components/common_simple_dialog.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 
 import 'package:wechat_like_memo/model/user.dart';
@@ -197,40 +198,20 @@ class HomeNotifier extends ChangeNotifier {
     );
   }
 
-  showSimpleDialog(userNew) async {
-    String result = "";
-    result = await showDialog(
+  void showDeleteSimpleDialog(BuildContext context, userNew) async {
+    await showDialog(
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text('Select account'),
-          ),
-          children: <Widget>[
-            SimpleDialogOption(
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.orange.shade200,
-                  child: Icon(Icons.delete_outline),
-                ),
-                title: Text(
-                  'delete',
-                  style: TextStyle(
-                    color: fontColor,
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-              onPressed: () {
+        return CommonSimpleDialog(
+          title: "このユーザーを削除してもよろしいですか？",
+        
+          onPressed: () {
                 deleteUser(userNew.id, userNew);
                 Navigator.pop(
                   context,
                 );
               },
-            ),
-          ],
         );
       },
     );

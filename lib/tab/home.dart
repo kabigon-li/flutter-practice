@@ -189,7 +189,7 @@ class _Home extends StatelessWidget {
 
               //长按显示dialog，删除用户
               onLongPress: () {
-                notifier.showSimpleDialog(userNew);
+                notifier.showDeleteSimpleDialog(context,userNew);
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

@@ -42,7 +42,7 @@ class _MyPageState extends State<MyPage> {
               child: Row(
                 children: [
                   Text(
-                    'Setting',
+                    '設定',
                     style: TextStyle(
                       fontSize: 22,
                       fontFamily: 'iconfont',
@@ -65,12 +65,12 @@ class _MyPageState extends State<MyPage> {
                 child: SettingsList(
                   sections: [
                     SettingsSection(
-                      title: 'Theme settings',
+                      title: 'テーマ設定',
                       titleTextStyle:
                           TextStyle(fontSize: 20, color: Colors.brown),
                       tiles: [
                         SettingsTile.switchTile(
-                          title: 'Dark mode',
+                          title: 'ダークモード',
                           titleTextStyle: TextStyle(fontSize: 18),
                           leading: Icon(Icons.nights_stay),
                           switchValue: theme.isDark,
@@ -80,7 +80,7 @@ class _MyPageState extends State<MyPage> {
                           switchActiveColor: buttonColor,
                         ),
                         SettingsTile(
-                          title: 'Change theme color',
+                          title: 'テーマ色',
                           titleTextStyle: TextStyle(fontSize: 18),
                           leading: Icon(Icons.color_lens),
                           trailing: Icon(Icons.arrow_forward_ios),

@@ -63,7 +63,7 @@ class _ChatPage extends StatelessWidget {
               Text(
                 notifier.userNew.userName,
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 18,
                   fontFamily: 'iconfont',
                   color: fontColor,
                 ),
@@ -260,7 +260,7 @@ class _ChatPage extends StatelessWidget {
             child: GestureDetector(
               //删除对话框图标
               onLongPress: () {
-                showSimpleDialog(context, chatNew);
+                showDeleteSimpleDialog(context, chatNew);
               },
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -319,7 +319,7 @@ class _ChatPage extends StatelessWidget {
           GestureDetector(
             //删除对话框图标
             onLongPress: () {
-              showSimpleDialog(context, chatNew);
+              showDeleteSimpleDialog(context, chatNew);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -480,7 +480,7 @@ class _ChatPage extends StatelessWidget {
     databaseProvider.deleteChat(index);
   }
 
-  void showSimpleDialog(BuildContext context, chatNew) async {
+ void showDeleteSimpleDialog(BuildContext context, chatNew) async {
     await showDialog(
       barrierDismissible: true,
       context: context,
@@ -491,10 +491,13 @@ class _ChatPage extends StatelessWidget {
             deleteChat(context, chatNew.id);
             Navigator.pop(context);
           },
+         
         );
       },
     );
   }
+
+ 
 
   Widget buildUserIconImage({
     BuildContext context,
