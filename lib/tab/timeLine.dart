@@ -208,32 +208,35 @@ class _TimeLine extends StatelessWidget {
                   padding: const EdgeInsets.only(
                     top: 10,
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: userProvider.getFirstUser().userImage != null
-                        ? buildUserIconImage(
-                            context,
-                            userNew,
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.only(
-                              left: 10.0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: userProvider.getFirstUser().userImage != null
+                          ? buildUserIconImage(
+                              context,
+                              userNew,
+                            )
+                          : Material(
+                              elevation: 5.0,
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.grey[300],
+                              child: Icon(
+                                Icons.account_box,
+                                size: 50,
+                                color: Color.fromRGBO(130, 176, 104, 05),
+                              ),
                             ),
-                            child: Icon(
-                              Icons.account_box,
-                              size: 50,
-                              color: Color.fromRGBO(130, 176, 104, 05),
-                            ),
-                          ),
+                    ),
                   ),
                 ),
-                SizedBox(
-                  width: 260,
-                  child: ListTile(
-                    // 用户名
-                    title: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
+                Padding(
+                  padding: const EdgeInsets.only(left:4.0),
+                  child: SizedBox(
+                    width: 260,
+                    child: ListTile(
+                      // 用户名
+                      title: Text(
                         userProvider.getFirstUser().userName,
                         style: TextStyle(
                           fontSize: 18,
@@ -242,18 +245,18 @@ class _TimeLine extends StatelessWidget {
                           fontFamily: 'iconfont',
                         ),
                       ),
-                    ),
 
-                    // 配文
-                    subtitle: Text(
-                      timelineNew.content,
-                      style: TextStyle(fontSize: 16),
+                      // 配文
+                      subtitle: Text(
+                        timelineNew.content,
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ),
                 ),
                 //删除按钮
                 Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
+                  padding: const EdgeInsets.only(top: 18.0,),
                   child: GestureDetector(
                     onTap: () {
                       showSimpleDialog(context, timelineNew);
@@ -271,16 +274,13 @@ class _TimeLine extends StatelessWidget {
             //朋友圈图片
             Align(
               alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Image.memory(
-                    base64Decode(timelineNew.imagePath),
-                    height: 200,
-                    width: 200,
-                    fit: BoxFit.cover,
-                  ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5.0),
+                child: Image.memory(
+                  base64Decode(timelineNew.imagePath),
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -294,24 +294,17 @@ class _TimeLine extends StatelessWidget {
     BuildContext context,
     User userNew,
   ) {
-    final notifier = Provider.of<TimeLinePageNotifier>(context);
+   
     final userProvider = Provider.of<UserProvider>(context);
-    return MaterialButton(
-      onPressed: () {
-        notifier.updateUserImage(userNew);
-        //点击图片后更新头像
-        //notifier.updateUserImage(userNew);
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        //データベース中の画像使う時だけ書くSQliteだけ
-        child: Image.memory(
-          base64Decode(userProvider.getFirstUser().userImage),
-          gaplessPlayback: true,
-          fit: BoxFit.cover,
-          height: 50,
-          width: 50,
-        ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      //データベース中の画像使う時だけ書くSQliteだけ
+      child: Image.memory(
+        base64Decode(userProvider.getFirstUser().userImage),
+        gaplessPlayback: true,
+        fit: BoxFit.cover,
+        height: 50,
+        width: 50,
       ),
     );
   }
