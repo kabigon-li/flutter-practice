@@ -189,7 +189,7 @@ class _Home extends StatelessWidget {
 
               //长按显示dialog，删除用户
               onLongPress: () {
-                notifier.showDeleteSimpleDialog(context,userNew);
+                notifier.showDeleteSimpleDialog(context, userNew);
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -221,8 +221,8 @@ class _Home extends StatelessWidget {
     final notifier = Provider.of<HomeNotifier>(context);
     return Padding(
       padding: const EdgeInsets.all(3.0),
-      child: MaterialButton(
-        onPressed: () {
+      child: GestureDetector(
+        onTap: () {
           notifier.updateUserImage(userNew);
         },
         child: ClipRRect(
@@ -248,18 +248,21 @@ class _Home extends StatelessWidget {
     final notifier = Provider.of<HomeNotifier>(context);
     return Row(
       children: [
-        MaterialButton(
-          onPressed: () {
-            notifier.updateUserImage(userNew);
-          },
-          child: Material(
-            elevation: 5.0,
-            borderRadius: BorderRadius.circular(10.0),
-            color: Colors.grey[300],
-            child: Icon(
-              Icons.account_box,
-              size: 50,
-              color: Color.fromRGBO(130, 176, 104, 05),
+        Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: GestureDetector(
+            onTap: () {
+              notifier.updateUserImage(userNew);
+            },
+            child: Material(
+              elevation: 5.0,
+              borderRadius: BorderRadius.circular(10.0),
+              color: Colors.grey[300],
+              child: Icon(
+                Icons.account_box,
+                size: 50,
+                color: Color.fromRGBO(130, 176, 104, 05),
+              ),
             ),
           ),
         ),
@@ -290,12 +293,12 @@ class _Home extends StatelessWidget {
                     width: 100,
                     height: 40,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 8.0, left: 8),
                       child: Text(
                         userNew.userName,
                         style: TextStyle(
                           // fontSize: fontSizeProvider.isFontSizeSelected == true
-                          fontSize: fontSizeProvider.fontSize,
+                          fontSize: 18,
                           //:20,
                         ),
                       ),
@@ -350,11 +353,14 @@ class _Home extends StatelessWidget {
         //竖列两个组件对其
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'No userName',
-            style: TextStyle(
-              fontSize: fontSizeProvider.fontSize,
-              color: fontColor,
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              'チャット君',
+              style: TextStyle(
+                fontSize: 18,
+                color: fontColor,
+              ),
             ),
           ),
         ],
@@ -372,11 +378,15 @@ class _Home extends StatelessWidget {
       (chat) => chat.userId == userNew.id,
       orElse: () => null,
     );
-    final now = DateTime.now();
-    final createdAt = now.toIso8601String();
 
-    DateTime chattime = DateTime.parse(createdAt);
-    String outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+    DateTime chattime;
+    String outputFormat;
+    try {
+      chattime = DateTime.parse(lastChat.createdAt);
+      outputFormat = DateFormat('MM-dd-H:mm').format(chattime);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
 
     //final notifier = Provider.of<HomeNotifier>(context);
     return GestureDetector(
@@ -388,32 +398,28 @@ class _Home extends StatelessWidget {
           ),
         );
       },
-      child: SizedBox(
-        width: 300,
-        height: 30,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 170,
-              child: Text(
-                lastChat != null ? lastChat.content.toString() : '',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Text(
-              lastChat != null ? outputFormat : '',
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text(
+              lastChat != null ? lastChat.content.toString() : '',
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 16,
                 color: Colors.grey,
               ),
-            )
-          ],
-        ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Text(
+            lastChat != null ? outputFormat ?? '' : '',
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.grey,
+            ),
+          )
+        ],
       ),
     );
   }
