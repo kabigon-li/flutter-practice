@@ -113,7 +113,7 @@ class _TimeLine extends StatelessWidget {
               children: [
                 SizedBox(height: 15),
                 Text(
-                  'take a picture',
+                  '写真を撮影',
                   style: TextStyle(fontSize: 16),
                 ),
                 Padding(
@@ -153,7 +153,7 @@ class _TimeLine extends StatelessWidget {
                     }
                   },
                   child: Text(
-                    'select from album',
+                    'アルバムから選択',
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -169,7 +169,7 @@ class _TimeLine extends StatelessWidget {
 
                 GestureDetector(
                   child: Text(
-                    'return',
+                    '戻る',
                     style: TextStyle(fontSize: 16),
                   ),
                   onTap: () {

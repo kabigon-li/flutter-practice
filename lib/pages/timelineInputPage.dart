@@ -48,13 +48,13 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
         backgroundColor: colorList[colorThemeProvider.themeNumber ?? 4],
         elevation: 0,
         leading: Padding(
-          padding: const EdgeInsets.only(left:30.0,top:20),
+          padding: const EdgeInsets.only(left:30.0,top:15),
           child: OverflowBox(
             maxWidth: 100,
             maxHeight: 100,
             child: GestureDetector(
               child: Text(
-                'Cancel',
+                '戻る',
                 style: TextStyle(fontSize: 18, color: Colors.black),
               ),
               
@@ -70,7 +70,7 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
             child: Center(
               child: ElevatedButton(
                 child: Text(
-                  'send',
+                  '送信',
                   style: TextStyle(fontSize: 18),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -157,7 +157,13 @@ class _TimelineInputPageState extends State<TimelineInputPage> {
                           chatbox(text);
                         },
                         decoration: InputDecoration(
-                          hintText: 'Say something...',
+                          hintText: '言いたいこと...',
+                          hintStyle: TextStyle(
+                            color: Colors.grey, // <-- Change this
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                          ),
                           contentPadding: const EdgeInsets.all(10),
                           border: InputBorder.none,
                         ),
