@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
             maxHeight: 100,
             child: GestureDetector(
               child: Text(
-                'Cancel',
+                '取り消し',
                 style: TextStyle(fontSize: 18, color: Colors.black),
               ),
               
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-                      hintText: "User name",
+                      hintText: "ユーザー名",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -204,9 +204,9 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                       child: Text(
-                        "Login",
+                        "追加",
                         style: TextStyle(
-                          fontSize: 26,
+                          fontSize: 24,
                           fontFamily: 'iconfont',
                           color: Color.fromRGBO(74, 61, 105, 1),
                         ),

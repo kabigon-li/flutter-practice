@@ -244,7 +244,7 @@ class _TodoTaday extends StatelessWidget {
                       height: 30,
                       width: 60,
                       child: ElevatedButton(
-                        child: Text('編集'),
+                        child: Text('edit'),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.blueGrey,
                         ),

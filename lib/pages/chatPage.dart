@@ -86,17 +86,6 @@ class _ChatPage extends StatelessWidget {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Stack(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                //color: Color.fromRGBO(209, 246, 255, 1),
-                // ? DecorationImage(
-                //     image: AssetImage(
-                //       imageList[season.selectedImageNumber],
-                //     ),
-                //     fit: BoxFit.cover,
-                //   )
-              ),
-            ),
             SingleChildScrollView(
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -150,7 +139,13 @@ class _ChatPage extends StatelessWidget {
                           notifier.chatbox(text);
                         },
                         decoration: InputDecoration(
-                          hintText: 'Tell me your thinking',
+                          hintText: '入力してメモしよう！',
+                          hintStyle: TextStyle(
+                            color: Colors.grey, // <-- Change this
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                          ),
                           contentPadding: const EdgeInsets.all(10),
                           border: InputBorder.none,
                         ),
@@ -176,7 +171,8 @@ class _ChatPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: colorList[colorThemeProvider.themeNumber ?? 4],
+                          primary:
+                              colorList[colorThemeProvider.themeNumber ?? 4],
                         ),
 
                         //チャット追加
@@ -199,7 +195,8 @@ class _ChatPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: colorList[colorThemeProvider.themeNumber ?? 4],
+                          primary:
+                              colorList[colorThemeProvider.themeNumber ?? 4],
                         ),
 
                         //チャット追加
@@ -365,7 +362,7 @@ class _ChatPage extends StatelessWidget {
 
   Widget buildChatBubble(context, chatNew) {
     final fontSizeProvider = Provider.of<FontSizeProvider>(context);
-    
+
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.all(6.0),
@@ -386,7 +383,7 @@ class _ChatPage extends StatelessWidget {
             child: SizedBox(
               // width: 280,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Expanded(
                   child: Text(
                     chatNew.content,
@@ -489,7 +486,7 @@ class _ChatPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return CommonSimpleDialog(
-          title: "Are you sure to delete this chat?",
+          title: "このチャットを削除してもよろしいですか？",
           onPressed: () {
             deleteChat(context, chatNew.id);
             Navigator.pop(context);
@@ -513,10 +510,10 @@ class _ChatPage extends StatelessWidget {
                 base64Decode(currentUser.userImage),
                 gaplessPlayback: true,
                 fit: BoxFit.cover,
-                height: 50,
-                width: 50,
+                height: 45,
+                width: 45,
               )
-            : Icon(Icons.account_box, color: buttonColor, size: 40),
+            : currentUser.userImage,
       ),
     );
   }
@@ -525,21 +522,18 @@ class _ChatPage extends StatelessWidget {
     BuildContext context,
   }) {
     final userProvider = Provider.of<UserProvider>(context);
-    return Padding(
-      padding: const EdgeInsets.only(top: 5, right: 5.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        //データベース中の画像使う時だけ書くSQliteだけ
-        child: userProvider.getFirstUser().id != 0
-            ? Image.memory(
-                base64Decode(userProvider.getFirstUser().userImage),
-                gaplessPlayback: true,
-                fit: BoxFit.cover,
-                height: 50,
-                width: 50,
-              )
-            : Icon(Icons.account_box, color: buttonColor, size: 40),
-      ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      //データベース中の画像使う時だけ書くSQliteだけ
+      child: userProvider.getFirstUser().id != 0
+          ? Image.memory(
+              base64Decode(userProvider.getFirstUser().userImage),
+              gaplessPlayback: true,
+              fit: BoxFit.cover,
+              height: 50,
+              width: 50,
+            )
+          : Icon(Icons.account_box, color: buttonColor, size: 55),
     );
   }
 }

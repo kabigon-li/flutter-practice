@@ -62,7 +62,7 @@ void main() async {
   //默认用户
   final defaultUser = User(
     id: 0,
-    userName: 'my user',
+    userName: 'マイユーザー',
     isLogined: 0,
   );
   insertUser(
