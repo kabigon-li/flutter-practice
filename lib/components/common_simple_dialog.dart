@@ -22,7 +22,7 @@ class CommonSimpleDialog extends StatelessWidget {
       actions: <Widget>[
         // ボタン領域
         ElevatedButton(
-          child: Text("Cancel"),
+          child: Text("戻る"),
           style: ElevatedButton.styleFrom(
             primary: Colors.black12,
           ),
@@ -31,9 +31,9 @@ class CommonSimpleDialog extends StatelessWidget {
           },
         ),
         ElevatedButton(
-          child: Text("Delete"),
+          child: Text("削除"),
           style: ElevatedButton.styleFrom(
-            primary: buttonColor,
+            primary: Colors.redAccent,
           ),
           onPressed: onPressed,
         ),

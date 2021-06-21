@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wechat_like_memo/components/common_simple_dialog.dart';
 import 'package:wechat_like_memo/constant/constants.dart';
 import 'package:wechat_like_memo/model/todo.dart';
 import 'package:wechat_like_memo/provider/ColorTheme%20_provider.dart';
+import 'package:wechat_like_memo/provider/database_provider.dart';
 import 'package:wechat_like_memo/provider/font_size_provider.dart';
 
 import 'package:wechat_like_memo/provider/settings_provider.dart';
@@ -179,7 +181,7 @@ class _TodoTaday extends StatelessWidget {
               child: Icon(Icons.delete),
               onTap: () {
                 //todoNew.id
-                deleteTodoSheet(context, todoNew.id);
+                showDeleteSimpleDialog(context, todoNew);
               },
             ),
           ),
@@ -244,7 +246,7 @@ class _TodoTaday extends StatelessWidget {
                       height: 30,
                       width: 60,
                       child: ElevatedButton(
-                        child: Text('edit'),
+                        child: Text('編集'),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.blueGrey,
                         ),
@@ -272,7 +274,7 @@ class _TodoTaday extends StatelessWidget {
       builder: (BuildContext context) {
         return Container(
           color: Colors.white,
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -294,7 +296,13 @@ class _TodoTaday extends StatelessWidget {
                             notifier.chatbox(t);
                           },
                           decoration: InputDecoration(
-                            hintText: 'White a new to do !',
+                            hintText: 'やりたいことを入力しよう！',
+                            hintStyle: TextStyle(
+                            color: Colors.grey, // <-- Change this
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                          ),
                             contentPadding: const EdgeInsets.all(10),
                             // border: InputBorder.none,
                           ),
@@ -304,10 +312,10 @@ class _TodoTaday extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 0),
                       child: SizedBox(
-                        height: 50,
+                        height: 40,
                         width: 80,
                         child: ElevatedButton(
-                          child: Text('add',style:TextStyle(fontSize: 20),),
+                          child: Text('追加',style:TextStyle(fontSize: 18),),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromRGBO(130, 176, 104,1),
                           ),
@@ -329,7 +337,30 @@ class _TodoTaday extends StatelessWidget {
     BuildContext context,
     int index,
   ) {
-    final notifier = Provider.of<TodoTodayNotifier>(context, listen: false);
-    notifier.deleteTodo(index);
+     final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    //　databaseの実体化
+    final databaseProvider =
+        Provider.of<DataBaseProvider>(context, listen: false);
+    todoProvider.deleteTodo(
+      //1, 渡す 0
+      index,
+    );
+    databaseProvider.deleteTodo(index);
+  }
+
+  void showDeleteSimpleDialog(BuildContext context, todoNew) async {
+    await showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return CommonSimpleDialog(
+          title: "このやりたいことを削除してもよろしいですか？",
+          onPressed: () {
+            deleteTodoSheet(context, todoNew.id);
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
   }
 }
