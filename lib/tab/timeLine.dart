@@ -228,7 +228,7 @@ class _TimeLine extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 270,
+                  width: 260,
                   child: ListTile(
                     // 用户名
                     title: Padding(
@@ -236,7 +236,7 @@ class _TimeLine extends StatelessWidget {
                       child: Text(
                         userProvider.getFirstUser().userName,
                         style: TextStyle(
-                          fontSize: fontSizeProvider.fontSize,
+                          fontSize: 18,
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'iconfont',
@@ -247,28 +247,23 @@ class _TimeLine extends StatelessWidget {
                     // 配文
                     subtitle: Text(
                       timelineNew.content,
-                      style: TextStyle(fontSize: fontSizeProvider.fontSize),
+                      style: TextStyle(fontSize: 16),
                     ),
-
-                    
-                    
                   ),
-
-                  
                 ),
                 //删除按钮
                 Padding(
-                  padding: const EdgeInsets.only(top:18.0),
+                  padding: const EdgeInsets.only(top: 18.0),
                   child: GestureDetector(
-                        onTap: () {
-                          showSimpleDialog(context, timelineNew);
-                        },
-                        child: Icon(
-                          Icons.more_vert,
-                          size: 24,
-                          color: Colors.grey,
-                        ),
-                      ),
+                    onTap: () {
+                      showSimpleDialog(context, timelineNew);
+                    },
+                    child: Icon(
+                      Icons.delete,
+                      size: 20,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
               ],
             ),
